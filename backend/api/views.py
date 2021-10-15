@@ -4,9 +4,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from rest_framework.response import Response
-from .models import GAVNO
 
-from .models import Message, MessageSerializer
+from .models import Message, MessageSerializer, GAVNO
 
 
 # Serve Vue Application
@@ -18,6 +17,7 @@ def shit(request):
     g = GAVNO.objects.create(description='shit')
     g.save()
     return Response(data=GAVNO.objects.values_list('description'), status=201)
+
 
 class MessageViewSet(viewsets.ModelViewSet):
     """
