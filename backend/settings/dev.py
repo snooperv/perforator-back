@@ -40,6 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'backend.api',
+    'backend.profile',
+    'backend.grade',
+    'backend.grade_category',
+    'backend.review',
+    'backend.performance_review',
+    'backend.average_grade',
+    'backend.one_on_one_review',
 ]
 
 MIDDLEWARE = [
