@@ -9,7 +9,6 @@
             <h1>Perforator</h1>
           </div>
 
-          <form class="log" @submit="submitForm">
             <input
               type="text"
               id="name"
@@ -80,9 +79,9 @@
             <input
               type="submit"
               class="fadeIn fourth"
+              @click="submitForm()"
               value="Зарегистрироваться"
             />
-          </form>
 
           <p class="agreement">
             Регистрируясь, вы принимаете наши
@@ -117,7 +116,7 @@ export default {
     }
   },
   methods: {
-    submitForm (event) {
+    submitForm () {
       this.createUser()
       // Т.к. мы уже отправили запрос на создание заметки строчкой выше,
       // нам нужно теперь очистить поля title и body
@@ -127,7 +126,6 @@ export default {
       this.password = ''
       // preventDefault нужно для того, чтобы страница
       // не перезагружалась после нажатия кнопки submit
-      // event.preventDefault()
       window.location.href = '/my_profile'
     },
     createUser () {
