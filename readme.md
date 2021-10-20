@@ -8,21 +8,21 @@
 7. Откройте терминал. Первый темринал называется Local, пока будем в нем работать
 
 !!! Команды которые нужно выполнить в терминале Local:
-8. ```virtualenv -p python3 env```
-9. ```env/scripts/activate```
+1. ```virtualenv -p python3 env```
+2. ```env/scripts/activate```
 (После этой команды должна появиться надпись (env) перед PS C:\\)<br>
 Пример: ![alt text](https://i.ibb.co/FnkJm7M/Screenshot-1.png)
-10. ```pip install django djangorestframework```
-11. ```pip install django-cors-headers```
-12. ```python backend/manage.py migrate```
+3. ```pip install django djangorestframework```
+4. ```pip install django-cors-headers```
+5. ```python backend/manage.py migrate```
 
 !!! Создайте новый терминал нажав "+" около Local. Повится терминал с названием Local (2). Следующие команды выполняем в нем:
-13. ```cd frontend```
-14. ```npm install```
-15. ```npm install pug --save-dev```
-16. ```npm install axios vue-axios --save```
-17. ```npm install vuex --save```
-18. ```npm audit fix```
+1. ```cd frontend```
+2. ```npm install```
+3. ```npm install pug --save-dev```
+4. ```npm install axios vue-axios --save```
+5. ```npm install vuex --save```
+6. ```npm audit fix```
 ## Запуск проекта ##
 Запуск Django происходит в консоли Local, когда есть приставка (env). Если ее нет, нужно выполнить команду:
 ```env/scripts/activate```
