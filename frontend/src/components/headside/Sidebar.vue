@@ -106,15 +106,15 @@ export default {
   name: 'Sidebar',
   computed: mapGetters(['users']),
   methods: {
-    deleteNote (note) {
-      // Вызываем действие `deleteNote` из нашего хранилища, которое
-      // попытается удалить заметку из нашех базы данных, отправив запрос к API
-      this.$store.dispatch('deleteUser', note)
+    deleteUser (user) {
+      // Вызываем действие `deleteUser` из нашего хранилища, которое
+      // попытается удалить пользователя из нашей базы данных, отправив запрос к API
+      this.$store.dispatch('deleteUser', user)
     }
   },
   beforeMount () {
     // Перед тем как загрузить страницу, нам нужно получить список всех
-    // имеющихся заметок. Для этого мы вызываем действие `getNotes` из
+    // имеющихся пользователей. Для этого мы вызываем действие `getUsers` из
     // нашего хранилища
     this.$store.dispatch('getUsers')
   }
