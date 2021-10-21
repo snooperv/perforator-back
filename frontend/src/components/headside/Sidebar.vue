@@ -6,7 +6,7 @@
       </div>
       <div class="profile-name">
         <h2>
-          {{ users[3].username }}
+          {{ users[0].username }}
         </h2>
       </div>
     </div>

@@ -8,13 +8,14 @@
 7. Откройте терминал. Первый темринал называется Local, пока будем в нем работать
 
 !!! Команды которые нужно выполнить в терминале Local:
-1. ```virtualenv -p python3 env```
-2. ```env/scripts/activate```
+1. ```cd backend```
+2. ```virtualenv -p python3 env```
+3. ```env/scripts/activate```
 (После этой команды должна появиться надпись (env) перед PS C:\\)<br>
 Пример: ![alt text](https://i.ibb.co/FnkJm7M/Screenshot-1.png)
-3. ```pip install django djangorestframework```
-4. ```pip install django-cors-headers```
-5. ```python backend/manage.py migrate```
+4. ```pip install django djangorestframework```
+5. ```pip install django-cors-headers```
+6. ```python backend/manage.py migrate```
 
 !!! Создайте новый терминал нажав "+" около Local. Повится терминал с названием Local (2). Следующие команды выполняем в нем:
 1. ```cd frontend```
