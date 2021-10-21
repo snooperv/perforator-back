@@ -12,11 +12,11 @@
                     <h1>Perforator</h1>
                 </div>
 
-                <form class="log">
-                <input type="text" id="name" class="fadeIn second" name="name" placeholder="Имя и фамилия" required>
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Номер телефона" minlength="11" maxlength="11" required>
-                <input type="text" id="url" class="fadeIn third" name="url" placeholder="Ссылка на профиль СБИС" required>
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Пароль" required>
+                <form class="log" @submit="registrationForm" method="POST" action="registerUser">
+                <input type="text" v-model="name" id="name" class="fadeIn second" name="name" placeholder="Имя и фамилия" required>
+                <input type="text" v-model="phone" id="login" class="fadeIn second" name="login" placeholder="Номер телефона" minlength="11" maxlength="11" required>
+                <input type="text" v-model="sbis_url" id="url" class="fadeIn third" name="url" placeholder="Ссылка на профиль СБИС" required>
+                <input type="password" v-model="password" id="password" class="fadeIn third" name="password" placeholder="Пароль" required>
                 <input type="submit" class="fadeIn fourth" value="Зарегистрироваться">
                 </form>
 
@@ -34,6 +34,19 @@
 
 <script>
     export default {
+      name: "Register",
+      data() {
+        return {
+          name: "",
+          phone: "",
+          sbis_url: "",
+          password: ""
+        }
+      },
+
+      methods: {
+        registerUser
+      }
 
     }
 </script>

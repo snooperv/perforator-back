@@ -1,10 +1,10 @@
+import uuid
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django import forms
 from django.contrib.auth import login, authenticate
-from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
-from models import Profile
+from rest_framework.response import Response
+
+from .models import Profile
 
 def basicView(request):
     html = "<html><body>Hello!</body></html>"
@@ -12,12 +12,33 @@ def basicView(request):
 
 def registerUser(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = authenticate(username=form.cleaned_data.get('username'),
-                                password=form.cleaned_data.get('password'))
-            login(request, user)
-            profile = Profile(user=user, phone=request.REQUEST.get('phone', None))
+        User.objects.create(username=request.REQUEST.get('username'),
+                            password=request.REQUEST.get('password'))
+        user = authenticate(username=request.REQUEST.get('username'),
+                            password=request.REQUEST.get('password'))
+        login(request, user)
+        profile = Profile(user=user, phone=request.REQUEST.get('phone', None))
+        image_name = uuid.uuid4()
+        photo = request.FILES['image']
+        with open(f'../../uploads/photos/{image_name}.img', 'wb+') as p:
+            for chunk in photo.chunks():
+                p.write(chunk)
+        profile.photo = image_name
+        profile.save()
+
+def loginUser(request):
+    if (request.method == 'POST'):
+        user = authenticate(username=request.REQUEST.get('username'),
+                            password=request.REQUEST.get('password'))
+        login(request, user)
+
+def profile(request):
+    if (request.method == 'GET'):
+        data = []
+
+        return Response()
+    if (request.method == 'POST'):
+        pass
+
 
 # Можно вставлять и настоящие HTML-файлы, посмотрите в Django
