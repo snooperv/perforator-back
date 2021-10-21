@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="db" uuid="b01e8f84-2d51-4c51-aaae-02ae0102b87c">
+    <data-source source="LOCAL" name="db [2]" uuid="fd96116b-b714-4f07-a8b9-4f61e3a96fee">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\VSCode\Perforator\backend\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\My folder\Projects\perforator-frontend\perforator\backend\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>
@@ -13,11 +13,11 @@
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="db [2]" uuid="fd96116b-b714-4f07-a8b9-4f61e3a96fee">
+    <data-source source="LOCAL" name="db [3]" uuid="51cb2060-a7d1-4593-90ad-eb42fa59a09b">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\My folder\Projects\perforator-frontend\perforator\backend\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\VSCode\perforator\backend\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>
