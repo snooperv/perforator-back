@@ -18,7 +18,8 @@
 Пример: ![alt text](https://i.ibb.co/FnkJm7M/Screenshot-1.png)
 4. ```pip install django djangorestframework```
 5. ```pip install django-cors-headers```
-6. ```python manage.py migrate```
+6. ```python manage.py makemigrations api```
+7. ```python manage.py migrate api```
 
 !!! Создайте новый терминал нажав "+" около Local. Повится терминал с названием Local (2). Следующие команды выполняем в нем:
 1. ```cd frontend```
