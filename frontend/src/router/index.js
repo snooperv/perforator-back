@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Register from '@/components/auth/Register'
 import Login from '@/components/auth/Login'
-import Main from '@/components/Main.vue'
+import Main from '@/components/Main'
 
 Vue.use(Router)
 
@@ -20,7 +20,8 @@ export default new Router({
       component: Login
     },
     {
-      path: '/my_profile',
+      path: '/myprofile',
+      name: 'Main',
       component: Main,
       children: [
         { path: '', component: () => import('@/components/My-profile.vue') },
