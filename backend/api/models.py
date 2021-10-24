@@ -8,6 +8,7 @@ class User(models.Model):
     phone = models.CharField(max_length=12)
     sbis = models.CharField(max_length=255)
     password = models.CharField(max_length=32)
+    token = models.CharField(max_length=128, default=None, blank=True, null=True)
 
 
 class Profile(models.Model):
