@@ -10,7 +10,10 @@
 3. Проверьте, что у вас выбран интерпретатор Python (снизу справа)
 4. Откройте терминал. Первый темринал называется Local, пока будем в нем работать
 
+### Для Django
+
 !!! Команды которые нужно выполнить в терминале Local:
+
 1. ```cd backend```
 2. ```virtualenv -p python3 env```
 3. ```env/scripts/activate```
@@ -20,6 +23,22 @@
 5. ```pip install django-cors-headers```
 6. ```python manage.py makemigrations api```
 7. ```python manage.py migrate api```
+
+### Настраиваем сессии в Django
+
+!!! Команды нужно выполнить в том же терминале Local:
+
+1. Убедитесь, что в ```api/settings.py``` массив ```INSTALLED_APPS = [ ... ]```
+содержит строку ```'django.contrib.sessions'```
+2. Убедитесь, что в том же файле ```api/settings.py``` массив ```MIDDLEWARE = [ ... ]```
+содержит строку ```'django.contrib.sessions.middleware.SessionMiddleware'```
+3. Выполните миграции для ```api``` из пунктов 6 и 7, расположенных выше, если еще
+не сделали это
+4. Выполните команду: ```python manage.py makemigrations``` (без ```api```)
+5. Выполните команду: ```python manage.py migrate``` (без ```api```)
+6. В базе данных должна появиться таблица с названием ```django_session```
+
+### Для Vue.js
 
 !!! Создайте новый терминал нажав "+" около Local. Повится терминал с названием Local (2). Следующие команды выполняем в нем:
 1. ```cd frontend```

@@ -6,6 +6,10 @@ from rest_framework.response import Response
 
 @api_view(['GET'])
 def get_current_user(request):
+    """
+        Получить данные пользователя, который авторизовался. Чтобы получить данные любого пользователя,
+        используйте get_user_info
+    """
     if 'token' not in request.session.keys():
         return Response(data={'message': 'Вы не авторизовались'}, status=400)
     token = request.session['token']
@@ -17,6 +21,10 @@ def get_current_user(request):
 
 @api_view(['GET'])
 def get_user_info(request):
+    """
+        Получить данные любого пользователя по номеру телефона (пока только по номеру).
+        Чтобы получить данные авторизованного пользователя, используйте get_current_user
+    """
     pass
 
 

@@ -6,6 +6,10 @@ from rest_framework.response import Response
 
 @api_view(['POST'])
 def auth(request):
+    """
+        Авторизация (точнее, здесь происходит регистрация) пользователя
+        :return: токен, можно не сохранять на фронтенде, возвращается на всякий случай
+    """
     users = User.objects.filter(phone=request.data['phone'])
     if len(users) > 0:
         return Response(data={'message': 'Пользователь с таким телефоном уже зарегистрирован'}, status=400)
@@ -16,11 +20,16 @@ def auth(request):
     u.save()
     result = {'token': token}
     request.session['token'] = token
+    request.session.modified = True
     return Response(data=result, status=200)
 
 
 @api_view(['GET'])
 def login(request):
+    """
+        Логин пользователя
+        :return: токен, можно не сохранять на фронтенде, возвращается на всякий случай
+    """
     phone = request.data['phone']
     password = request.data['password']
     user = User.objects.filter(phone=phone, password=password)
@@ -37,11 +46,15 @@ def login(request):
         user.save()
     result = {'token': token}
     request.session['token'] = token
+    request.session.modified = True
     return Response(data=result, status=200)
 
 
 @api_view(['GET'])
 def logout(request):
+    """
+        Выход пользователя
+    """
     if 'token' not in request.session.keys():
         return Response(data={'message': 'Нет текущего пользователя'}, status=400)
 
