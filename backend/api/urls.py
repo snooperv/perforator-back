@@ -1,15 +1,18 @@
 from django.contrib import admin
 from django.urls import path
+from .views import *
 from django.conf.urls import include, url
-from django.contrib import admin
 from rest_framework import routers
-from .views import UserViewSet
 
 
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+app_name = 'api'
 
 urlpatterns = [
-    url(r'^api/v1/', include(router.urls)),
-    url(r'^admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('api/v1/base-auth/', include('rest_framework.urls')),
+    path('api/v1/users/create', UserCreateView.as_view()),
+    path('api/v1/users/all', UserListView.as_view()),
+    path('api/v1/users/detail/<int:pk>', UserDetailView.as_view()),
+
+
 ]
