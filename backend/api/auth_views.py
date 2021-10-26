@@ -1,5 +1,6 @@
+import uuid
 from rest_framework.decorators import api_view
-from .models import User
+from .models import User, Profile
 from .crypto import gen_token
 from rest_framework.response import Response
 
@@ -18,6 +19,12 @@ def auth(request):
     u = User(username=request.data['username'], phone=request.data['phone'],
              sbis=request.data['sbis'], password=request.data['password'], token=token)
     u.save()
+    image_name = uuid.uuid4()
+    p = Profile(user=u, photo=image_name)
+    p.save()
+    with open(f'../../files/{image_name}.jpg', 'wb+') as destination:
+        for chunk in request.FILES['image'].chunks():
+            destination.write(chunk)
     result = {'token': token}
     request.session['token'] = token
     request.session.modified = True
