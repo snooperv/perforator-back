@@ -9,7 +9,8 @@ import {
 Vue.use(Vuex)
 // Состояние
 const state = {
-  users: [] // список заметок
+  users: [], // список заметок
+  token: ''
 }
 // Геттеры
 const getters = {
@@ -44,8 +45,8 @@ const actions = {
       commit(REMOVE_USER, note)
     })
   },
-  getUsers ({ commit }) {
-    User.list().then(notes => {
+  getUsers ({ commit }, token) {
+    User.list(token).then(notes => {
       commit(SET_USER, { notes })
     })
   }

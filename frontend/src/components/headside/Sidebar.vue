@@ -116,7 +116,7 @@ export default {
     // Перед тем как загрузить страницу, нам нужно получить список всех
     // имеющихся пользователей. Для этого мы вызываем действие `getUsers` из
     // нашего хранилища
-    this.$store.dispatch('getUsers')
+    this.$store.dispatch('getUsers', {token: ''}) // TODO
   }
 }
 </script>

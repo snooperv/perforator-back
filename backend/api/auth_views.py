@@ -25,7 +25,7 @@ def auth(request):
     with open(f'../../files/{image_name}.jpg', 'wb+') as destination:
         for chunk in request.FILES['image'].chunks():
             destination.write(chunk)
-    result = {'token': token}
+    result = {'token': token, 'username': u.username}
     request.session['token'] = token
     request.session.modified = True
     return Response(data=result, status=200)
