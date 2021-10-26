@@ -34,7 +34,7 @@ def get_user_info(request):
 def get_profile_info(request):
     """
         Селянин 26.10:
-        Метод для чтения профиля по id. Используется для получения данных для личной
+        Метод для чтения профиля текущего пользователя. Используется для получения данных для личной
         странички пользователя.
     """
     if 'token' not in request.session.keys():
@@ -56,4 +56,24 @@ def get_profile_info(request):
 @api_view(['GET'])
 def get_profile_info(request):
     pass
+
+@api_view(['POST'])
+def change_profile(request):
+    """
+        Селянин 26.10:
+        Метод для чтения профиля текущего пользователя. Используется для изменения данных личной
+        странички пользователя.
+    """
+    if 'token' not in request.session.keys():
+        return Response(data={'message': 'Вы не авторизовались'}, status=400)
+    token = request.session['token']
+    user = User.objects.filter(token=token)[0]
+    for field in ['name', 'phone', 'sbis']:
+        if field in request.data:
+            setattr(user, field, request.data[field])
+    if 'photo' in request.FILES:
+        with open(f'../../files/{user.profile.photo}.jpg', 'wb+') as destination:
+            for chunk in request.FILES['image'].chunks():
+                destination.write(chunk)
+    return Response(data={}, status=200)
 
