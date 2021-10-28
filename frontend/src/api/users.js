@@ -1,7 +1,7 @@
 import { HTTP } from './common'
 export const User = {
   create: function (config) {
-    return HTTP.post('/users/', config)
+    return HTTP.post('/auth/', config)
       .then(response => {
         return response.data
       })
@@ -9,8 +9,8 @@ export const User = {
   delete (note) {
     return HTTP.delete(`/users/${note.id}/`)
   },
-  list () {
-    return HTTP.get('/users/').then(response => {
+  list (token) {
+    return HTTP.get('/current/', token).then(response => {
       return response.data
     })
   }

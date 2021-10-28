@@ -8,6 +8,7 @@ class User(models.Model):
     phone = models.CharField(max_length=12)
     sbis = models.CharField(max_length=255)
     password = models.CharField(max_length=32)
+    token = models.CharField(max_length=128, default=None, blank=True, null=True)
 
 
 class Profile(models.Model):
@@ -15,7 +16,7 @@ class Profile(models.Model):
     manager = models.OneToOneField('self', on_delete=models.PROTECT)
     peers = models.ManyToManyField('self')
     team = models.ManyToManyField('self')
-    phone = models.CharField(max_length=12)
+    photo = models.CharField(max_length=32, default=None, blank=True, null=True)
 
 
     def __str__(self):
