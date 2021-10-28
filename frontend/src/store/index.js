@@ -9,18 +9,17 @@ import {
 Vue.use(Vuex)
 // Состояние
 const state = {
-  users: [], // список заметок
-  token: ''
+  user: ''
 }
 // Геттеры
 const getters = {
-  users: state => state.users // получаем список заметок из состояния
+  user: state => state.user // получаем список заметок из состояния
 }
 // Мутации
 const mutations = {
   // Добавляем заметку в список
-  [ADD_USER] (state, note) {
-    state.users = [note, ...state.users]
+  [ADD_USER] (state, user) {
+    state.user = user
   },
   // Убираем заметку из списка
   [REMOVE_USER] (state, { id }) {
@@ -29,8 +28,9 @@ const mutations = {
     })
   },
   // Задаем список заметок
-  [SET_USER] (state, { notes }) {
-    state.users = notes
+  [SET_USER] (state, { user }) {
+    console.log('SET_USER: user = ' + user)
+    state.user = user
   }
 }
 // Действия
@@ -45,9 +45,9 @@ const actions = {
       commit(REMOVE_USER, note)
     })
   },
-  getUsers ({ commit }, token) {
-    User.list(token).then(notes => {
-      commit(SET_USER, { notes })
+  getCurrentUser ({ commit }) {
+    User.current().then(user => {
+      commit(SET_USER, { user })
     })
   }
 }

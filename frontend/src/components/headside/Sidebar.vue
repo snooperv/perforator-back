@@ -6,7 +6,7 @@
       </div>
       <div class="profile-name">
         <h2>
-          {{ users[0].username }}
+          {{ user["username"] }}
         </h2>
       </div>
     </div>
@@ -116,7 +116,7 @@ export default {
     // Перед тем как загрузить страницу, нам нужно получить список всех
     // имеющихся пользователей. Для этого мы вызываем действие `getUsers` из
     // нашего хранилища
-    this.$store.dispatch('getUsers', {token: ''}) // TODO
+    this.$store.dispatch('getCurrentUser') // TODO
   }
 }
 </script>
