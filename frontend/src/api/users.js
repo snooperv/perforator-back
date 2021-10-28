@@ -13,5 +13,11 @@ export const User = {
     return HTTP.get('/current/', token).then(response => {
       return response.data
     })
+  },
+  current () {
+    return HTTP.get('/current/').then(response => {
+      console.log('User.current: user = ' + response.data)
+      return response.data
+    })
   }
 }
