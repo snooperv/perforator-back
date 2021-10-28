@@ -16,7 +16,7 @@ class Profile(models.Model):
     manager = models.OneToOneField('self', on_delete=models.PROTECT)
     peers = models.ManyToManyField('self')
     team = models.ManyToManyField('self')
-    photo = models.CharField(max_length=32)
+    photo = models.CharField(max_length=32, default=None, blank=True, null=True)
 
 
     def __str__(self):
