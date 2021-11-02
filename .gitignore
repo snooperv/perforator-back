@@ -22,7 +22,10 @@ media
 .idea/**/uiDesigner.xml 
 .idea/**/gradle.xml 
 .idea/**/libraries 
-*.iws /out/ 
+*.iws /out/
+.idea
+.idea/
+backend/api/migrations/
 
 # Python # 
 *.py[cod] 

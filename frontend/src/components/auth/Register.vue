@@ -115,7 +115,8 @@ export default {
         username: this.username,
         phone: this.phone,
         sbis: this.sbis,
-        password: this.password})
+        password: this.password
+      })
       this.$router.push({ name: 'Main' })
       // window.location.href = '/my_profile'
     }

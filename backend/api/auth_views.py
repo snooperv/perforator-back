@@ -1,3 +1,4 @@
+import os
 import uuid
 from rest_framework.decorators import api_view
 from .models import User, Profile
@@ -22,8 +23,8 @@ def auth(request):
     image_name = uuid.uuid4()
     p = Profile(user=u, photo=image_name)
     p.save()
-    with open(f'../../files/{image_name}.jpg', 'wb+') as destination:
-        for chunk in request.FILES['image'].chunks():
+    with open(os.path.dirname(os.path.realpath('__file__')) + f'../../files/{image_name}.jpg', 'wb+') as destination:
+        for chunk in request.files['photo'].chunks():
             destination.write(chunk)
     result = {'token': token, 'username': u.username}
     request.session['token'] = token
