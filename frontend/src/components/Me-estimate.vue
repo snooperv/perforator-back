@@ -1,24 +1,182 @@
 <template>
-    <div class="me-estimate">
-        Я оцениваю
+  <div class="me-estimate">
+    <div class="instruction">
+      <h2 style="margin-bottom: 0;">Система баллов:</h2>
+      <div class="number">1</div>
+      <p>
+        <span>Значительно ниже моих ожиданий</span> <br />
+        человек не до конца понимает, что от него ждут в данной компетенции,
+        например он не правильно рассчитал время на выполнение задачи и закрыл
+        ее немного позже срока
+      </p>
+      <div class="number">2</div>
+      <p>
+        <span>Немного ниже моих ожиданий</span>
+        <br />человек слегка не удовлетворяет ваши ожидания в данной
+        компетенции, например вы работаете в команде и Вася хорошо справляется
+        со своими обязанностями, но не всегда обращается к коллегам за помощью в
+        решении возникающих у него рабочих проблем
+      </p>
+      <div class="number">3</div>
+      <p>
+        <span>Немного выше моих ожиданий</span>
+        <br />человек проявил себя в данной компетенции сильнее, чем вы ожидали,
+        но не сделал ничего супер крутого
+      </p>
+      <div class="number">4</div>
+      <p>
+        <span>Значительно выше моих ожиданий</span>
+        <br />человек сильно превысил ваши ожидания по данной компетенции,
+        например вы ожидали, что он в одиночку не сможет написать этот метод, а
+        он не только написал его, но и сделал его полностью рабочим
+      </p>
     </div>
+
+    <div class="wait">
+      <h2>Ожидают моей оценки</h2>
+      <div class="peers">
+        <button @click="myFunction()" class="peer dropbtn">
+          <img src="@/assets/pic.png" class="peer-avatar" />
+          <span class="name">Коновалов Илья</span>
+          <a href="#" class="chevron"><fa icon="chevron-right"/></a>
+        </button>
+        <div id="myDropdown" class="dropdown-content">
+          <div class="dropdown-container">
+            <h3 class="dropdownTitle">
+              <fa icon="circle" class="list-icon" />Соблюдение сроков
+            </h3>
+<!--            <div class="rating">-->
+<!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+<!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+<!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+<!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+<!--            </div>-->
+            <textarea
+              name="deadlines"
+              id="deadlines"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+            <h3 class="dropdownTitle">
+              <fa icon="circle" class="list-icon" />Пути достижения целей
+            </h3>
+            <p class="description">
+              Идет ли человек по головам или находит пути решения договариваясь
+              с коллегами
+            </p>
+            <textarea
+              name="goals"
+              id="goals"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+            <h3 class="dropdownTitle">
+              <fa icon="circle" class="list-icon" />Умение работать в команде
+            </h3>
+            <p class="description">
+              Насколько активно человек вовлечен в командную работу
+            </p>
+            <textarea
+              name="teamwork"
+              id="teamwork"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+            <h3 class="dropdownTitle">
+              <fa icon="circle" class="list-icon" />Приверженность к хорошим
+              теx.практикам
+            </h3>
+            <p class="description">
+              Насколько человек придерживается покрытия кода авто тестами,
+              проектирует хорошую архитектуру, использует хорошие паттерны.
+            </p>
+            <textarea
+              name="techPrac"
+              id="techPrac"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+            <h3 class="dropdownTitle">
+              <fa icon="circle" class="list-icon" />Уровень владения
+              технологиями
+            </h3>
+            <p class="description">
+              Насколько хорошо человек владеет технологиями разработки,
+              используемым стеком и т.д.
+            </p>
+            <textarea
+              name="techSkills"
+              id="techSkills"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+            <h3 class="dropdownTitle">
+              <fa icon="circle" class="list-icon" />Адаптивность
+            </h3>
+            <p class="description">
+              Насколько быстро человек адаптируется к новым условиям работы,
+              вливается в новый коллектив
+            </p>
+            <textarea
+              name="adaptive"
+              id="adaptive"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+            <input type="submit" value="Отправить отзыв" />
+          </div>
+
+        </div>
+
+        <!-- <button @click="myFunction()" class="peer dropbtn">
+          <img src="@/assets/pic.png" class="peer-avatar" />
+          <span class="name">Коновалов Илья</span>
+          <a href="#" class="chevron"><fa icon="chevron-right"/></a>
+        </button>
+        <div id="myDropdown" class="dropdown-content">
+          <h3 class="dropdownTitle"><fa icon="circle" class="list-icon"/>Соблюдение сроков</h3>
+          <textarea
+              name="deadlines"
+              id="deadlines"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+        </div>
+        <button @click="myFunction()" class="peer dropbtn">
+          <img src="@/assets/pic.png" class="peer-avatar" />
+          <span class="name">Коновалов Илья</span>
+          <a href="#" class="chevron"><fa icon="chevron-right"/></a>
+        </button>
+        <div id="myDropdown" class="dropdown-content">
+          <h3 class="dropdownTitle"><fa icon="circle" class="list-icon"/>Соблюдение сроков</h3>
+          <textarea
+              name="deadlines"
+              id="deadlines"
+              rows="4"
+              class="ta"
+              maxlength="512"
+            ></textarea>
+        </div> -->
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    myFunction () {
+      document.getElementById('myDropdown').classList.toggle('show')
+    }
+  }
 }
 </script>
 
-<style scoped>
-.me-estimate {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    font-size: 40px;
-    color: rgb(167, 167, 167);
-    font-weight: 600;
-}
-</style>
+<style scoped src="@/css/me-estimate.css"></style>

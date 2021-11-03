@@ -14,26 +14,6 @@
         </p>
         <h2 class="title">Self Review</h2>
         <div class="form">
-            <p class="info">ФИО:</p>
-                <p class="name" >
-                    Марк Цукерберг
-                </p>
-            <br>
-            <p class="info">Должность:</p>
-                <p class="job">
-                    Один из разработчиков и основателей соц.сети Facebook
-                </p>
-            <br>
-            <p class="info">Стаж работы:</p>
-                <p class="experience">
-                    Много лет
-                </p>
-            <br>
-            <p class="info">Профиль в системе СБИС:</p>
-                <p class="sbis-profile">
-                    <a href="#">Марк Цукерберг</a>
-                </p>
-            <br>
             <div class="container">
                 <div id="introduction">
                     <h4>Вводная часть</h4>
@@ -76,7 +56,7 @@
         </div>
         <h2 class="title">Оценивающие</h2>
         <div class="peers">
-            <p><fa icon="circle" class="icon" /><span>Респонденты</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать 3-7 человек</p>
+            <p><fa icon="circle" class="icon" /><span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать 3-7 человек</p>
             <button class="add-peer">
                 <fa icon="plus" /> Добавить респондента
             </button>

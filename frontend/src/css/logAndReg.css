@@ -250,17 +250,17 @@ input[type=url]::placeholder {
     font-weight: 400;
 }
 
-/* input[type=text]:valid, input[type=password]:valid,
-input[type=number]:valid, input[type=tel]:valid,
-input[type=url]:valid {
+/*input[type=text]:valid, input[type=password]:valid,*/
+/*input[type=number]:valid, input[type=tel]:valid,*/
+/*input[type=url]:valid {*/
 
-}
+/*}*/
 
-input[type=text]:invalid:not(:focus):not(:placeholder-shown), input[type=password]:invalid:not(:focus):not(:placeholder-shown),
-input[type=number]:invalid:not(:focus):not(:placeholder-shown), input[type=tel]:invalid:not(:focus):not(:placeholder-shown),
-input[type=url]:invalid:not(:focus):not(:placeholder-shown) {
+/*input[type=text]:invalid:not(:focus):not(:placeholder-shown), input[type=password]:invalid:not(:focus):not(:placeholder-shown),*/
+/*input[type=number]:invalid:not(:focus):not(:placeholder-shown), input[type=tel]:invalid:not(:focus):not(:placeholder-shown),*/
+/*input[type=url]:invalid:not(:focus):not(:placeholder-shown) {*/
 
-} */
+/*}*/
 
 .admin {
     display: inline-block;

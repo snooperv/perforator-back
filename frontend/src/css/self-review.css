@@ -33,6 +33,9 @@ p {
 
 .instruction p {
     color: #5C5C5C;
+    text-align: left;
+    font-size: 18px;
+    margin-top: 10px;
 }
 
 .title {
@@ -127,7 +130,7 @@ input[type=text] {
     background-color: #ffffff;
     color: #0d0d0d;
     padding: 15px 10px;
-    text-align: center;
+    text-align: left;
     text-decoration: none;
     font-size: 18px;
     margin-bottom: 10px;
@@ -173,8 +176,9 @@ input[type=submit]:active {
     border-radius: 15px;
     border: 1px solid #222222;
     width: 90%;
-    padding: 10px;
+    padding: 5px;
     font-size: 16px;
+    resize: none;
 }
 
 .add-peer {
@@ -222,12 +226,49 @@ input[type=submit]:active {
     background-color: transparent;
     color: #222222;
     display: inline-block;
-    padding: 7px 5px;
-    width: 20%;
+    padding: 7px 0;
+    width: 18%;
     cursor: pointer;
     -webkit-border-radius: 15px;
     border-radius: 30px;
     margin: 20px 10px;
+}
+
+.peer {
+    width: 80%;
+    background-color: #ECECF2;
+    border-radius: 15px;
+    height: 3em;
+    margin-left: 35px;
+    margin-top: 20px;
+}
+
+.peer span {
+    display: block;
+    text-align: left;
+    position: relative;
+    top: 16px;
+    left: 10px;
+    color: #331969;
+    font-family: 'Gotham Pro';
+    font-size: 22px;
+}
+
+.peer-avatar {
+    position: relative;
+    float: left;
+    top: -5px;
+    left: -10px;
+    width: 70px;
+}
+
+.close {
+    position: relative;
+    float: right;
+    margin-right: 20px;
+    font-size: 1.5em;
+    color: #f00;
+    top: -12px;
 }
 
 .feedback {
@@ -251,13 +292,13 @@ input[type=submit]:active {
 }
 
 @media (max-width: 1580px) {
-   
+
   }
-  
+
   @media (max-width: 1450px) {
-   
+
   }
-  
+
   @media (max-width: 1325px) {
- 
+
   }

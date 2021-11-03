@@ -30,7 +30,8 @@ export default new Router({
         { path: '/me-manager', component: () => import('@/components/Me-manager.vue') },
         { path: '/self-review', component: () => import('@/components/Self-review.vue') },
         { path: '/one-to-one', component: () => import('@/components/One-to-one.vue') },
-        { path: '/last-periods', component: () => import('@/components/Last-periods.vue') }
+        { path: '/last-periods', component: () => import('@/components/Last-periods.vue') },
+        { path: '/one-to-one/last-periods', component: () => import('@/components/LastPeriodsOneToOne.vue') }
       ]
     }
   ]
