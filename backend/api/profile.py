@@ -12,7 +12,7 @@ def get_current_user(request):
         используйте get_user_info
     """
     if 'token' not in request.session.keys():
-        return Response(data={'username': 'Хер'}, status=200)
+        return Response(data={'username': 'Хер'}, status=400)
         # return Response(data={'message': 'Вы не авторизовались'}, status=400)
     token = request.session['token']
     user = User.objects.filter(token=token)[0]
