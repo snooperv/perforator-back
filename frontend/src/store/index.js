@@ -49,6 +49,11 @@ const actions = {
     User.current().then(user => {
       commit(SET_USER, { user })
     })
+  },
+  loginUser ({ commit }, payload) {
+    User.login(payload).then(user => {
+      commit(SET_USER, { user })
+    })
   }
 }
 export default new Vuex.Store({

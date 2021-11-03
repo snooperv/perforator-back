@@ -6,7 +6,7 @@
       </div>
       <div class="profile-name">
         <h2>
-          {{ user["username"] }}
+          {{ user.username }}
         </h2>
       </div>
     </div>
@@ -104,7 +104,7 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Sidebar',
-  computed: mapGetters(['users']),
+  computed: mapGetters(['user']),
   methods: {
     deleteUser (user) {
       // Вызываем действие `deleteUser` из нашего хранилища, которое

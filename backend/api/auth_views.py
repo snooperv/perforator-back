@@ -19,7 +19,6 @@ def auth(request):
     u = User(username=request.data['username'], phone=request.data['phone'],
              sbis=request.data['sbis'], password=request.data['password'], token=token)
     u.save()
-
     """
     image_name = uuid.uuid4()
     p = Profile(user=u, photo=image_name)
@@ -34,7 +33,7 @@ def auth(request):
     return Response(data=result, status=200)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def login(request):
     """
         Логин пользователя
@@ -44,7 +43,8 @@ def login(request):
     password = request.data['password']
     user = User.objects.filter(phone=phone, password=password)
     if len(user) == 0:
-        return Response(data={'message': 'Неверный номер телефона или пароль'}, status=400)
+        return Response(data={'username': 'Неверный номер телефона или пароль'}, status=400)
+        # return Response(data={'message': 'Неверный номер телефона или пароль'}, status=400)
 
     user = user[0]
     token = None

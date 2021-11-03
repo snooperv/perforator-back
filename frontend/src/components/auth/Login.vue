@@ -8,15 +8,16 @@
             <img :src="image" :alt="altText" class="logo" />
             <h1>Perforator</h1>
           </div>
-          <form class="log">
+          <form class="log" @submit="submitForm()">
             <input
               type="tel"
               id="login"
               class="fadeIn second"
               name="login"
               placeholder="Номер телефона"
-              minlength="11"
-              maxlength="11"
+              minlength="12"
+              maxlength="12"
+              v-model="phone"
               required
             />
             <fa icon="check" class="icons check tel" />
@@ -27,6 +28,7 @@
               class="fadeIn third"
               name="password"
               placeholder="Пароль"
+              v-model="password"
               required
             />
             <fa icon="check" class="icons check password" />
@@ -56,7 +58,20 @@ export default {
   name: 'Login',
   data () {
     // eslint-disable-next-line standard/object-curly-even-spacing
-    return { image: require('@/assets/logo.svg')}
+    return {
+      'phone': '',
+      'password': '',
+      image: require('@/assets/logo.svg')
+    }
+  },
+  methods: {
+    submitForm () {
+      this.$store.dispatch('loginUser', {
+        phone: this.phone,
+        password: this.password})
+      this.$router.push({ name: 'Main' })
+      // window.location.href = '/my_profile'
+    }
   }
 }
 </script>
