@@ -13,7 +13,7 @@ class User(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    manager = models.OneToOneField('self', on_delete=models.PROTECT)
+    manager = models.OneToOneField('self', on_delete=models.PROTECT, default=None, blank=True, null=True)
     peers = models.ManyToManyField('self')
     team = models.ManyToManyField('self')
     photo = models.CharField(max_length=32, default=None, blank=True, null=True)
