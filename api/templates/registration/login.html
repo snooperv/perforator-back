@@ -1,0 +1,490 @@
+{% extends "base_auth.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/logAndReg.css' %}">
+{% block content %}
+
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+
+<div class="background">
+    <div class="login">
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <div class="fadeIn first"></div>
+                <div class="logo-title">
+                    <img src="{% static 'img/logo.svg' %}" alt="Picture" class="logo"/>
+                    <h1>Perforator</h1>
+                </div>
+                <form method="post" action="{% url 'login' %}" class="log">
+                  {% csrf_token %}
+                  {% load widget_tweaks %}
+
+                  {% render_field form.username class="fadeIn second" placeholder="Номер телефона" %}
+                  {% render_field form.password class="fadeIn third" placeholder="Пароль" %}
+
+                  <input type="submit" class="fadeIn fourth" value="Войти" />
+                  <input type="hidden" name="next" value="{{ next }}"  style="display: none"/>
+                </form>
+                <div class="admin fadeIn fourth">
+                    <button class="adminLogin">Администратор</button>
+                </div>
+              </div>
+        </div>
+        <div class="enter fadeInDown">
+            <div id="formEnter">
+                <p>
+                    У вас еще нет аккаунта?
+                    <a href="registration" style="color: #2c286d">Зарегистрироваться</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    a {
+    color: #2C286D;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+p {
+    font-family: 'Gotham Pro light';
+    font-weight: 1000;
+}
+
+h1 {
+    display: inline-block;
+}
+
+.background {
+    height: 100%;
+    background-color: #F8F8FA;
+}
+
+.login {
+    position: relative;
+    top: 20vh;
+}
+
+.register {
+    position: relative;
+    top: 12vh;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.enter {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+}
+
+#formEnter {
+    border-radius: 15px;
+    border: 1px solid #414141;
+    background: #fff;
+    color: #222;
+    font-weight: 200;
+    font-size: 14px;
+    padding: 5px 25px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    text-align: center;
+    margin-top: -20px;
+}
+
+.logo {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    transform: rotate(10deg);
+    top: 5px;
+    margin-right: 10px;
+}
+
+.logo-title {
+    position: relative;
+    left: -10px;
+    color: #414141;
+    margin-top: 15px;
+    font-size: 22px;
+}
+
+.photo {
+    display: inline-block;
+    width: 85%;
+}
+
+.empty {
+    background-color: #F4F4FA;
+    border: 3px solid #A5A4F5;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    float: left;
+    margin-top: 5px;
+}
+
+.avatar {
+    position: relative;
+    top: 5%;
+}
+
+.background-photo-upload {
+    display: block;
+    background-color: #F4F4FA;
+    border-radius: 15px;
+    height: 50px;
+    padding: 15px 7px;
+    margin: 20px 0 5px 10px;
+    box-shadow: 0px 0.82px 3.3px rgba(0, 0, 0, 0.25);
+}
+
+.inner-wrapper {
+    display: inline-block;
+    margin-top: -15px;
+}
+
+.photo-text {
+    font-weight: 400;
+    font-size: 15px;
+    display: inline-block;
+    margin-right: 10px;
+    color: #AAAAAA;
+}
+
+.photo-btn {
+    display: inline-block;
+}
+
+.agreement {
+    color: #414141;
+    font-size: 14px;
+    margin: 10px 40px 25px 40px
+}
+
+input[type="file"] {
+    display: none;
+}
+
+label {
+    font-family: 'Gotham Pro light';
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    padding: 7px 20px;
+    background-color: #A5A4F5;
+    border-radius: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+label:hover {
+    background-color: rgba(140, 140, 245, 1);
+    transition: all 0.3s ease-in-out;
+}
+
+#formContent {
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    border: 1px solid #414141;
+    background: #fff;
+    padding: 0 20px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    text-align: center;
+}
+
+button, input[type=button], input[type=submit], input[type=reset] {
+    font-family: 'Gotham Pro light';
+    font-weight: 1000;
+    letter-spacing: 1px;
+    background-color: #c1c1ec;
+    border: none;
+    color: white;
+    padding: 15px 7px;
+    width: 85%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    margin: 15px 20px 10px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+    background-color: rgba(140, 140, 245, 1);
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+input[type=text], input[type=password],
+input[type=number], input[type=tel],
+input[type=url] {
+    background-color: #F4F4FA;
+    border: none;
+    color: #0d0d0d;
+    padding: 15px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 7px;
+    width: 85%;
+    border: 1px solid #414141;
+    box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.25);
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+input[type=text]:focus, input[type=password]:focus,
+input[type=number]:focus, input[type=tel]:focus,
+input[type=url]:focus {
+    background-color: #fff;
+}
+
+input[type=text]:focus::placeholder, input[type=password]:focus::placeholder,
+input[type=number]::placeholder, input[type=tel]:focus::placeholder,
+input[type=url]:focus::placeholder {
+    color: transparent;
+}
+
+input[type=text]::placeholder, input[type=password]::placeholder,
+input[type=number]::placeholder, input[type=tel]::placeholder,
+input[type=url]::placeholder {
+    font-family: 'Gotham Pro light';
+    font-size: 20px;
+    color: #AAAAAA;
+    text-align: left;
+    font-weight: 400;
+}
+
+/* input[type=text]:valid, input[type=password]:valid,
+input[type=number]:valid, input[type=tel]:valid,
+input[type=url]:valid {
+
+}
+
+input[type=text]:invalid:not(:focus):not(:placeholder-shown), input[type=password]:invalid:not(:focus):not(:placeholder-shown),
+input[type=number]:invalid:not(:focus):not(:placeholder-shown), input[type=tel]:invalid:not(:focus):not(:placeholder-shown),
+input[type=url]:invalid:not(:focus):not(:placeholder-shown) {
+
+} */
+
+.admin {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: 70%;
+    border-top: 1px solid #414141;
+}
+
+.adminLogin {
+    font-family: 'Gotham Pro light';
+    font-weight: 1000;
+    font-size: 14px;
+    text-decoration: none;
+    color: #222222;
+    padding: 5px 15px;
+    border: 1px solid #edbd31;
+    border-radius: 15px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    opacity: 0;
+    -webkit-animation: fadeIn ease-in 1;
+    -moz-animation: fadeIn ease-in 1;
+    animation: fadeIn ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+.fadeIn.first {
+    -webkit-animation-delay: 0.4s;
+    -moz-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+.fadeIn.second {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+}
+
+.fadeIn.third {
+    -webkit-animation-delay: 0.8s;
+    -moz-animation-delay: 0.8s;
+    animation-delay: 0.8s;
+}
+
+.fadeIn.fourth {
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    animation-delay: 1s;
+}
+
+*:focus {
+    outline: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.icons {
+    display: none;
+    transform: scale(1.25);
+    position: absolute;
+    margin-top: 25px;
+    margin-left: -40px;
+}
+
+input[type=text]:valid ~ .text.check {
+    display: inline-block;
+    color: #71F251;
+}
+
+input[type=text]:invalid:not(:focus):not(:placeholder-shown) ~ .text.fault {
+    display: inline-block;
+    color: #CD2525;
+}
+
+input[type=tel]:valid ~ .tel.check {
+    display: inline-block;
+    color: #71F251;
+}
+
+input[type=tel]:invalid:not(:focus):not(:placeholder-shown) ~ .tel.fault {
+    display: inline-block;
+    color: #CD2525;
+}
+
+input[type=url]:valid ~ .url.check {
+    display: inline-block;
+    color: #71F251;
+}
+
+input[type=url]:invalid:not(:focus):not(:placeholder-shown) ~ .url.fault {
+    display: inline-block;
+    color: #CD2525;
+}
+
+input[type=password]:valid ~ .password.check {
+    display: inline-block;
+    color: #71F251;
+}
+
+input[type=password]:invalid:not(:focus):not(:placeholder-shown) ~ .password.fault {
+    display: inline-block;
+    color: #CD2525;
+}
+
+</style>
+{% endblock %}
