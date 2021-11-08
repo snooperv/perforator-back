@@ -5,9 +5,11 @@
   {% block title %}<title>Perforator</title>{% endblock %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
   <!-- Добавление дополнительного статического CSS файла -->
   {% load static %}
@@ -16,7 +18,7 @@
 
 <body>
 
-  <div class="container-fluid">
+<div class="container-fluid">
 
     <div class="row">
       <div class="col-sm-2">
@@ -30,7 +32,6 @@
 
           {% if user.is_authenticated %}
             <li>User: {{ user.first_name }}</li>
-            <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
           {% else %}
             <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
           {% endif %}
@@ -42,9 +43,77 @@
       <div class="col-sm-10 ">
       {% block content %}{% endblock %}
       </div>
+    </div>
+</div>
 
+<!-- Bootstrap 5 -->
+    <div class="modal fade" id="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Мои данные</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+              <div>Имя и Фамилия: {{ user.first_name }}</div>
+              <div>Номер телефона: {{ user.profile.phone }}</div>
+              <div>Профиль СБИС: {{ user.profile.sbis }}</div>
+          </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn-change">Изменить данные</button>
+                <a href="{% url 'login'%}?next={{request.path}}">
+                    <button type="button" class="btn btn-primary" style="background-color: #CD2525">Выйти из аккаунта</button>
+                </a>
+          </div>
+        </div>
+      </div>
     </div>
 
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">Профиль</button>
+  <div class="modal fade" id="modal" tabindex="-1"> ... </div>
+
+
+  <div class="modal fade" id="modal-change" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Изменить данные</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <form action="" method="post" id="register">
+              <div class="modal-body">
+                  {% csrf_token %}
+                  {% load widget_tweaks %}
+
+                  {% render_field form.name class='fadeIn second' placeholder='Имя и фамилия' value=user.first_name %}
+                  {% render_field form.phone class='fadeIn second' placeholder='Номер телефона' value=user.profile.phone %}
+                  {% render_field form.sbis class='fadeIn second' placeholder='Ссылка на профиль СБИС' value=user.profile.sbis %}
+              </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btn-save">Сохранить данные</button>
+                </div>
+          </form>
+        </div>
+      </div>
   </div>
+  <div class="modal fade" id="modal-change" tabindex="-1"> ... </div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.querySelector('#btn-change');
+      const btn_save = document.querySelector('#btn-save');
+      const modal = new bootstrap.Modal(document.querySelector('#modal'));
+      const modal_change = new bootstrap.Modal(document.querySelector('#modal-change'));
+      btn.addEventListener('click', function() {
+        modal.hide();
+        modal_change.show();
+      });
+      btn_save.addEventListener('click', function() {
+        modal_change.hide();
+        modal.show();
+      });
+    });
+  </script>
+
 </body>
 </html>

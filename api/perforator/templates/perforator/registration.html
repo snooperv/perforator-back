@@ -13,11 +13,11 @@
                 </div>
                 <form action="" method="post" id="register">
                     {% csrf_token %}
-
-                    {{ form.name }}
-                    {{ form.phone }}
-                    {{ form.sbis }}
-                    {{ form.password }}
+                    {% load widget_tweaks %}
+                    {% render_field form.name class="fadeIn second" placeholder="Имя и фамилия" %}
+                    {% render_field form.phone class="fadeIn second" placeholder="Номер телефона (+79...)" %}
+                    {% render_field form.sbis class="fadeIn third" placeholder="Ссылка на профиль СБИС (http://...)" %}
+                    {% render_field form.password class="fadeIn third" placeholder="Пароль" %}
 
                     <div class="photo fadeIn third">
                         <div class="empty">

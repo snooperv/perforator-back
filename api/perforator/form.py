@@ -4,8 +4,15 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class RegistrationForm(forms.Form):
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'fadeIn second', 'placeholder': 'Имя и фамилия'}))
-    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'fadeIn second', 'placeholder': "Номер телефона (+79...)"}))
-    sbis = forms.CharField(widget=forms.TextInput(attrs={'class': 'fadeIn third', 'placeholder': "Ссылка на профиль СБИС (http://...)"}))
-    password = forms.CharField(widget=forms.TextInput(attrs={'class': 'fadeIn third', 'placeholder': "Пароль"}))
+    name = forms.CharField(widget=forms.TextInput())
+    phone = forms.CharField(widget=forms.TextInput())
+    sbis = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.TextInput())
+
+
+class UpdateProfile(forms.Form):
+    name = forms.CharField(widget=forms.TextInput())
+    phone = forms.CharField(widget=forms.TextInput())
+    sbis = forms.CharField(widget=forms.TextInput())
+
 

@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views import generic
-from .form import RegistrationForm
+from django.views import generic, View
+
+from .form import *
 from django.contrib.auth.models import User
-from .models import SelfReview, PUser
+from .models import SelfReview
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -16,8 +17,27 @@ def index(request):
                   context={'num_self': num_self})
 
 
-class SelfReviewByUserView(LoginRequiredMixin, generic.ListView):
+class SelfReviewByUserView(LoginRequiredMixin, View):
     model = SelfReview
+
+    @staticmethod
+    def get(request):
+        form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
+        return render(request, 'index.html', {'form': form})
+
+    @staticmethod
+    def post(request):
+        if request.method == 'POST':
+            form = UpdateProfile(request.POST)
+
+            if form.is_valid():
+                user = User.objects.get(username=request.user.username)
+                user.username = form.cleaned_data['phone']
+                user.first_name = form.cleaned_data['name']
+                user.profile.phone = form.cleaned_data['phone']
+                user.profile.sbis = form.cleaned_data['sbis']
+                user.save()
+                return HttpResponseRedirect(reverse('index'))
 
     def get_queryset(self):
         return SelfReview.objects.filter(self_review=self.request.user)
@@ -28,13 +48,19 @@ def registration(request):
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
-            user = PUser.objects.create_user(form.cleaned_data['phone'], '', form.cleaned_data['password'])
-            user.phone = form.cleaned_data['phone']
+            user = User.objects.create_user(form.cleaned_data['phone'], '', form.cleaned_data['password'])
+            user.profile.phone = form.cleaned_data['phone']
             user.first_name = form.cleaned_data['name']
-            user.sbis = form.cleaned_data['sbis']
+            user.profile.sbis = form.cleaned_data['sbis']
             user.save()
 
             return HttpResponseRedirect(reverse('index'))
     else:
         form = RegistrationForm(initial={'name': "", 'phone': "", 'sbis': "", 'password': ""})
     return render(request, 'perforator/registration.html', {'form': form})
+
+
+
+
+
+
