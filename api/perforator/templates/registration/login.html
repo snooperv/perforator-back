@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <div class="background">
+        <div class="login">
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <div class="fadeIn first"></div>
+                    <div class="logo-title">
+                        <img src="{% static 'img/logo.svg' %}" alt="Picture" class="logo"/>
+                        <h1>Perforator</h1>
+                    </div>
+                    <form method="post" action="{% url 'login' %}" class="log">
+                        {% csrf_token %}
+                        {% load widget_tweaks %}
+
+                        {% render_field form.username class="fadeIn second" placeholder="Номер телефона" %}
+                        {% render_field form.password class="fadeIn third" placeholder="Пароль" %}
+
+                        <input type="submit" class="fadeIn fourth" value="Войти"/>
+                        <input type="hidden" name="next" value="{{ next }}" style="display: none"/>
+                    </form>
+                    <div class="admin fadeIn fourth">
+                        <button class="adminLogin">Администратор</button>
+                    </div>
+                </div>
+            </div>
+            <div class="enter fadeInDown">
+                <div id="formEnter">
+                    <p>
+                        У вас еще нет аккаунта?
+                        <a href="registration" style="color: #2c286d">Зарегистрироваться</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="{% static 'css/logAndReg.css' %}">
+{% endblock %}

@@ -1,0 +1,118 @@
+{% load static %}
+
+<div class="header">
+    <div class="wrapper">
+        <div class="toggle">
+            <input type="checkbox" id="check"/>
+            <label for="check" class="icons">
+                <!--<fa icon="bars" id="bars"/>
+                <fa icon="times" id="cancel"/>-->
+            </label>
+        </div>
+        <div class="logo-div">
+            <img src="{% static 'img/logo.svg' %}" alt="logo" class="logo"/>
+        </div>
+        <div class="logo-title">
+            <h3>Perforator</h3>
+        </div>
+    </div>
+    <div class="rightWrapper">
+        <a href="#popup"><img
+                src="{% static 'img/settings.svg' %}"
+                alt="settings"
+                class="settings rightIcon btn"
+        /></a>
+    </div>
+
+    <div id="changeData" style="visibility: hidden;">
+        <form method="post">
+            <div class="popup-content">
+                <a href="#" class="close">
+                    <!--<fa icon="times"/>-->
+                </a>
+                <h3>Изменение данных</h3>
+                <div class="user">
+                    <img class="avatar" src="{% static 'img/pic.png' %}"/>
+                    <div class="user-info">
+                        {% csrf_token %}
+                        {% load widget_tweaks %}
+                        <p class="name">Имя и фамилия:
+                            <span class="text">
+                                {% render_field form.name class='fadeIn second' placeholder='Имя и фамилия' value=user.first_name %}
+                            </span>
+                        </p>
+                        <p class="tel">Номер телефона:
+                            <span class="text">
+                                {% render_field form.phone class='fadeIn second' placeholder='Номер телефона' value=user.profile.phone %}
+                            </span>
+                        </p>
+                        <p class="url">Профиль СБИС:
+                            {% render_field form.sbis class='fadeIn second' placeholder='Ссылка на профиль СБИС' value=user.profile.sbis %}
+                        </p>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="change" type="submit">Сохранить данные</button>
+                    <!-- Я пока что оставлю эту кнопку, когда созвонюсь с Вовой - уберу -->
+                    <input type="button" class="exit" onclick="toggle_visibility()" value="Отменить"/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--<a href="#" class="close-changeData"></a>-->
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <a href="#" class="close">
+                <!--<fa icon="times"/>-->
+            </a>
+            <h3>Мои данные</h3>
+            <div class="user">
+                <img class="avatar" src="{% static 'img/pic.png' %}"/>
+                <div class="user-info">
+                    <p class="name">Имя и фамилия:
+                        <span class="text">
+                {{ user.first_name }}
+              </span>
+                    </p>
+                    <p class="tel">Номер телефона:
+                        <span class="text">
+                {{ user.profile.phone }}
+              </span>
+                    </p>
+                    <p class="url">Профиль СБИС:
+                        <a class="url-sbis text" href="{{ user.profile.sbis }}">
+                            {{ user.first_name }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="change" onclick="toggle_visibility()">Изменить данные</button>
+                <a href="{% url 'login' %}?next={{ request.path }}">
+                    <button class="exit">
+                        <img src="{% static 'img/exit.png' %}" class="exit-icon">
+                        Выйти из аккаунта
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="close-popup"></a>
+</div>
+
+<script type="text/javascript">
+    function toggle_visibility() {
+        let e = document.getElementById('changeData');
+        let a = document.getElementById('popup');
+        if (e.style.visibility === 'hidden') {
+            e.style.visibility = 'visible';
+            a.style.visibility = 'hidden';
+        } else {
+            e.style.visibility = 'hidden';
+            a.style.visibility = 'visible';
+        }
+    }
+</script>
+
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
