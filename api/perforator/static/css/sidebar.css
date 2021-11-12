@@ -1,3 +1,8 @@
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
 .sidebar {
     position: fixed;
     width: 20vw;
@@ -46,7 +51,7 @@
 .menu-items {
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 0px;
 }
 
 .side-btn {
@@ -59,6 +64,16 @@
     margin: 0 15px 0 5px;
     background-color: transparent;
     margin-top: 0.2em;
+}
+
+.perfomance {
+    border: none;
+    padding: 10px 0px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    background-color: transparent;
+    margin: 15px 15px 0 5px;
 }
 
 .side-btn.small {
