@@ -23,7 +23,7 @@ class SelfReviewByUserView(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
         form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
-        return render(request, 'main/index.html', {'form': form})
+        return render(request, 'main/mainfiles/self_review.html', {'form': form})
 
     @staticmethod
     def post(request):
