@@ -16,38 +16,28 @@
         </div>
     </div>
 
+
+    <!-- <router-link to="/" active-class="active" tag="button" exact class="side-btn">
+              <div class="link-container">
+                  Мой профиль
+              </div>
+          </router-link> -->
     <div class="menu-items">
-        <!-- <router-link to="/" active-class="active" tag="button" exact class="side-btn">
-                  <div class="link-container">
-                      Мой профиль
-                  </div>
-              </router-link> -->
-        <router-link
-                to="/perfomance-review"
-                active-class="active"
-                tag="button"
-                exact
-                class="side-btn perfomance-review"
-                style="font-size: 22px"
-        >
-            <div class="link-container">
-                <img
-                        src="{% static 'img/perfomance-review-icon.svg' %}"
-                        width="20"
-                        height="20"
-                />
-                Perfomance Review
-            </div>
-        </router-link>
-        <router-link
-                to="/self-review"
-                active-class="active"
-                tag="button"
-                exact
-                class="side-btn small"
-        >
-            <div class="link-container">self reveiw</div>
-        </router-link>
+        <div class="perfomance link-container" style="font-size: 22px">
+            <img
+                    src="{% static 'img/perfomance-review-icon.svg' %}"
+                    width="20"
+                    height="20"
+                    alt="perfomance review icon"/>
+            Perfomance Review
+        </div>
+    </div>
+    <div class="menu-items" id="menuItems">
+        <nav class="side-btn small">
+            <a href="{% url 'index' %}">
+                <div class="link-container">self review</div>
+            </a>
+        </nav>
         <router-link
                 to="/me-estimate"
                 active-class="active"

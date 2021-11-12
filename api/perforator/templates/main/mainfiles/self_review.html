@@ -1,5 +1,8 @@
 {% extends "main/index.html" %}
 {% load static %}
+{% block title %}
+    Self Review -
+{% endblock %}
 {% block mainContent %}
     <div class="self-review">
         <div class="instruction">
@@ -85,9 +88,23 @@
 
         <div class="feedback">
             <h3>Итоговая обратная связь</h3>
-            <p>Здесь будут результаты вашего ревью!!!</p>
+            <p>Здесь будут результаты вашего ревью!</p>
         </div>
     </div>
+
+    <script>
+        try {
+            var el = document.getElementById('menuItems').getElementsByTagName('a');
+            var nav = document.getElementById('menuItems').getElementsByTagName('nav');
+            var url = document.location.href;
+            for (var i = 0; i < el.length; i++) {
+                if (url === el[i].href) {
+                    nav[i].className += ' active';
+                }
+            }
+        } catch (e) {
+        }
+    </script>
 
     <link rel="stylesheet" href="{% static 'css/self-review.css' %}">
 {% endblock %}
