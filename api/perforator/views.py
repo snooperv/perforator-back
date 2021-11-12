@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def index(request):
     num_self = SelfReview.objects.all().count()
     return render(request,
-                  'index.html',
+                  'main/index.html',
                   context={'num_self': num_self})
 
 
@@ -23,7 +23,7 @@ class SelfReviewByUserView(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
         form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
-        return render(request, 'index.html', {'form': form})
+        return render(request, 'main/index.html', {'form': form})
 
     @staticmethod
     def post(request):
@@ -57,7 +57,7 @@ def registration(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         form = RegistrationForm(initial={'name': "", 'phone': "", 'sbis': "", 'password': ""})
-    return render(request, 'perforator/registration.html', {'form': form})
+    return render(request, 'registration/registration.html', {'form': form})
 
 
 

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/logAndReg.css' %}">
+{% block content %}
+    <div class="background">
+        <div class="register" id="reg">
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <div class="fadeIn first"></div>
+                    <div class="logo-title">
+                        <img src="{% static 'img/logo.svg' %}" alt="Picture" class="logo"/>
+                        <h1>Perforator</h1>
+                    </div>
+                    <form action="" method="post" id="register">
+                        {% csrf_token %}
+                        {% load widget_tweaks %}
+                        {% render_field form.name class="fadeIn second" placeholder="Имя и фамилия" %}
+                        {% render_field form.phone class="fadeIn second" placeholder="Номер телефона (+79...)" %}
+                        {% render_field form.sbis class="fadeIn third" placeholder="Ссылка на профиль СБИС (http://...)" %}
+                        {% render_field form.password class="fadeIn third" placeholder="Пароль" %}
+
+                        <div class="photo fadeIn third">
+                            <div class="empty">
+                                <img src="{% static 'img/avatar.png' %}" alt="Picture" class="avatar"/>
+                            </div>
+                            <div class="background-photo-upload">
+                                <div class="inner-wrapper">
+                                    <p class="photo-text">Ваша аватарка</p>
+                                    <label for="img">Выбрать файл</label>
+                                    <input
+                                            type="file"
+                                            id="img"
+                                            accept="image/*"
+                                            class="photo-btn"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" value="Зарегистрироваться"/>
+                    </form>
+                    <p class="agreement">
+                        Регистрируясь, вы принимаете наши
+                        <a href="#">Условия, Политику использования данных</a> и
+                        <a href="#">Политику в отношении файлов cookie.</a>
+                    </p>
+                </div>
+            </div>
+            <div class="enter fadeInDown">
+                <div id="formEnter">
+                    <p>
+                        Уже есть аккаунт? <a href="{% url 'login' %}" style="color: #2c286d">Войти</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="{% static 'css/logAndReg.css' %}">
+{% endblock %}
