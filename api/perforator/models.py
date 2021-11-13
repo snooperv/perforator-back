@@ -44,10 +44,10 @@ class GradeCategory(models.Model):
 
 # Модель Перформанс-Ревью
 class PerformanceReview(models.Model):
-    self_review_categories = models.ManyToManyField(GradeCategory, related_name='self_review_categories')
-    manager_review_categories = models.ManyToManyField(GradeCategory, related_name='manager_review_categories')
-    peers_review_categories = models.ManyToManyField(GradeCategory, related_name='peers_review_categories')
-    team_review_categories = models.ManyToManyField(GradeCategory, related_name='team_review_categories')
+    self_review_categories = models.ManyToManyField(GradeCategory, related_name='self_review_categories', default=None)
+    manager_review_categories = models.ManyToManyField(GradeCategory, related_name='manager_review_categories', default=None)
+    peers_review_categories = models.ManyToManyField(GradeCategory, related_name='peers_review_categories', default=None)
+    team_review_categories = models.ManyToManyField(GradeCategory, related_name='team_review_categories', default=None)
 
 
 # Модель Ревью (для обычного ревью и селф-ревью. В случае последнего в оценках числовое значение остаётся null)
