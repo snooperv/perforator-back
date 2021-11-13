@@ -128,3 +128,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "static"),
 ]
+
+# Id для текущего Performance Review
+PERFORMANCE_REVIEW_ID = 1
