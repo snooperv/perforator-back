@@ -47,7 +47,9 @@
                             </span>
                         </p>
                         <p class="url">Профиль СБИС:
-                            {% render_field form.sbis class='fadeIn second' placeholder='Ссылка на профиль СБИС' value=user.profile.sbis %}
+                            <span class="text">
+                                {% render_field form.sbis class='fadeIn second' placeholder='Ссылка на профиль СБИС' value=user.profile.sbis %}
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -81,7 +83,7 @@
               </span>
                     </p>
                     <p class="url">Профиль СБИС:
-                        <a class="url-sbis text" href="{{ user.profile.sbis }}">
+                        <a class="url-sbis text" href="{{ user.profile.sbis }}" target="_blank">
                             {{ user.first_name }}
                         </a>
                     </p>

@@ -94,4 +94,18 @@
     </div>
 </div>
 
+<script>
+    try {
+        var el = document.getElementById('menuItems').getElementsByTagName('a');
+        var nav = document.getElementById('menuItems').getElementsByTagName('nav');
+        var url = document.location.href;
+        for (var i = 0; i < el.length; i++) {
+            if (url === el[i].href) {
+                nav[i].className += ' active';
+            }
+        }
+    } catch (e) {
+    }
+</script>
+
 <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
