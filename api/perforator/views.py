@@ -6,7 +6,7 @@ from django.views import generic, View
 
 from .form import *
 from django.contrib.auth.models import User
-from .models import SelfReview
+from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -15,6 +15,14 @@ def index(request):
     return render(request,
                   'main/index.html',
                   context={'num_self': num_self})
+
+
+class I_Rate(LoginRequiredMixin, View):
+    model = Grade
+
+    @staticmethod
+    def get(request):
+        return render(request, 'main/mainfiles/i_rate.html')
 
 
 class SelfReviewByUserView(LoginRequiredMixin, View):
