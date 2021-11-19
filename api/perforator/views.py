@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, logout, login
+from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic, View
@@ -61,7 +63,8 @@ def registration(request):
             user.first_name = form.cleaned_data['name']
             user.profile.sbis = form.cleaned_data['sbis']
             user.save()
-
+            auto_login = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
+            login(request, auto_login)
             return HttpResponseRedirect(reverse('index'))
     else:
         form = RegistrationForm(initial={'name': "", 'phone': "", 'sbis': "", 'password': ""})
