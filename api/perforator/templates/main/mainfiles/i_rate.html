@@ -40,7 +40,7 @@
         <div class="wait">
             <h2>Ожидают моей оценки</h2>
             <div class="peers">
-                <button @click="myFunction()" class="peer dropbtn">
+                <button onclick="myFunction()" class="peer dropbtn">
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
                     <span class="name">Коновалов Илья</span>
                     <a href="#" class="chevron">
@@ -180,6 +180,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function myFunction() {
+            document.getElementById('myDropdown').classList.toggle('show')
+        }
+    </script>
 
     <link rel="stylesheet" href="{% static 'css/me-estimate.css' %}">
 {% endblock %}
