@@ -91,7 +91,7 @@
             </div>
             <div class="buttons">
                 <button class="change" onclick="toggle_visibility()">Изменить данные</button>
-                <a href="{% url 'login' %}?next={{ request.path }}">
+                <a href="{% url 'logout' %}?next={{ request.path }}">
                     <button class="exit">
                         <img src="{% static 'img/exit.png' %}" class="exit-icon" alt="Exit">
                         Выйти из аккаунта
