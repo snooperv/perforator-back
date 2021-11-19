@@ -16,3 +16,10 @@ class UpdateProfile(forms.Form):
     sbis = forms.CharField(widget=forms.TextInput())
 
 
+class SelfReviewForm(forms.Form):
+    input_1 = forms.CharField(widget=forms.TextInput())
+    input_2 = forms.CharField(widget=forms.TextInput())
+    successes_1 = forms.CharField(widget=forms.TextInput())
+    successes_2 = forms.CharField(widget=forms.TextInput())
+    plans_1 = forms.CharField(widget=forms.TextInput())
+    plans_2 = forms.CharField(widget=forms.TextInput())
