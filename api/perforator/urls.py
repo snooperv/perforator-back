@@ -10,6 +10,7 @@ urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
     path('irate/', views.I_Rate.as_view(), name='irate'),
     url(r'^registration/$', views.registration, name='registration'),
+    path('peers/demo', raw_peers_views.peers_demo),
     path('peers/all/', raw_peers_views.get_all_peers),
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
     path('peers/delete/', raw_peers_views.delete_peers),
