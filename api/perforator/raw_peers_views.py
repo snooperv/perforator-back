@@ -19,6 +19,11 @@ from . import peers
 """
 
 
+def peers_demo(request):
+    return render(request,
+                  'test/peers_demo.html')
+
+
 @api_view(['GET'])
 def get_all_peers(request):
     return Response(data=peers.get_all_peers(request), status=200)

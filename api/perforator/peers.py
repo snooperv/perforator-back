@@ -36,7 +36,7 @@ def get_all_peers(request):
             profile.save()
         profile = Profile.objects.filter(user=u)[0]
         obj = {'user_id': u.id, 'profile_id': profile.id,
-               'username': u.username, 'photo': profile.photo, 'sbis': profile.sbis}
+               'username': u.first_name, 'photo': profile.photo, 'sbis': profile.sbis}
         result.append(obj)
     return result
 
@@ -117,3 +117,13 @@ def save_peers(request):
         return {'error': True, 'message': 'Вы не авторизовались'}
 
 
+def search_peers_by_prefix(request):
+    pass
+
+
+def get_where_current_user_is_peer(request):
+    pass
+
+
+def get_where_user_id_is_peer(request):
+    pass
