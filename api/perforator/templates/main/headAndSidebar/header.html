@@ -24,7 +24,7 @@
         /></a>
     </div>
 
-    <div id="changeData" style="visibility: hidden;">
+    <div id="changeData">
         <form method="post">
             <div class="popup-content">
                 <a href="#" class="close">
@@ -56,7 +56,7 @@
                 <div class="buttons">
                     <button class="change" type="submit">Сохранить данные</button>
                     <!-- Я пока что оставлю эту кнопку, когда созвонюсь с Вовой - уберу -->
-                    <input type="button" class="exit" onclick="toggle_visibility()" value="Отменить"/>
+                    <input type="button" class="exit" id="btn_cancel" value="Отменить"/>
                 </div>
             </div>
         </form>
@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div class="buttons">
-                <button class="change" onclick="toggle_visibility()">Изменить данные</button>
+                <button class="change" id="btn-change">Изменить данные</button>
                 <a href="{% url 'logout' %}?next={{ request.path }}">
                     <button class="exit">
                         <img src="{% static 'img/exit.png' %}" class="exit-icon" alt="Exit">
@@ -102,19 +102,5 @@
     </div>
     <a href="" class="close-popup"></a>
 </div>
-
-<script type="text/javascript">
-    function toggle_visibility() {
-        let e = document.getElementById('changeData');
-        let a = document.getElementById('popup');
-        if (e.style.visibility === 'hidden') {
-            e.style.visibility = 'visible';
-            a.style.visibility = 'hidden';
-        } else {
-            e.style.visibility = 'hidden';
-            a.style.visibility = 'visible';
-        }
-    }
-</script>
 
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
