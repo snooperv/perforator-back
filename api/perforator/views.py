@@ -6,7 +6,7 @@ from django.views import generic, View
 
 from .form import *
 from django.contrib.auth.models import User
-from .models import SelfReview
+from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
