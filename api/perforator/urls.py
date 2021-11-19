@@ -8,6 +8,7 @@ from . import raw_reviews_views
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
+    path('irate/', views.I_Rate.as_view(), name='irate'),
     url(r'^registration/$', views.registration, name='registration'),
     path('peers/all/', raw_peers_views.get_all_peers),
     path('peers/my/', raw_peers_views.get_all_current_user_peers),

@@ -17,6 +17,14 @@ def index(request):
                   context={'num_self': num_self})
 
 
+class I_Rate(LoginRequiredMixin, View):
+    model = Grade
+
+    @staticmethod
+    def get(request):
+        return render(request, 'main/mainfiles/i_rate.html')
+
+
 class SelfReviewByUserView(LoginRequiredMixin, View):
     model = SelfReview
 
