@@ -22,7 +22,8 @@ class I_Rate(LoginRequiredMixin, View):
 
     @staticmethod
     def get(request):
-        return render(request, 'main/mainfiles/i_rate.html')
+        form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
+        return render(request, 'main/mainfiles/i_rate.html', {'form': form})
 
 
 class SelfReviewByUserView(LoginRequiredMixin, View):
