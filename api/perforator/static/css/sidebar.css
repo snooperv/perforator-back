@@ -16,6 +16,7 @@ a {
     color: #000;
     margin-top: 100px;
     /* height: 7.25em; */
+    margin-left: 25px;
 }
 
 .profile-div h2 {
@@ -61,7 +62,7 @@ a {
     font-size: 18px;
     font-weight: 700;
     color: #000;
-    margin: 0 15px 0 5px;
+    margin: 0 15px 0 15px;
     background-color: transparent;
     margin-top: 0.2em;
 }
