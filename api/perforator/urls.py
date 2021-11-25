@@ -16,6 +16,7 @@ urlpatterns = [
     path('peers/delete/', raw_peers_views.delete_peers),
     path('peers/save/', raw_peers_views.save_peers),
     path('self-review/', raw_reviews_views.get_self_review),
+    path('self-review/main', raw_reviews_views.self_review),
     path('self-review/save/', raw_reviews_views.edit_self_review),
     path('review/form/', raw_reviews_views.get_empty_review_form),
     path('review/save/', raw_reviews_views.save_review),

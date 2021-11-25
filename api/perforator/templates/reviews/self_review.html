@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Self review</title>
+</head>
+<body>
+<h2>Сэлф-ревью</h2>
+        <div id="self-review">
+            <form>
+
+            </form>
+        </div>
+        <div id="buttons">
+            <button onclick="save_self_review()">Сохранить сэлф-ревью</button>
+        </div>
+        {% csrf_token %}  <!-- этот токен нужен для POST-запросов -->
+        <script>
+            window.onload = function () {
+                get_self_review()
+                    .then(response => response.json())
+                    .then(json => {
+                        console.log(json)
+                        for (let p of json) {
+
+                        }
+                    })
+            }
+
+            function get_self_review() {
+                return fetch(window.location.origin + "/perforator/self-review/");
+            }
+
+            function save_self_review() {
+
+            }
+        </script>
+</body>
+</html>
