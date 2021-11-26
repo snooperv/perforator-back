@@ -39,7 +39,7 @@ class I_Rate(LoginRequiredMixin, View):
                 user.profile.phone = form.cleaned_data['phone']
                 user.profile.sbis = form.cleaned_data['sbis']
                 user.save()
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('irate'))
 
 
 class SelfReviewByUserView(LoginRequiredMixin, View):

@@ -93,7 +93,7 @@
         var nav = document.getElementById('menuItems').getElementsByTagName('nav');
         var url = document.location.href;
         for (var i = 0; i < el.length; i++) {
-            if (url === el[i].href) {
+            if (url === el[i].href || url === el[i].href + '#popup') {
                 nav[i].className += ' active';
             }
         }
