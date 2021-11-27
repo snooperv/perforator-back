@@ -252,11 +252,11 @@ p {
 }
 
 .avatar {
-  width: 135px;
+  width: 160px;
   position: relative;
   display: inline-block;
   float: left;
-  left: -35px;
+  left: -45px;
   top: -5px;
 }
 
@@ -370,3 +370,4 @@ p {
     margin: 3px 0;
   }
 }
+
