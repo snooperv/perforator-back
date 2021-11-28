@@ -47,22 +47,17 @@
                 </div>
             </a>
         </nav>
-        <router-link
-                to="/me-manager"
-                active-class="active"
-                tag="button"
-                exact
-                class="side-btn small"
-        >
-            <div class="link-container">
-                я менеджер
-
-                <!-- Нужно будет поправить, сделал набросок -->
-                <div class="amount-bg second"></div>
-                <span class="amount">1 из 8</span>
-                <!-- -------------------------------------- -->
-            </div>
-        </router-link>
+        <nav class="side-btn small">
+            <a href="{% url 'imanager' %}">
+                <div class="link-container">
+                    я менеджер
+                    <!-- Нужно будет поправить, сделал набросок -->
+                    <div class="amount-bg second"></div>
+                    <span class="amount">1 из 8</span>
+                    <!-- -------------------------------------- -->
+                </div>
+            </a>
+        </nav>
         <nav class="side-btn small">
             <a href="{% url '1to1' %}">
                 <div class="link-container">one to one</div>
