@@ -15,7 +15,6 @@ a {
 .profile-div {
     color: #000;
     margin-top: 100px;
-    /* height: 7.25em; */
 }
 
 .profile-div h2 {
@@ -25,7 +24,6 @@ a {
     font-weight: 1000;
     line-height: 27px;
     letter-spacing: 0em;
-    /* margin-top: 1em; */
 }
 
 .profile-div p {
@@ -38,6 +36,7 @@ a {
 .profile-pic {
     display: inline-block;
     vertical-align: middle;
+    margin-left: 20px;
 }
 
 .profile-name {

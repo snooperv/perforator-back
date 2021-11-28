@@ -6,7 +6,7 @@
 {% block mainContent %}
     <div class="me-estimate">
         <div class="instruction">
-            <h2 style="margin-bottom: 0;">Система баллов:</h2>
+            <h2 class="main-title">Система баллов:</h2>
             <div class="number">1</div>
             <p>
                 <span>Значительно ниже моих ожиданий</span> <br/>
@@ -44,13 +44,12 @@
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
                     <span class="name">Коновалов Илья</span>
                     <a href="#" class="chevron">
-                        <fa icon="chevron-right"/>
+                        <i class="fas fa-chevron-right"></i>
                     </a>
                 </button>
                 <div id="myDropdown" class="dropdown-content">
                     <div class="dropdown-container">
                         <h3 class="dropdownTitle">
-                            <fa icon="circle" class="list-icon"/>
                             Соблюдение сроков
                         </h3>
                         <!--            <div class="rating">-->
@@ -67,7 +66,6 @@
                                 maxlength="512"
                         ></textarea>
                         <h3 class="dropdownTitle">
-                            <fa icon="circle" class="list-icon"/>
                             Пути достижения целей
                         </h3>
                         <p class="description">
@@ -82,7 +80,6 @@
                                 maxlength="512"
                         ></textarea>
                         <h3 class="dropdownTitle">
-                            <fa icon="circle" class="list-icon"/>
                             Умение работать в команде
                         </h3>
                         <p class="description">
@@ -96,7 +93,6 @@
                                 maxlength="512"
                         ></textarea>
                         <h3 class="dropdownTitle">
-                            <fa icon="circle" class="list-icon"/>
                             Приверженность к хорошим
                             теx.практикам
                         </h3>
@@ -112,7 +108,6 @@
                                 maxlength="512"
                         ></textarea>
                         <h3 class="dropdownTitle">
-                            <fa icon="circle" class="list-icon"/>
                             Уровень владения
                             технологиями
                         </h3>
@@ -128,7 +123,6 @@
                                 maxlength="512"
                         ></textarea>
                         <h3 class="dropdownTitle">
-                            <fa icon="circle" class="list-icon"/>
                             Адаптивность
                         </h3>
                         <p class="description">
@@ -146,37 +140,6 @@
                     </div>
 
                 </div>
-
-                <!-- <button @click="myFunction()" class="peer dropbtn">
-                  <img src="@/assets/pic.png" class="peer-avatar" />
-                  <span class="name">Коновалов Илья</span>
-                  <a href="#" class="chevron"><fa icon="chevron-right"/></a>
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                  <h3 class="dropdownTitle"><fa icon="circle" class="list-icon"/>Соблюдение сроков</h3>
-                  <textarea
-                      name="deadlines"
-                      id="deadlines"
-                      rows="4"
-                      class="ta"
-                      maxlength="512"
-                    ></textarea>
-                </div>
-                <button @click="myFunction()" class="peer dropbtn">
-                  <img src="@/assets/pic.png" class="peer-avatar" />
-                  <span class="name">Коновалов Илья</span>
-                  <a href="#" class="chevron"><fa icon="chevron-right"/></a>
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                  <h3 class="dropdownTitle"><fa icon="circle" class="list-icon"/>Соблюдение сроков</h3>
-                  <textarea
-                      name="deadlines"
-                      id="deadlines"
-                      rows="4"
-                      class="ta"
-                      maxlength="512"
-                    ></textarea>
-                </div> -->
             </div>
         </div>
     </div>

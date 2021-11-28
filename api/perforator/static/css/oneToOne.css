@@ -100,6 +100,7 @@ h2 {
   float: right;
   margin-right: 25px;
   font-size: 1.5em;
+  color: #331969;
 }
 
 .dropbtn {
@@ -136,24 +137,30 @@ h2 {
   border-radius: 15px;
   border: none;
   width: 95%;
-  padding: 5px;
+  padding: 20px;
   font-size: 16px;
   resize: none;
   margin-bottom: 30px;
   line-height: 1.5;
 }
 
-.dropdownTitle {
-  text-align: left;
-  margin: 20px 0 15px 20px;
-  color: #000;
-}
-
-.icon {
-  width: 12px;
-  padding: 0 5px 0 5px;
+.icon-lock {
+  padding: 5x;
   border-radius: 50%;
   background-color: #331969;
   color: #fff;
   margin-right: 5px;
+  font-size: 5px;
+}
+
+.double-links {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-radius: 25px;
+}
+
+.second-link {
+    margin-left: 30px;
 }
