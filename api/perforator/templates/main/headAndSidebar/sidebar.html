@@ -63,15 +63,11 @@
                 <!-- -------------------------------------- -->
             </div>
         </router-link>
-        <router-link
-                to="/one-to-one"
-                active-class="active"
-                tag="button"
-                exact
-                class="side-btn small"
-        >
-            <div class="link-container">one to one</div>
-        </router-link>
+        <nav class="side-btn small">
+            <a href="{% url '1to1' %}">
+                <div class="link-container">one to one</div>
+            </a>
+        </nav>
         <router-link
                 to="/last-periods"
                 active-class="active"
