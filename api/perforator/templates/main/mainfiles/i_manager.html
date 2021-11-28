@@ -7,15 +7,14 @@
     <div class="manager">
         <div class="double-links">
             <a href="#" class="first-link">
-                Утверждение пиров
+                утверждение пиров
             </a>
             <a href="#" class="second-link">
-                Моя команда
+                моя команда
             </a>
         </div>
         <div class="block-container">
-            <h2 class="block-title">Неутвержденные пользователи</h2>
-
+            <h2 class="block-title">Неутвержденные пользователи<div class="peers-amount"> 1 </div></h2>
             <div class="peers">
                 <button onclick="myFunction()" class="peer dropbtn">
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
@@ -58,11 +57,16 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
+
         <div class="block-container">
-            <h2 class="block-title">Пользователь не отправил Self Review</h2>
+            <h2 class="block-title">Пользователь не отправил Self Review<div class="peers-amount"> 2 </div></h2>
+            <div class="peers">
+                <div class="peer">
+                    <img src="{% static 'img/pic.png' %}" class="no-sr-peer-avatar"/>
+                    <span class="block-name">Коновалов Илья</span>
+                </div>
+            </div>
             <div class="peers">
                 <div class="peer">
                     <img src="{% static 'img/pic.png' %}" class="no-sr-peer-avatar"/>
@@ -71,7 +75,7 @@
             </div>
         </div>
         <div class="block-container">
-            <h2 class="block-title">Утверждённые пользователи</h2>
+            <h2 class="block-title">Утверждённые пользователи<div class="peers-amount last"> 1 </div></h2>
             <div class="peers">
                 <button onclick="myFunction2()" class="peer dropbtn">
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
@@ -99,19 +103,25 @@
                                 <i class="fas fa-times"></i>
                             </a>
                         </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+                <!----------------------------------------->
+                <!--Временно сделал все на одной странице-->
+                <!----------------------------------------->
+        <div class="block-container">
+            <h2 class="block-title">Средняя оценка по всей команде</h2>
+            <div class="inside-wrapper">
+                <div class="items">
+                    Соблюдение сроков
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 
     <script>
         function myFunction() {
