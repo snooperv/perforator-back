@@ -154,7 +154,7 @@ h2 {
 }
 
 .double-links {
-    display: inline-block;
+  align-self: flex-start;
     margin-top: 25px;
     padding: 10px 20px;
     background-color: #fff;
