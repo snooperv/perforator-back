@@ -19,9 +19,9 @@
     margin-top: 30px;
     width: 90%;
     background: #FFFFFF;
-    text-align: left;
     border-radius: 30px;
     padding-bottom: 15px;
+    margin-bottom: 50px;
 }
 
 .block-title {
@@ -111,7 +111,7 @@
   position: relative;
   float: right;
   margin-right: 25px;
-  font-size: 2.5em;
+  font-size: 1.5em;
   color: #331969;
 }
 .delete-peer {
@@ -263,8 +263,8 @@ input[type=submit]:active {
 .block-name {
   float: left;
   position: relative;
-  top: 18px;
-  color: #331969;
+  top: 20px;
+  color: #331969 !important;
   font-family: "Gotham Pro";
   font-size: 26px;
   font-weight: 400;
@@ -289,15 +289,31 @@ input[type=submit]:active {
 }
 
 .inside-wrapper {
-    display: inline;
+    display: inline-block;
+    margin-left: 45px;
 }
 
+
 .items {
-    font-size: 50px;
-    display: inline-block;
+    width: 80%;
     background-color: #F4F4FA;
+    font-size: 20px;
+    font-weight: 400;
+    color: #333;
     border-radius: 20px;
     height: 60px;
+    line-height: 60px;
+    padding-left: 25px;
+    margin-bottom: 5px;
+    display: inline-block;
+    float: left;
+
+}
+
+.sum {
+    font-family: 'Gotham Pro';
+    font-weight: 1000;
+    color: #4C4B9A;
 }
 
 .grade {
@@ -306,5 +322,56 @@ input[type=submit]:active {
     width: 100px;
     height: 60px;
     border-radius: 20px;
-    background-color: #333;
+    background-color: #F4F4FA;
+    margin-left: 5px;
+}
+
+.grade-number {
+    font-size: 20px;
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    border-radius: 25px;
+    width: 60px;
+    height: 32px;
+    line-height: 32px;
+    display: inline-block;
+    margin-left: 15px;
+    margin-top: 9px;
+}
+
+.great {
+    background-color: #A5A4F5;
+}
+
+.good {
+    background-color: #EDBD31;
+}
+
+.bad {
+    background-color: #CD2525;
+}
+
+.rating-name {
+    font-weight: 400;
+}
+
+.block-description {
+    font-size: 15px;
+    color: #2C286D;
+    font-weight: 1000;
+    margin: -20px 0 25px 35px;
+}
+
+.name-link {
+    color: #2C286D;
+    position: relative;
+    left: -10px;
+}
+
+.rating-peer-avatar {
+    width: 63px;
+    float: left;
+    position: relative;
+    left: -30px;
 }

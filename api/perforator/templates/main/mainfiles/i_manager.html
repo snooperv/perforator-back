@@ -87,21 +87,15 @@
                 <div id="myDropdown1" class="dropdown-content">
                     <div class="dropdown-container">
                         <div class="dropdown-description">
-                            пиры, которых выбрал сотрудник
+                            коллеги, которых выбрал сотрудник
                         </div>
                         <div class="selected-peer">
                             <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
                             <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
                         </div>
                         <div class="selected-peer">
                             <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
                             <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -114,42 +108,121 @@
         <div class="block-container">
             <h2 class="block-title">Средняя оценка по всей команде</h2>
             <div class="inside-wrapper">
-                <div class="items" id="it" style="
-                width: 85%;
-                background-color: #F4F4FA;
-                font-size: 20px;
-                color: #333;
-                border-radius: 20px;
-                height: 60px;
-                line-height: 60px;
-                padding-left: 30px;
-                margin-left: 30px;
-                ">
+                <div class="items">
                     Соблюдение сроков
                 </div>
-                <div class="grade"></div>
-                <div class="items" id="it">
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items">
                     Пути достижения целей
                 </div>
-                <div class="grade"></div>
-                <div class="items" id="it">
+                <div class="grade">
+                    <div class="grade-number good">2.8</div>
+                </div>
+                <div class="items">
                     Умение работать в команде
                 </div>
-                <div class="grade"></div>
+                <div class="grade">
+                    <div class="grade-number bad">1.5</div>
+                </div>
                 <div class="items">
                     Приверженность к хорошим техническим практикам
                 </div>
-                <div class="grade"></div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
                 <div class="items">
                     Уровень владения технологиями
                 </div>
-                <div class="grade"></div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
                 <div class="items">
                     Адаптивность
                 </div>
-                <div class="grade"></div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items sum">
+                    Средняя оценка
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items sum">
+                    Нормированная оценка
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
             </div>
         </div>
+
+        <div class="block-container">
+            <h2 class="block-title">Рейтинг сотрудников</h2>
+            <p class="block-description">*кликните на сотрудника, чтобы посмотреть результаты его ревью</p>
+            <div class="inside-wrapper">
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number good">2.8</div>
+                </div>
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number bad">1.5</div>
+                </div>
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+                <div class="items rating-name">
+                    <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                    <a href="" class="name-link">Коновалов Илья</a>
+                </div>
+                <div class="grade">
+                    <div class="grade-number great">3.8</div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <script>
