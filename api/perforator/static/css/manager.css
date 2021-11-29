@@ -9,6 +9,7 @@
     background-color: #fff;
     border-radius: 25px;
     border: 1px solid #EDBD31;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
 }
 
 .second-link {
@@ -261,14 +262,14 @@ input[type=submit]:active {
 }
 
 .block-name {
-  float: left;
-  position: relative;
-  top: 20px;
-  color: #331969 !important;
-  font-family: "Gotham Pro";
-  font-size: 26px;
-  font-weight: 400;
-  letter-spacing: -1px;
+    float: left;
+    position: relative;
+    top: 20px;
+    color: #331969 !important;
+    font-family: "Gotham Pro";
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -1px;
 }
 
 .peers-amount {
@@ -353,7 +354,7 @@ input[type=submit]:active {
 }
 
 .rating-name {
-    font-weight: 400;
+    font-size: 22px;
 }
 
 .block-description {
