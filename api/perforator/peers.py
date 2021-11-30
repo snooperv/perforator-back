@@ -117,8 +117,30 @@ def save_peers(request):
         return {'error': True, 'message': 'Вы не авторизовались'}
 
 
-def search_peers_by_prefix(request):
-    pass
+def search_peers(request):
+    """
+        Найти всех пользователей, имя (first_name) которых имеет заданную строку
+        request.data: string_to_search - та самая заданная строка
+        :return: Список вида:
+        [ { 'user_id': user.id,
+              'profile_id': profile.id,
+              'username': user.username },
+          { ... }
+        ]
+    """
+    if request.user.is_authenticated:
+        substring = str(request.data)
+
+        users = User.objects.get(first_name__icontains=substring)
+        result = []
+
+        for u in users:
+            p = Profile.objects.get(user=u)
+            result.append({'user_id': u.id, 'profile_id': p.id, 'username': u.first_name})
+
+        return result
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
 
 
 def get_where_current_user_is_peer(request):

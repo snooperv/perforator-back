@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3b7ff48b-752c-4e76-a12f-8df99ec71e38" name="Changes" comment="Add i_rate view" />
+    <list default="true" id="3b7ff48b-752c-4e76-a12f-8df99ec71e38" name="Changes" comment="Add i_rate view">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/perforator/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/perforator/peers.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/peers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/perforator/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/urls.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,6 +64,9 @@
       <workItem from="1637313283351" duration="471000" />
       <workItem from="1637313779094" duration="878000" />
       <workItem from="1637910048741" duration="5000" />
+      <workItem from="1638204096394" duration="4851000" />
+      <workItem from="1638249393590" duration="2126000" />
+      <workItem from="1638274111262" duration="472000" />
     </task>
     <task id="LOCAL-00001" summary="Add site admin models">
       <created>1636817596334</created>
