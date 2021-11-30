@@ -114,17 +114,21 @@ class SelfReviewByUserView(LoginRequiredMixin, View):
 
 def registration(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)
 
         if form.is_valid():
             user = User.objects.create_user(form.cleaned_data['phone'], '', form.cleaned_data['password'])
             user.profile.phone = form.cleaned_data['phone']
             user.first_name = form.cleaned_data['name']
             user.profile.sbis = form.cleaned_data['sbis']
+            photo = form.cleaned_data['photo']
+            user.profile.photo = photo
             user.save()
             auto_login = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
             login(request, auto_login)
             return HttpResponseRedirect(reverse('index'))
+        else:
+            print(form)
     else:
         form = RegistrationForm(initial={'name': "", 'phone': "", 'sbis': "", 'password': ""})
     return render(request, 'registration/registration.html', {'form': form})

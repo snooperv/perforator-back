@@ -8,6 +8,7 @@ class RegistrationForm(forms.Form):
     phone = forms.CharField(widget=forms.TextInput())
     sbis = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.TextInput())
+    photo = forms.ImageField()
 
 
 class UpdateProfile(forms.Form):

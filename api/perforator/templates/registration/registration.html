@@ -13,13 +13,15 @@
                         <img src="{% static 'img/logo.svg' %}" alt="Picture" class="logo"/>
                         <h1>Perforator</h1>
                     </div>
-                    <form action="" method="post" id="register">
+                    <form action="" method="post" id="register" enctype= multipart/form-data>
                         {% csrf_token %}
                         {% load widget_tweaks %}
                         {% render_field form.name class="fadeIn second" placeholder="Имя и фамилия" %}
                         {% render_field form.phone class="fadeIn second" placeholder="Номер телефона (+79...)" %}
                         {% render_field form.sbis class="fadeIn third" placeholder="Ссылка на профиль СБИС (http://...)" %}
                         {% render_field form.password class="fadeIn third" placeholder="Пароль" %}
+                        {% render_field form.photo class="fadeIn third" placeholder="Фото" %}
+
 
                         <div class="photo fadeIn third">
                             <div class="empty">
@@ -28,13 +30,14 @@
                             <div class="background-photo-upload">
                                 <div class="inner-wrapper">
                                     <p class="photo-text">Ваша аватарка</p>
+                                    <!--
                                     <label for="img">Выбрать файл</label>
                                     <input
                                             type="file"
                                             id="img"
                                             accept="image/*"
                                             class="photo-btn"
-                                    />
+                                    />-->
                                 </div>
                             </div>
                         </div>
