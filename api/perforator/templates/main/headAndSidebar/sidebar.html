@@ -3,7 +3,7 @@
 <div class="sidebar">
     <div class="profile-div">
         <div class="profile-pic">
-            <img src="{% static 'img/pic.png' %}"/>
+            <img src="{{ user.profile.photo.url }}"/>
         </div>
         <div class="profile-name">
             <h2>

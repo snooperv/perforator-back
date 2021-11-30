@@ -26,7 +26,7 @@
                 </a>
                 <h3>Изменение данных</h3>
                 <div class="user">
-                    <img class="avatar" src="{% static 'img/pic.png' %}"/>
+                    <img class="avatar" src="{{ user.profile.photo.url }}"/>
                     <div class="user-info">
                         {% csrf_token %}
                         {% load widget_tweaks %}
@@ -64,7 +64,7 @@
             </a>
             <h3>Мои данные</h3>
             <div class="user">
-                <img class="avatar" src="{% static 'img/pic.png' %}"/>
+                <img class="avatar" src="{{ user.profile.photo.url }}"/>
                 <div class="user-info">
                     <p class="name">Имя и фамилия:
                         <span class="text">
