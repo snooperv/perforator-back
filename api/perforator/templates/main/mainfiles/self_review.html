@@ -6,18 +6,14 @@
 {% block mainContent %}
     <div class="self-review">
         <div class="instruction">
-            <h3 style="margin-bottom: 5px;">Инструкция</h3>
-            <p>
+            <h3 class="instr-title">Инструкция</h3>
+            <p class="instr-p">
                 В данной форме вам нужно будет провести самоанализ по проделанной работе за последние полгода.
                 <br>Это поможет вам найти сильные и слабые стороны в своей работе, оценить ваш профессиональный рост.
                 <br>Убедительная просьба отвечать на вопросы честно, а не "для галочки", так как это инструмент,
                 направленный в первую очередь на улучшение ваших профессиональных навыков.
             </p>
         </div>
-        <p class="deadline">
-            <!--<fa icon="clock"/>-->
-            Дедлайн заполнения: 30.01.2022 00:00, после дедлайна форма будет закрыта
-        </p>
         <h2 class="title">Self Review</h2>
         <div class="form">
             <div class="container">
@@ -27,9 +23,9 @@
                         время</p>
                     <p class="question">Что вам нравится в вашей текущей работе, задачах, отношениях с коллегами,
                         процессах в компании и т.д.? </p>
-                    <input type="text">
+                    <input type="text" class="input-text">
                     <p class="question">Что не нравится, что можно улучшить/ исправить?</p>
-                    <input type="text">
+                    <input type="text" class="input-text">
                 </div>
                 <div id="progress">
                     <h4>Успехи и неудачи</h4>
@@ -41,11 +37,11 @@
                     <p class="question">
                         Какие у вас были успехи?
                     </p>
-                    <input type="text">
+                    <input type="text" class="input-text">
                     <p class="question">
                         Какие у вас были неудачи?
                     </p>
-                    <input type="text">
+                    <input type="text" class="input-text">
                 </div>
                 <div id="improvement-zones">
                     <h4>Зоны роста</h4>
@@ -70,13 +66,13 @@
         <h2 class="title">Оценивающие</h2>
         <div class="peers">
             <p>
-                <!--<fa icon="circle" class="icon"/>-->
-                <span>Респонденты</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать
+                <i class="icon-circle fas fa-circle"></i>
+                <span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать
                 3-7 человек
             </p>
             <button class="add-peer">
-                <!--<fa icon="plus"/>-->
-                Добавить респондента
+                <i class="icon-plus fas fa-plus"></i>
+                Добавить пира
             </button>
         </div>
         <div class="wrapper-submit">
