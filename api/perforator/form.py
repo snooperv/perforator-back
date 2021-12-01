@@ -6,9 +6,9 @@ from django.utils.translation import ugettext_lazy as _
 class RegistrationForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput())
     phone = forms.CharField(widget=forms.TextInput())
-    sbis = forms.CharField(widget=forms.TextInput())
-    password = forms.CharField(widget=forms.TextInput())
-    photo = forms.ImageField()
+    sbis = forms.CharField(widget=forms.URLInput())
+    password = forms.CharField(widget=forms.PasswordInput())
+    photo = forms.ImageField(widget=forms.FileInput())
 
 
 class UpdateProfile(forms.Form):

@@ -1,3 +1,9 @@
+.photo-sidebar {
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
+}
+
 a {
     text-decoration: none;
     color: #000000;
@@ -34,6 +40,10 @@ a {
 }
 
 .profile-pic {
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    overflow: hidden;
     display: inline-block;
     vertical-align: middle;
     margin-left: 20px;
@@ -45,6 +55,7 @@ a {
     text-align: left;
     margin-left: 20px;
     top: 0.5em;
+    width: 40%;
 }
 
 .menu-items {
@@ -154,20 +165,20 @@ a {
     }
 }
 
-@media (max-width: 1536px) {
+@media (max-width: 1535px) {
     .side-btn:last-child {
         font-size: 16px;
     }
 
-    h2 {
-        text-align: center;
+    .profile-pic {
+        width: 102px;
+        height: 102px;
     }
 
     .profile-name {
         margin-top: -10px;
         /* margin-left: 0px; */
         position: relative;
-        left: -10px;
     }
 
     .menu-items {

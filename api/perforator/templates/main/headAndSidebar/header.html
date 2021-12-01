@@ -20,13 +20,15 @@
     <div id="changeData">
         <form method="post">
             <div class="popup-content">
-                <a href="#" class="close">
-                        <!--        Нужно доработать корректность отображения            -->
+                <a href="" class="close">
+                    <!--        Нужно доработать корректность отображения            -->
                     <!--<i class="fas fa-times"></i>-->
                 </a>
                 <h3>Изменение данных</h3>
                 <div class="user">
-                    <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                    <div class="header-pic">
+                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                    </div>
                     <div class="user-info">
                         {% csrf_token %}
                         {% load widget_tweaks %}
@@ -59,12 +61,14 @@
 
     <div class="popup" id="popup">
         <div class="popup-content">
-            <a href="#" class="close">
+            <a href="" class="close">
                 <i class="fas fa-times"></i>
             </a>
             <h3>Мои данные</h3>
             <div class="user">
-                <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                <div class="header-pic">
+                    <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                </div>
                 <div class="user-info">
                     <p class="name">Имя и фамилия:
                         <span class="text">
