@@ -205,7 +205,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
 }
 
 input[type=text], input[type=password],
-input[type=number], input[type=tel],
+input[type=number], input[type=tel], input[type=file],
 input[type=url] {
     background-color: #F4F4FA;
     border: none;
