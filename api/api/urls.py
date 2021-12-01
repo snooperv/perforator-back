@@ -12,3 +12,4 @@ urlpatterns = [
     path('accounts/login/registration', RedirectView.as_view(url='/perforator/registration/'))
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

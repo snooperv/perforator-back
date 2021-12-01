@@ -1,15 +1,18 @@
-h2 {
-  color: #000;
-  text-align: left;
-  padding: 25px 0 10px 10px;
-  font-size: 26px;
-  letter-spacing: -0.5px;
-}
+
 
 b {
   background-color: #edbd31;
   border-radius: 50%;
   width: 10px;
+}
+
+.main-title {
+  color: #000;
+  text-align: left;
+  padding: 25px 0 0 10px;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+  margin-bottom: 0;
 }
 
 .me-estimate {
@@ -112,6 +115,7 @@ b {
   float: right;
   margin-right: 25px;
   font-size: 1.5em;
+  color: #331969;
 }
 
 .dropbtn {

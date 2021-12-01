@@ -64,6 +64,10 @@ h3 {
 
 p {
     font-size: 18px;
+    font-family: 'Gotham Pro light';
+    font-weight: 1000;
+    color: #222222;
+    margin: 0;
 }
 
 .header {
@@ -141,6 +145,10 @@ p {
 
 .toggle {
     float: left;
+}
+
+.settings {
+    width: 35px;
 }
 
 label #bars,
@@ -255,13 +263,22 @@ label #cancel {
     margin-top: 15px;
 }
 
-.avatar {
+.header-pic {
     width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    overflow: hidden;
     position: relative;
     display: inline-block;
     float: left;
     left: -35px;
-    top: -5px;
+    top: -10px;
+}
+
+.avatar {
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
 }
 
 .user-info {

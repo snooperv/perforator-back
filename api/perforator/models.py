@@ -1,12 +1,18 @@
-from django.utils import timezone
+from uuid import uuid4
+import os
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+
+def savePhotoUnderRandomName(instance, filename):
+    upload_to = 'photos'
+    ext = filename.split('.')[-1]
+    # set filename as random string
+    filename = '{}.{}'.format(uuid4().hex, ext)
+    # return the whole path to the file
+    return os.path.join(upload_to, filename)
 
 
 # Модель Профиль (связан с User джанги 1-к-1)
@@ -15,7 +21,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
     peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True)
-    photo = models.CharField(max_length=32, default=None, blank=True, null=True)
+    photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
 
 
 @receiver(post_save, sender=User)

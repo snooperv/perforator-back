@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.shortcuts import render
 
 from . import reviews
 
@@ -8,6 +9,11 @@ from . import reviews
     Созданы по аналогии с raw_peers_view.py
     Все роуты возвращают JSON
 """
+
+
+def self_review(request):
+    return render(request,
+                  'reviews/self.review.html')
 
 
 @api_view(['GET'])

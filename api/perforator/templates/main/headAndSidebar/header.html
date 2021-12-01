@@ -2,13 +2,6 @@
 
 <div class="header">
     <div class="wrapper">
-        <div class="toggle">
-            <input type="checkbox" id="check"/>
-            <label for="check" class="icons">
-                <!--<fa icon="bars" id="bars"/>
-                <fa icon="times" id="cancel"/>-->
-            </label>
-        </div>
         <div class="logo-div">
             <img src="{% static 'img/logo.svg' %}" alt="logo" class="logo"/>
         </div>
@@ -27,12 +20,15 @@
     <div id="changeData">
         <form method="post">
             <div class="popup-content">
-                <a href="#" class="close">
-                    <!--<fa icon="times"/>-->
+                <a href="" class="close">
+                    <!--        Нужно доработать корректность отображения            -->
+                    <!--<i class="fas fa-times"></i>-->
                 </a>
                 <h3>Изменение данных</h3>
                 <div class="user">
-                    <img class="avatar" src="{% static 'img/pic.png' %}"/>
+                    <div class="header-pic">
+                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                    </div>
                     <div class="user-info">
                         {% csrf_token %}
                         {% load widget_tweaks %}
@@ -65,12 +61,14 @@
 
     <div class="popup" id="popup">
         <div class="popup-content">
-            <a href="#" class="close">
-                <!--<fa icon="times"/>-->
+            <a href="" class="close">
+                <i class="fas fa-times"></i>
             </a>
             <h3>Мои данные</h3>
             <div class="user">
-                <img class="avatar" src="{% static 'img/pic.png' %}"/>
+                <div class="header-pic">
+                    <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                </div>
                 <div class="user-info">
                     <p class="name">Имя и фамилия:
                         <span class="text">

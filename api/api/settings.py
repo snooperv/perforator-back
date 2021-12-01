@@ -131,3 +131,6 @@ STATICFILES_DIRS = [
 
 # Id для текущего Performance Review
 PERFORMANCE_REVIEW_ID = 1
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'perforator/media')
