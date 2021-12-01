@@ -1,0 +1,41 @@
+{% load static %}
+
+<div class="selection" id="peers">
+    <a href="" class="close">
+        <i class="fas fa-times"></i>
+    </a>
+    <h3>Выберите оценивающего</h3>
+    <input type="text" class="peers-text">
+    <div class="list-peers">
+        <div class="peers-pic">
+            <img class="avatar" src="{{ user.profile.photo.url }}"/>
+        </div>
+        <div class="peer-info">
+            {{ user.first_name }}
+        </div>
+        <button class="choose">Выбрать</button>
+    </div>
+    <div class="list-peers">
+        <div class="peers-pic">
+            <img class="avatar" src="{{ user.profile.photo.url }}"/>
+        </div>
+        <div class="peer-info">
+            {{ user.first_name }}
+        </div>
+        <button class="choose">Выбрать</button>
+    </div>
+    <div class="list-peers">
+        <div class="peers-pic">
+            <img class="avatar" src="{{ user.profile.photo.url }}"/>
+        </div>
+        <div class="peer-info">
+            {{ user.first_name }}
+        </div>
+        <button class="choose">Выбрать</button>
+    </div>
+</div>
+<a href="" class="close-popup"></a>
+
+<script src="{% static 'js/peers_modal_window.js' %}"></script>
+<script src="{% static 'js/peers_main_functions.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/peers.css' %}">
