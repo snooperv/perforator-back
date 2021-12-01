@@ -20,7 +20,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
-    peers = models.ManyToManyField('self', default=None, blank=True, null=True)
+    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True)
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
 
 
