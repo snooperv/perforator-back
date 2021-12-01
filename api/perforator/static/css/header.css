@@ -263,13 +263,22 @@ label #cancel {
     margin-top: 15px;
 }
 
-.avatar {
+.header-pic {
     width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    overflow: hidden;
     position: relative;
     display: inline-block;
     float: left;
     left: -35px;
     top: -10px;
+}
+
+.avatar {
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
 }
 
 .user-info {

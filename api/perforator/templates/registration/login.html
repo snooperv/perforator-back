@@ -21,8 +21,7 @@
                     <form method="post" action="{% url 'login' %}" class="log">
                         {% csrf_token %}
                         {% load widget_tweaks %}
-
-                        {% render_field form.username class="fadeIn second" placeholder="Номер телефона" %}
+                        {% render_field form.username title="Формат номера: +79... или 89..." pattern="([\+]*[7-8]{1}\s?[\(]*9[0-9]{2}[\)]*\s?\d{3}[-]*\d{2}[-]*\d{2})" minlength="11" maxlength="12" class="fadeIn second" placeholder="Номер телефона" %}
                         {% render_field form.password class="fadeIn third" placeholder="Пароль" %}
 
                         <input type="submit" class="fadeIn fourth" value="Войти"/>
