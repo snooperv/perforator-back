@@ -22,7 +22,7 @@ def get_all_peers(request):
         [ {'user_id': user.id,
            'profile_id': profile.id,
            'username': user.username,
-           'photo': profile.photo,
+           'photo': profile.photo.url,
            'sbis': user.sbis},
           { ... }
         ]
@@ -36,7 +36,7 @@ def get_all_peers(request):
             profile.save()
         profile = Profile.objects.filter(user=u)[0]
         obj = {'user_id': u.id, 'profile_id': profile.id,
-               'username': u.first_name, 'photo': profile.photo, 'sbis': profile.sbis}
+               'username': u.first_name, 'photo': profile.photo.url, 'sbis': profile.sbis}
         result.append(obj)
     return result
 
@@ -49,7 +49,7 @@ def get_all_current_user_peers(request):
         [ {'user_id': user.id,
            'profile_id': profile.id,
            'username': user.username,
-           'phone': user.phone,
+           'photo': user.photo.url,
            'sbis': user.sbis},
           { ... }
         ]
@@ -61,7 +61,7 @@ def get_all_current_user_peers(request):
         peers = profile.peers.all()
         for p in peers:
             obj = {'user_id': p.user.id, 'profile_id': p.id,
-               'username': p.user.first_name, 'photo': p.photo, 'sbis': p.sbis}
+               'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis}
             result.append(obj)
         return result
     else:
