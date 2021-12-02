@@ -70,11 +70,47 @@
                 <span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать
                 3-7 человек
             </p>
-            <div id="my_peers"></div>
-            <button type="button" class="add-peer" onclick="show_add_peer_window()" id="btn">
-                <i class="icon-plus fas fa-plus"></i>
-                Добавить пира
-            </button>
+            <div id="my_peers">
+                <div class="peer-sel">
+                    <div class="peers-pic">
+                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                    </div>
+                    <div class="peer-info">
+                        {{ user.first_name }}
+                    </div>
+                    <a href="" class="close">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+                <div class="peer-sel">
+                    <div class="peers-pic">
+                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                    </div>
+                    <div class="peer-info">
+                        {{ user.first_name }}
+                    </div>
+                    <a href="" class="close">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+                <div class="peer-sel">
+                    <div class="peers-pic">
+                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
+                    </div>
+                    <div class="peer-info">
+                        {{ user.first_name }}
+                    </div>
+                    <a href="" class="close">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <a href="#peers">
+                <button type="button" class="add-peer">
+                    <i class="icon-plus fas fa-plus"></i>
+                    Добавить пира
+                </button>
+            </a>
         </div>
         <div class="wrapper-submit">
             <input type="submit" value="Отправить">
@@ -89,35 +125,7 @@
         </div>
     </div>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-
-    <!-- Модальное окно -->
-    <div id="modal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Оценивающие</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-
-          <div class="modal-body">
-            <div id="peer_list_wrapper" style="visibility: hidden">
-                <hr/>
-                <h2>Выберите оценивающего</h2>
-                <div id="peers_list"></div>
-            </div>
-          {% csrf_token %}
-          </div>
-
-          <div class="modal-footer">
-
-          </div>
-
-        </div>
-      </div>
-    </div>
+    {% include "main/mainfiles/addons/peers.html" %}
 
     <link rel="stylesheet" href="{% static 'css/self-review.css' %}">
 {% endblock %}
