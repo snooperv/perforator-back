@@ -5,59 +5,71 @@
 {% endblock %}
 {% block mainContent %}
     <div class="manager">
-        <div class="double-links">
-            <a href="#" class="first-link">
+        <div class="double-links" id="dl">
+            <a href="#"
+               class="d-link dactive"
+               onclick="
+               document.getElementById('second-page').classList.add('hide')
+               document.getElementById('first-page').classList.remove('hide')
+            ">
                 утверждение пиров
             </a>
-            <a href="#" class="second-link">
+            <a href="#"
+               class="d-link second-link"
+               onclick="
+               document.getElementById('first-page').classList.add('hide')
+               document.getElementById('second-page').classList.remove('hide')
+            ">
                 моя команда
             </a>
         </div>
-        <div class="block-container">
-            <h2 class="block-title">Неутвержденные пользователи<div class="peers-amount"> 1 </div></h2>
-            <div class="peers">
-                <button onclick="myFunction()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                    <span class="name">Коновалов Илья</span>
-                    <a href="#" class="chevron">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                    <div class="dropdown-container">
-                        <div class="dropdown-description">
-                            пиры, которых выбрал сотрудник
+        <div id="first-page">
+            <div class="block-container">
+                <h2 class="block-title">Неутвержденные пользователи<div class="peers-amount"> 1 </div></h2>
+                <div class="peers">
+                    <button onclick="myFunction()" class="peer dropbtn">
+                        <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
+                        <span class="name">Коновалов Илья</span>
+                        <a href="#" class="chevron">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <div class="dropdown-container">
+                            <div class="dropdown-description">
+                                пиры, которых выбрал сотрудник
+                            </div>
+                            <div class="selected-peer">
+                                <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
+                                <span class="selected-peer-name">Коновалов Илья</span>
+                                <a href="#" class="delete-peer">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                            <div class="selected-peer">
+                                <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
+                                <span class="selected-peer-name">Коновалов Илья</span>
+                                <a href="#" class="delete-peer">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                            <div class="selected-peer">
+                                <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
+                                <span class="selected-peer-name">Коновалов Илья</span>
+                                <a href="#" class="delete-peer">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                            <button class="add-peer">
+                                <i class="icon-plus fas fa-plus"></i>
+                                Добавить пира
+                            </button>
+                            <input class="accept" type="submit" value="утвердить"/>
                         </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-                        <button class="add-peer">
-                            <i class="icon-plus fas fa-plus"></i>
-                            Добавить пира
-                        </button>
-                        <input class="accept" type="submit" value="утвердить"/>
                     </div>
                 </div>
             </div>
-        </div>
+
 
         <div class="block-container">
             <h2 class="block-title">Пользователь не отправил Self Review<div class="peers-amount"> 2 </div></h2>
@@ -101,63 +113,64 @@
                 </div>
             </div>
         </div>
+    </div>
 
-                <!----------------------------------------->
-                <!--Временно сделал все на одной странице-->
-                <!----------------------------------------->
-        <div class="block-container">
-            <h2 class="block-title">Средняя оценка по всей команде</h2>
-            <div class="inside-wrapper">
-                <div class="items">
-                    Соблюдение сроков
-                </div>
-                <div class="grade">
-                    <div class="grade-number great">3.8</div>
-                </div>
-                <div class="items">
-                    Пути достижения целей
-                </div>
-                <div class="grade">
-                    <div class="grade-number good">2.8</div>
-                </div>
-                <div class="items">
-                    Умение работать в команде
-                </div>
-                <div class="grade">
-                    <div class="grade-number bad">1.5</div>
-                </div>
-                <div class="items">
-                    Приверженность к хорошим техническим практикам
-                </div>
-                <div class="grade">
-                    <div class="grade-number great">3.8</div>
-                </div>
-                <div class="items">
-                    Уровень владения технологиями
-                </div>
-                <div class="grade">
-                    <div class="grade-number great">3.8</div>
-                </div>
-                <div class="items">
-                    Адаптивность
-                </div>
-                <div class="grade">
-                    <div class="grade-number great">3.8</div>
-                </div>
-                <div class="items sum">
-                    Средняя оценка
-                </div>
-                <div class="grade">
-                    <div class="grade-number great">3.8</div>
-                </div>
-                <div class="items sum">
-                    Нормированная оценка
-                </div>
-                <div class="grade">
-                    <div class="grade-number great">3.8</div>
+        <!---  Вторая страница   --->
+
+        <div id="second-page" class="hide">
+            <div class="block-container">
+                <h2 class="block-title">Средняя оценка по всей команде</h2>
+                <div class="inside-wrapper">
+                    <div class="items">
+                        Соблюдение сроков
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number great">3.8</div>
+                    </div>
+                    <div class="items">
+                        Пути достижения целей
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number good">2.8</div>
+                    </div>
+                    <div class="items">
+                        Умение работать в команде
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number bad">1.5</div>
+                    </div>
+                    <div class="items">
+                        Приверженность к хорошим техническим практикам
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number great">3.8</div>
+                    </div>
+                    <div class="items">
+                        Уровень владения технологиями
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number great">3.8</div>
+                    </div>
+                    <div class="items">
+                        Адаптивность
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number great">3.8</div>
+                    </div>
+                    <div class="items sum">
+                        Средняя оценка
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number great">3.8</div>
+                    </div>
+                    <div class="items sum">
+                        Нормированная оценка
+                    </div>
+                    <div class="grade">
+                        <div class="grade-number great">3.8</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
         <div class="block-container">
             <h2 class="block-title">Рейтинг сотрудников</h2>
@@ -221,19 +234,25 @@
                 </div>
             </div>
         </div>
-
+    </div>
 
     </div>
 
     <script>
-        function myFunction() {
+    $('.d-link').on('click',function(){
+        $('.d-link.dactive').removeClass('dactive');
+        $(this).addClass('dactive');
+    });
+
+
+
+    function myFunction() {
             document.getElementById('myDropdown').classList.toggle('show')
         };
         // Пока сделал так, чтоб не париться
         function myFunction2() {
             document.getElementById('myDropdown1').classList.toggle('show')
         };
-
     </script>
 
 <link rel="stylesheet" href="{% static 'css/manager.css' %}">
