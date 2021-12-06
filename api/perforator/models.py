@@ -24,6 +24,29 @@ class Profile(models.Model):
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
 
 
+class PeerReviews(models.Model):
+    class Rates(models.IntegerChoices):
+        LOWER = 1
+        LOW = 2
+        HIGH = 3
+        HIGHER = 4
+
+    peer_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='rated_reviews')
+    rated_person = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='my_reviews')
+    deadlines = models.CharField(max_length=512)
+    approaches = models.CharField(max_length=512)
+    teamwork = models.CharField(max_length=512)
+    practices = models.CharField(max_length=512)
+    experience = models.CharField(max_length=512)
+    adaptation = models.CharField(max_length=512)
+    rates_deadlines = models.CharField(max_length=512)
+    rates_approaches = models.IntegerField(choices=Rates.choices)
+    rates_teamwork = models.IntegerField(choices=Rates.choices)
+    rates_practices = models.IntegerField(choices=Rates.choices)
+    rates_experience = models.IntegerField(choices=Rates.choices)
+    rates_adaptation = models.IntegerField(choices=Rates.choices)
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

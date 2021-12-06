@@ -11,10 +11,11 @@ from .models import User, Profile
     с любым значенем
 """
 
+
 # получить всех пиров
 def get_all_peers(request):
     """
-        Получить всех доступных пиров. Пока это все пользователи.
+        Получить всех доступных пиров. Пока это все пользователи, кроме залогиненного.
         ВАЖНО! Если профиль вдруг не был создан ранее у какого-то пользователя,
         он создастся здесь автоматически
         request.data: не требуется
@@ -27,18 +28,21 @@ def get_all_peers(request):
           { ... }
         ]
     """
-    users = User.objects.all()
-    result = []
-    for u in users:
-        profiles = Profile.objects.filter(user=u)
-        if len(profiles) == 0:
-            profile = Profile(user=u)
-            profile.save()
-        profile = Profile.objects.filter(user=u)[0]
-        obj = {'user_id': u.id, 'profile_id': profile.id,
-               'username': u.first_name, 'photo': profile.photo.url, 'sbis': profile.sbis}
-        result.append(obj)
-    return result
+    if request.user.is_authenticated:
+        users = User.objects.exclude(username=request.user.username)
+        result = []
+        for u in users:
+            profiles = Profile.objects.filter(user=u)
+            if len(profiles) == 0:
+                profile = Profile(user=u)
+                profile.save()
+            profile = Profile.objects.filter(user=u)[0]
+            obj = {'user_id': u.id, 'profile_id': profile.id,
+                   'username': u.first_name, 'photo': profile.photo.url, 'sbis': profile.sbis}
+            result.append(obj)
+        return result
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
 
 
 def get_all_current_user_peers(request):
@@ -61,7 +65,7 @@ def get_all_current_user_peers(request):
         peers = profile.peers.all()
         for p in peers:
             obj = {'user_id': p.user.id, 'profile_id': p.id,
-               'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis}
+                   'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis}
             result.append(obj)
         return result
     else:
@@ -144,6 +148,10 @@ def search_peers(request):
 
 
 def get_where_current_user_is_peer(request):
+    """
+        Найти пользователей, у которых залогиненный пользователь
+        является пиром
+    """
     pass
 
 

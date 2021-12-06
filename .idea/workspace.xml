@@ -1,112 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3b7ff48b-752c-4e76-a12f-8df99ec71e38" name="Changes" comment="Add i_rate view">
+    <list default="true" id="01960a37-229a-4470-aece-fcb238276627" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/perforator/ratings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/perforator/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/perforator/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/perforator/peers.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/peers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/perforator/templates/main/mainfiles/i_rate.html" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/templates/main/mainfiles/i_rate.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/perforator/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
-    <envs>
-      <env key="FLASK_APP" value="app" />
-    </envs>
-    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
-    <option name="myEnvs">
-      <map>
-        <entry key="FLASK_APP" value="app" />
-      </map>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="dev-v2" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="20rw2nYyOoZ3kBC6Fsv7Rz9REZC" />
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="21is1QbkMUuWQGuwHPZzJujwRab" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/api" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3b7ff48b-752c-4e76-a12f-8df99ec71e38" name="Changes" comment="" />
-      <created>1636815816500</created>
+      <changelist id="01960a37-229a-4470-aece-fcb238276627" name="Changes" comment="" />
+      <created>1638435026733</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1636815816500</updated>
-      <workItem from="1636815819615" duration="3781000" />
-      <workItem from="1636972304830" duration="23000" />
-      <workItem from="1637226009790" duration="1320000" />
-      <workItem from="1637313283351" duration="471000" />
-      <workItem from="1637313779094" duration="878000" />
-      <workItem from="1637910048741" duration="5000" />
-      <workItem from="1638204096394" duration="4851000" />
-      <workItem from="1638249393590" duration="2126000" />
-      <workItem from="1638274111262" duration="472000" />
-      <workItem from="1638427122243" duration="1429000" />
+      <updated>1638435026733</updated>
+      <workItem from="1638435028027" duration="13359000" />
+      <workItem from="1638611982159" duration="12794000" />
     </task>
-    <task id="LOCAL-00001" summary="Add site admin models">
-      <created>1636817596334</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1636817596334</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Add site admin models">
-      <created>1637313878123</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1637313878123</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Add i_rate view">
-      <created>1637314649801</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1637314649802</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add site admin models" />
-    <MESSAGE value="Add i_rate view" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add i_rate view" />
   </component>
 </project>
