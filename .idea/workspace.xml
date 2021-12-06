@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="01960a37-229a-4470-aece-fcb238276627" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api/perforator/ratings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/perforator/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/perforator/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/perforator/peers.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/peers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/perforator/templates/main/mainfiles/i_rate.html" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/templates/main/mainfiles/i_rate.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/perforator/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/perforator/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +55,7 @@
       <updated>1638435026733</updated>
       <workItem from="1638435028027" duration="13359000" />
       <workItem from="1638611982159" duration="12794000" />
+      <workItem from="1638784391256" duration="78000" />
     </task>
     <servers />
   </component>
