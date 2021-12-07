@@ -20,8 +20,32 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
-    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True)
+    manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
+    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True, related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
+
+
+class PeerReviews(models.Model):
+    class Rates(models.IntegerChoices):
+        LOWER = 1
+        LOW = 2
+        HIGH = 3
+        HIGHER = 4
+
+    peer_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='rated_reviews')
+    rated_person = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='my_reviews')
+    deadlines = models.CharField(max_length=512)
+    approaches = models.CharField(max_length=512)
+    teamwork = models.CharField(max_length=512)
+    practices = models.CharField(max_length=512)
+    experience = models.CharField(max_length=512)
+    adaptation = models.CharField(max_length=512)
+    rates_deadlines = models.CharField(max_length=512)
+    rates_approaches = models.IntegerField(choices=Rates.choices)
+    rates_teamwork = models.IntegerField(choices=Rates.choices)
+    rates_practices = models.IntegerField(choices=Rates.choices)
+    rates_experience = models.IntegerField(choices=Rates.choices)
+    rates_adaptation = models.IntegerField(choices=Rates.choices)
 
 
 @receiver(post_save, sender=User)

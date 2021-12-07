@@ -25,7 +25,8 @@ class I_Rate(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
         form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
-        return render(request, 'main/mainfiles/i_rate.html', {'form': form})
+        review_form = RateForm()
+        return render(request, 'main/mainfiles/i_rate.html', {'form': form, 'review': review_form})
 
     @staticmethod
     def post(request):

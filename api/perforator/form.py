@@ -24,3 +24,22 @@ class SelfReviewForm(forms.Form):
     successes_2 = forms.CharField(widget=forms.TextInput())
     plans_1 = forms.CharField(widget=forms.TextInput())
     plans_2 = forms.CharField(widget=forms.TextInput())
+
+
+class RateForm(forms.Form):
+    """
+        Форма оценки пользователя в разделе 'Я оцениваю'
+    """
+    RATES = [('1', '2', '3', '4'), ('<b>1</b>', '2', '3', '4')]
+    deadlines = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
+    approaches = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
+    teamwork = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
+    practices = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
+    experience = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
+    adaptation = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
+    rates_deadlines = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
+    rates_approaches = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
+    rates_teamwork = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
+    rates_practices = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
+    rates_experience = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
+    rates_adaptation = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
