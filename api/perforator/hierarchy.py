@@ -7,7 +7,7 @@ def __format_profile_to_data(p):
         'user_id': p.user.id,
         'profile_id': p.id,
         'username': p.user.first_name,
-        'photo': base64.b64encode(p.photo.read()),
+        'photo': p.photo.url,
         'sbis': p.sbis
     }
 

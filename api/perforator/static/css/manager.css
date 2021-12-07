@@ -376,3 +376,15 @@ input[type=submit]:active {
     position: relative;
     left: -30px;
 }
+
+.peers-pic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    float: left;
+    left: -15px;
+    top: -22px;
+}

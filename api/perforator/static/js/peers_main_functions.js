@@ -29,7 +29,7 @@
 
                         const myDiv = document.createElement("div");
                         myDiv.setAttribute("id", `my-peer-${p.user_id}`);
-                        myDiv.innerHTML = `<div class="peer-sel"><div class="peers-pic"><img class="avatar" src="${p.photo}"/></div><div class="peer-info">${p.username}</div><button onclick="remove_peer_remote(${p.user_id})"> Удалить </button></div>`;
+                        myDiv.innerHTML = `<div class="peer-sel"><div class="peers-pic"><img class="avatar" src="${p.photo}"/></div><div class="peer-info">${p.username}</div><a class="close" onclick="remove_peer_remote(${p.user_id})"><i class="fas fa-times"></i></a></div>`;
                         myDiv.style.display = 'none';
                         my_peers.appendChild(myDiv);
                     }
