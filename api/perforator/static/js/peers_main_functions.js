@@ -59,11 +59,21 @@ window.onload = function () {
                         var id = p.user_id;
                         save_peers(id);
                     }
+                })
+                .then(() => {
+                    get_my_peers()
+                        .then(response => response.json())
+                        .then(json => {
+                            console.log(json);
+
+                            for (var p of json) {
+                                var id = p.user_id;
+                                save_peers(id);
+                            }
+                        });
                 });
         });
-
-};
-
+}
 
 // посылаем post-запрос на сервер, что пользователь выбрал пира
 function select_peer_remote(id) {
@@ -126,7 +136,6 @@ function delete_peers(id) {
     document.getElementById(`my-peer-${id}`).style.display = 'none';
     document.getElementById(`peer-${id}`).style.display = 'block';
 }
-
 
 // выбираем пира, скрываем и показываем нужный элемент
 // вызывается при клике, вызывает select_peer
