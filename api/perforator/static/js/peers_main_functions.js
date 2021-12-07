@@ -66,15 +66,14 @@ window.onload = function () {
                         .then(json => {
                             console.log(json);
 
-                            for (var p of json){
+                            for (var p of json) {
                                 var id = p.user_id;
                                 save_peers(id);
                             }
                         });
                 });
-
-        };
-
+        });
+}
 
 // посылаем post-запрос на сервер, что пользователь выбрал пира
 function select_peer_remote(id) {
