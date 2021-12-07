@@ -70,41 +70,7 @@
                 <span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать
                 3-7 человек
             </p>
-            <div id="my_peers">
-                <div class="peer-sel">
-                    <div class="peers-pic">
-                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
-                    </div>
-                    <div class="peer-info">
-                        {{ user.first_name }}
-                    </div>
-                    <a href="" class="close">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </div>
-                <div class="peer-sel">
-                    <div class="peers-pic">
-                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
-                    </div>
-                    <div class="peer-info">
-                        {{ user.first_name }}
-                    </div>
-                    <a href="" class="close">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </div>
-                <div class="peer-sel">
-                    <div class="peers-pic">
-                        <img class="avatar" src="{{ user.profile.photo.url }}"/>
-                    </div>
-                    <div class="peer-info">
-                        {{ user.first_name }}
-                    </div>
-                    <a href="" class="close">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </div>
-            </div>
+            <div id="my_peers"></div> <!--Сюда добавляются выбранные пиры-->
             <a href="#peers">
                 <button type="button" class="add-peer">
                     <i class="icon-plus fas fa-plus"></i>
@@ -124,7 +90,6 @@
             <p>Здесь будут результаты вашего ревью!</p>
         </div>
     </div>
-
     {% include "main/mainfiles/addons/peers.html" %}
 
     <link rel="stylesheet" href="{% static 'css/self-review.css' %}">

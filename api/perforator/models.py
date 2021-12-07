@@ -20,7 +20,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
-    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True)
+    manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
+    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True, related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
 
 

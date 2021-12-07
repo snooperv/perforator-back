@@ -106,6 +106,10 @@ a {
     display: inline-block;
 }
 
+.imanager_disable{
+    pointer-events: none;
+}
+
 /* Нужно доделать, чтобы было красиво */
 .amount {
     position: absolute;

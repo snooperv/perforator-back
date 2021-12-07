@@ -5,6 +5,7 @@ from django.urls import path, include
 from . import views
 from . import raw_peers_views
 from . import raw_reviews_views
+from . import raw_hierarchy_views
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
@@ -18,10 +19,17 @@ urlpatterns = [
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
     path('peers/delete/', raw_peers_views.delete_peers),
     path('peers/save/', raw_peers_views.save_peers),
+    path('peers/id', raw_peers_views.get_where_user_id_is_peer),
+    path('peers/uid', raw_peers_views.get_user_peers),
+
 
     path('self-review/', raw_reviews_views.get_self_review),
     path('self-review/main', raw_reviews_views.self_review),
     path('self-review/save/', raw_reviews_views.edit_self_review),
     path('review/form/', raw_reviews_views.get_empty_review_form),
     path('review/save/', raw_reviews_views.save_review),
+
+    path('manager', raw_hierarchy_views.get_profile_manager),
+    path('team', raw_hierarchy_views.get_profile_team),
+    path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),
 ]
