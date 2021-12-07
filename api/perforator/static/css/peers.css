@@ -63,7 +63,7 @@
     border-color: rgb(124, 124, 241);
 }
 
-.list-peers {
+.one-peer {
     width: 100%;
     background-color: #ffffff;
     border-radius: 1.5em;
@@ -78,7 +78,7 @@
     overflow: hidden;
     position: relative;
     display: inline-block;
-    float: left;
+    /*float: left;*/
     left: -15px;
     top: -22px;
 }
@@ -86,6 +86,8 @@
 .peer-info {
     font-size: 25px;
     color: #6564b7;
+    margin-left: 75px;
+    margin-top: -82px;
 }
 
 .choose {
@@ -136,9 +138,10 @@
 }
 
 .peer-sel .close {
-    margin-top: -35px;
+    margin-top: -32px;
     width: 35px;
     float: right;
     font-size: 1.7em;
     color: #f00;
+    cursor: pointer
 }
