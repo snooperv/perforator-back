@@ -1,51 +1,53 @@
 // ВАЖНО!
-// 1) Рекомендую сначала посмотреть peers.py (я там написал хорошую (надеюсь) документацию),
-// а также raw_peers_views.py - там прописаны роуты
-// 2) Обращаю внимание, что в <head> подключаем библиотеку JQuery
-// 3) Чтобы пользоваться, нужно обязательно АВТОРИЗОВАТЬСЯ
-// 4) window.location.origin - для того, чтобы работало и на localhost, и на удаленном сервере
+        // 1) Рекомендую сначала посмотреть peers.py (я там написал хорошую (надеюсь) документацию),
+        // а также raw_peers_views.py - там прописаны роуты
+        // 2) Обращаю внимание, что в <head> подключаем библиотеку JQuery
+        // 3) Чтобы пользоваться, нужно обязательно АВТОРИЗОВАТЬСЯ
+        // 4) window.location.origin - для того, чтобы работало и на localhost, и на удаленном сервере
 
-// при загрузке страницы мы сразу заполняем my_peers и peers_list
-// всеми возможными вариантами (пользователями), а потом просто
-// меняем у них visibility
-// Если у вас есть другой вариант реализации - можете его реализовать
-window.onload = function () {
-    console.log('page loaded');
-    get_all_peers()
-        .then(response => response.json())
-        .then(json => {
-            console.log(json);
 
-            var peers_list = document.getElementById("peers_list");
-            var my_peers = document.getElementById("my_peers");
+        // при загрузке страницы мы сразу заполняем my_peers и peers_list
+        // всеми возможными вариантами (пользователями), а потом просто
+        // меняем у них visibility
+        // Если у вас есть другой вариант реализации - можете его реализовать
+        window.onload = function () {
+            console.log('page loaded');
 
-            for (var p of json) {
-                const allDiv = document.createElement("div");
-                allDiv.setAttribute("id", `peer-${p['user_id']}`);
-                allDiv.innerHTML = `photo: ${p.photo} | ${p.username} (${p.user_id}) | <button onclick="select_peer_remote(${p.user_id})"> Выбрать </button>`;
-                peers_list.appendChild(allDiv);
-
-                const myDiv = document.createElement("div");
-                myDiv.setAttribute("id", `my-peer-${p.user_id}`);
-                myDiv.innerHTML = `photo: ${p.photo} | ${p.username} (${p.user_id}) | <button onclick="remove_peer_remote(${p.user_id})"> Удалить </button>`;
-                myDiv.style.display = 'none';
-                my_peers.appendChild(myDiv);
-            }
-        })
-        .then(() => {
-            get_my_peers()
+            get_all_peers()
                 .then(response => response.json())
                 .then(json => {
                     console.log(json);
 
-                    for (var p of json){
-                        var id = p.user_id;
-                        save_peers(id);
-                    }
-                });
-        });
+                    var peers_list = document.getElementById("peers_list");
+                    var my_peers = document.getElementById("my_peers");
 
-};
+                    for (var p of json) {
+                        const allDiv = document.createElement("div");
+                        allDiv.setAttribute("id", `peer-${p['user_id']}`);
+                        allDiv.innerHTML = `<div class="list-peers"><div class="peers-pic"><img class="avatar" src="${p.photo}"/></div><div class="peer-info">${p.username}</div><button onclick="select_peer_remote(${p.user_id})" class="choose"> Выбрать </button></div>`;
+                        peers_list.appendChild(allDiv);
+
+                        const myDiv = document.createElement("div");
+                        myDiv.setAttribute("id", `my-peer-${p.user_id}`);
+                        myDiv.innerHTML = `<div class="peer-sel"><div class="peers-pic"><img class="avatar" src="${p.photo}"/></div><div class="peer-info">${p.username}</div><button onclick="remove_peer_remote(${p.user_id})"> Удалить </button></div>`;
+                        myDiv.style.display = 'none';
+                        my_peers.appendChild(myDiv);
+                    }
+                })
+                .then(() => {
+                    get_my_peers()
+                        .then(response => response.json())
+                        .then(json => {
+                            console.log(json);
+
+                            for (var p of json){
+                                var id = p.user_id;
+                                save_peers(id);
+                            }
+                        });
+                });
+
+        };
 
 
         function show_add_peer_window(){
@@ -123,5 +125,3 @@ window.onload = function () {
             document.getElementById(`my-peer-${id}`).style.display = 'block';
             document.getElementById(`peer-${id}`).style.display = 'none';
         }
-
-
