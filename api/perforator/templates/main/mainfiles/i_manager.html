@@ -4,6 +4,7 @@
     Я менеджер -
 {% endblock %}
 {% block mainContent %}
+    <script src="{% static 'js/imanager_main_function.js' %}"></script>
     <div class="manager">
         <div class="double-links">
             <a href="#" class="first-link">
@@ -15,6 +16,8 @@
         </div>
         <div class="block-container">
             <h2 class="block-title">Неутвержденные пользователи<div class="peers-amount"> 1 </div></h2>
+            <div id="team">
+
             <div class="peers">
                 <button onclick="myFunction()" class="peer dropbtn">
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
@@ -57,6 +60,8 @@
                     </div>
                 </div>
             </div>
+
+        </div>
         </div>
 
         <div class="block-container">
