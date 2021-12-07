@@ -19,6 +19,9 @@ urlpatterns = [
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
     path('peers/delete/', raw_peers_views.delete_peers),
     path('peers/save/', raw_peers_views.save_peers),
+    path('peers/id', raw_peers_views.get_where_user_id_is_peer),
+    path('peers/uid', raw_peers_views.get_user_peers),
+
 
     path('self-review/', raw_reviews_views.get_self_review),
     path('self-review/main', raw_reviews_views.self_review),

@@ -41,8 +41,8 @@
                 </div>
             </a>
         </nav>
-        <nav class="side-btn small">
-            <a href="{% url 'imanager' %}">
+        <nav class="side-btn small" id="i_manager_button">
+            <a href="{% url 'imanager' %} ">
                 <div class="link-container">
                     я менеджер
                     <!-- Нужно будет поправить, сделал набросок -->
@@ -68,7 +68,6 @@
                 <img src="{% static 'img/history.svg' %}" width="20" height="20"/>
                 Прошлые периоды оценки
             </div>
-            <a href="{% url 'imanager' %}" id="i_manager_button" style="position: relative; top:100px">Я менеджер</a>
         </router-link>
     </div>
 </div>
@@ -80,7 +79,8 @@ window.onload = function () {
         .then(json => {
             let link = document.getElementById('i_manager_button')
             if (!json.length >= 1){
-                link.classList.add("imanager_disable")
+                link.style.display = "none";
+                //link.classList.add("imanager_disable")
             }
             console.log(json.length)
             console.log(link.href)
