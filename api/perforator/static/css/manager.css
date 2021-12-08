@@ -215,8 +215,10 @@ input[type=submit]:active {
     float: left;
     position: relative;
     width: 57px;
+    height: 57px;
     left: -20px;
     top: -15px;
+    border-radius: 50%;
 }
 
 .add-peer {

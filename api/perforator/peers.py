@@ -194,3 +194,55 @@ def get_user_peers(request, id):
         return result
     else:
         return {'error': True, 'message': 'Вы не авторизовались'}
+
+
+def delete_user_peers(request, id):
+    """
+        Удалить список пользователей в качестве пиров текущего пользовтаеля.
+        request.data: [ profile_id1, profile_id2, ... ] - список id профиля, которые надо удалить
+        :return: Один из следующих словраей:
+        { message: "ОК" },
+        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+    """
+    if request.user.is_authenticated:
+        profile_ids = request.data
+        user = User.objects.filter(id=id).first()
+        profile_user = Profile.objects.filter(user=user)[0]
+        for p in profile_ids:
+            profile_list = Profile.objects.filter(id=p)
+            if len(profile_list) == 0:
+                return {'error': True, f'message': f'Профиль с таким id не найден: {p}'}
+            peer = profile_list[0]
+            if peer in profile_user.peers.all():
+                profile_user.peers.remove(peer)
+                profile_user.save()
+        return {'message': 'ОК'}
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+
+
+def save_user_peers(request, id):
+    """
+        Сохранить новый список пользователей в качестве пиров текущего пользовтаеля.
+        request.data: [ profile_id1, profile_id2, ... ] - список id профиля, которые надо добавить
+        :return: Один из следующих словраей:
+        { message: "ОК" }
+        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+    """
+    if request.user.is_authenticated:
+        profile_ids = request.data
+        user = User.objects.filter(id=id).first()
+        profile_user = Profile.objects.filter(user=user)[0]
+        for p in profile_ids:
+            profile_list = Profile.objects.filter(id=p)
+            if len(profile_list) == 0:
+                return {'error': True, f'message': f'Профиль с таким id не найден: {p}'}
+            peer = profile_list[0]
+
+            if peer in profile_user.peers.all():
+                continue
+            profile_user.peers.add(peer)
+            profile_user.save()
+        return {'message': 'ОК'}
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
