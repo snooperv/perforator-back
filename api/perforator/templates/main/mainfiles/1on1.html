@@ -5,118 +5,65 @@
 {% endblock %}
 {% block mainContent %}
     <div class="container">
-        <h1 class="main-title">1-on-1</h1>
-          <div class="double-links" id="dl">
-            <a href="#"
-               class="d-link dactive"
-               onclick="
-               document.getElementById('last-per').classList.add('hide')
-               document.getElementById('current').classList.remove('hide')
-            ">
-                текущие
-            </a>
-            <a href="#"
-               class="d-link second-link "
-               onclick="
-               document.getElementById('current').classList.add('hide')
-               document.getElementById('last-per').classList.remove('hide')
-                ">
-                прошлые периоды
-            </a>
-        </div>
-
-        <div id="current">
-            <div class="peers">
-              <div class="date">
-                <h2>Q2</h2>
-                <span class="period"> 01.01.2021 - 14.01.2021</span>
-              </div>
-              <button onclick="myFunction()" class="peer dropbtn">
-                <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                <span class="name">Коновалов Илья</span>
-                <span class="position"> Мой руководитель</span>
-                <a href="#" id="chev" class="chevron rotate">
-                  <i class="fas fa-chevron-right"></i>
+        <h1>1-on-1</h1>
+          <div class="double-links">
+                <a href="#" class="first-link">
+                    текущие
                 </a>
-              </button>
-              <div id="myDropdown" class="dropdown-content">
-                <h3 class="dropdownTitle">Общие заметки</h3>
-                <textarea
-                  name="generalNotes"
-                  id="generalNotes"
-                  rows="5"
-                  class="ta big"
-                  maxlength="512"
-                  style="margin-left: 35px;"
-                ></textarea>
-                <h3 class="dropdownTitle">
-                  <i class="icon-lock fas fa-lock"></i>
-                  Личные заметки
-                </h3>
-                <textarea
-                  name="personalNotes"
-                  id="personalNotes"
-                  rows="5"
-                  class="ta big"
-                  maxlength="512"
-                  style="margin-left: 35px;"
-                ></textarea>
-              </div>
-            </div>
-        </div>
-        <div id="last-per" class="hide">
-            <div class="peers">
-              <div class="date">
-                <h2>Q1</h2>
-                <span class="period"> 01.01.2020 - 14.01.2020</span>
-              </div>
-              <button onclick="myFunction()" class="peer dropbtn">
-                <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                <span class="name">Коновалов Илья</span>
-                <span class="position"> Мой руководитель</span>
-                <a href="#" id="chev" class="chevron rotate">
-                  <i class="fas fa-chevron-right"></i>
+                <a href="#" id="lastp" class="second-link">
+                    прошлые периоды
                 </a>
-              </button>
-              <div id="myDropdown" class="dropdown-content">
-                <h3 class="dropdownTitle">Общие заметки</h3>
-                <textarea
-                  name="generalNotes"
-                  id="generalNotes"
-                  rows="5"
-                  class="ta big"
-                  maxlength="512"
-                  style="margin-left: 35px;"
-                ></textarea>
-                <h3 class="dropdownTitle">
-                  <i class="icon-lock fas fa-lock"></i>
-                  Личные заметки
-                </h3>
-                <textarea
-                  name="personalNotes"
-                  id="personalNotes"
-                  rows="5"
-                  class="ta big"
-                  maxlength="512"
-                  style="margin-left: 35px;"
-                ></textarea>
-              </div>
             </div>
+        <div class="peers">
+          <div class="date">
+            <h2>Q2</h2>
+            <span class="period"> 01.01.2021 - 14.01.2021</span>
+          </div>
+          <button onclick="myFunction()" class="peer dropbtn">
+            <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
+            <span class="name">Коновалов Илья</span>
+            <span class="position"> Мой руководитель</span>
+            <a href="#" id="chev" class="chevron rotate">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </button>
+          <div id="myDropdown" class="dropdown-content">
+            <h3 class="dropdownTitle">Общие заметки</h3>
+            <textarea
+              name="generalNotes"
+              id="generalNotes"
+              rows="5"
+              class="ta big"
+              maxlength="512"
+              style="margin-left: 35px;"
+            ></textarea>
+            <h3 class="dropdownTitle">
+              <i class="icon-lock fas fa-lock"></i>
+              Личные заметки
+            </h3>
+            <textarea
+              name="personalNotes"
+              id="personalNotes"
+              rows="5"
+              class="ta big"
+              maxlength="512"
+              style="margin-left: 35px;"
+            ></textarea>
+          </div>
         </div>
-
+        <div id="testt">
+            123
+        </div>
     </div>
 
     <script>
-        $('.d-link').on('click',function(){
-            $('.d-link.dactive').removeClass('dactive');
-            $(this).addClass('dactive');
-        });
-
         function myFunction() {
             document.getElementById('myDropdown').classList.toggle('show');
-            document.getElementById('chev').classList.toggle('down');
         };
-
+        // Позже доработаю
+        $(".rotate").click(function(){
+            $(this).toggleClass("down");
+        });
     </script>
 
     <link rel="stylesheet" href="{% static 'css/oneToOne.css' %}">
