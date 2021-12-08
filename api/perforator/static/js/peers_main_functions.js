@@ -44,7 +44,7 @@ window.onload = function () {
                             ${p.username}
                         </div>
                         <a class="close" onclick="remove_peer_remote(${p.user_id})">
-                            <i class="fas fa-times"></i>
+                            <i class="close-icon fas fa-times"></i>
                         </a>
                     </div>`;
                 myDiv.style.display = 'none';
