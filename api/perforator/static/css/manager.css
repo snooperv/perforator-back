@@ -237,8 +237,10 @@ input[type=submit]:active {
     float: left;
     position: relative;
     width: 57px;
+    height: 57px;
     left: -20px;
     top: -15px;
+    border-radius: 50%;
 }
 
 .add-peer {
@@ -397,4 +399,16 @@ input[type=submit]:active {
     float: left;
     position: relative;
     left: -30px;
+}
+
+.peers-pic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    float: left;
+    left: -25px;
+    top: -22px;
 }

@@ -1,0 +1,12 @@
+{% load static %}
+
+<div class="selection">
+    <a href="" class="close">
+        <i class="fas fa-times"></i>
+    </a>
+    <h3>Подтвердите действие</h3>
+</div>
+<a href="" class="close-popup" onclick="close_add_peers()"></a>
+{% csrf_token %}
+
+<link rel="stylesheet" href="{% static 'css/peers.css' %}">

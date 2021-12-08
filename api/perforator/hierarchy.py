@@ -7,8 +7,9 @@ def __format_profile_to_data(p):
         'user_id': p.user.id,
         'profile_id': p.id,
         'username': p.user.first_name,
-        'photo': base64.b64encode(p.photo.read()),
-        'sbis': p.sbis
+        'photo': p.photo.url,
+        'sbis': p.sbis,
+        'approve': p.approve,
     }
 
 
@@ -33,8 +34,10 @@ def get_manager(request):
     """
     if request.user.is_authenticated:
         profile = Profile.objects.filter(user=request.user)[0]
-        manager = profile.manager
-        return __format_profile_to_data(manager)
+        if profile.manager:
+            return __format_profile_to_data(profile.manager)
+        else:
+            return {'error': True, 'message': 'Менеджер отсутствует'}
     else:
         return {'error': True, 'message': 'Вы не авторизовались'}
 

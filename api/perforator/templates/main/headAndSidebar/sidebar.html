@@ -41,8 +41,8 @@
                 </div>
             </a>
         </nav>
-        <nav class="side-btn small">
-            <a href="{% url 'imanager' %}">
+        <nav class="side-btn small" id="i_manager_button">
+            <a href="{% url 'imanager' %} ">
                 <div class="link-container">
                     я менеджер
                     <!-- Нужно будет поправить, сделал набросок -->
@@ -73,17 +73,31 @@
 </div>
 
 <script>
-    try {
-        var el = document.getElementById('menuItems').getElementsByTagName('a');
-        var nav = document.getElementById('menuItems').getElementsByTagName('nav');
-        var url = document.location.href;
-        for (var i = 0; i < el.length; i++) {
-            if (url === el[i].href || url === el[i].href + '#popup') {
-                nav[i].className += ' active';
+window.onload = function () {
+    fetch(window.location.origin + "/perforator/team")
+        .then(response => response.json())
+        .then(json => {
+            let link = document.getElementById('i_manager_button')
+            if (!json.length >= 1){
+                link.style.display = "none";
+                //link.classList.add("imanager_disable")
             }
+            console.log(json.length)
+            console.log(link.href)
+        })
+};
+
+try {
+    var el = document.getElementById('menuItems').getElementsByTagName('a');
+    var nav = document.getElementById('menuItems').getElementsByTagName('nav');
+    var url = document.location.href;
+    for (var i = 0; i < el.length; i++) {
+        if (url === el[i].href || url === el[i].href + '#popup') {
+            nav[i].className += ' active';
         }
-    } catch (e) {
     }
+} catch (e) {}
+
 </script>
 
 <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
