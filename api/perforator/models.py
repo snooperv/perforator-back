@@ -48,6 +48,24 @@ class PeerReviews(models.Model):
     rates_experience = models.IntegerField(choices=Rates.choices)
     rates_adaptation = models.IntegerField(choices=Rates.choices)
 
+    def __dict__(self):
+        return {
+            'peer_id': self.peer_id,
+            'rated_person': self.rated_person,
+            'deadlines': self.deadlines,
+            'approaches': self.approaches,
+            'teamwork': self.teamwork,
+            'practices': self.practices,
+            'experience': self.experience,
+            'adaptation': self.adaptation,
+            'rates_deadlines': self.rates_deadlines,
+            'rates_approaches': self.rates_approaches,
+            'rates_teamwork': self.rates_teamwork,
+            'rates_practices': self.rates_practices,
+            'rates_experience': self.rates_experience,
+            'rates_adaptation': self.rates_adaptation
+        }
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
