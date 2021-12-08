@@ -23,48 +23,6 @@ class Profile(models.Model):
     manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
     peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True, related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
-    approve = models.BooleanField(default=False)
-
-
-class PeerReviews(models.Model):
-    class Rates(models.IntegerChoices):
-        LOWER = 1
-        LOW = 2
-        HIGH = 3
-        HIGHER = 4
-
-    peer_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='rated_reviews')
-    rated_person = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='my_reviews')
-    deadlines = models.CharField(max_length=512)
-    approaches = models.CharField(max_length=512)
-    teamwork = models.CharField(max_length=512)
-    practices = models.CharField(max_length=512)
-    experience = models.CharField(max_length=512)
-    adaptation = models.CharField(max_length=512)
-    rates_deadlines = models.CharField(max_length=512)
-    rates_approaches = models.IntegerField(choices=Rates.choices)
-    rates_teamwork = models.IntegerField(choices=Rates.choices)
-    rates_practices = models.IntegerField(choices=Rates.choices)
-    rates_experience = models.IntegerField(choices=Rates.choices)
-    rates_adaptation = models.IntegerField(choices=Rates.choices)
-
-    def __dict__(self):
-        return {
-            'peer_id': self.peer_id,
-            'rated_person': self.rated_person,
-            'deadlines': self.deadlines,
-            'approaches': self.approaches,
-            'teamwork': self.teamwork,
-            'practices': self.practices,
-            'experience': self.experience,
-            'adaptation': self.adaptation,
-            'rates_deadlines': self.rates_deadlines,
-            'rates_approaches': self.rates_approaches,
-            'rates_teamwork': self.rates_teamwork,
-            'rates_practices': self.rates_practices,
-            'rates_experience': self.rates_experience,
-            'rates_adaptation': self.rates_adaptation
-        }
 
 
 @receiver(post_save, sender=User)

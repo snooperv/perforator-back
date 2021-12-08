@@ -6,9 +6,36 @@
     </a>
     <h3>Выберите оценивающего</h3>
     <input type="text" class="peers-text">
-    <div id="list_peers"></div> <!--Сюда добавляются все пиры, которых можно выбрать-->
+    <div class="list-peers">
+        <div class="peers-pic">
+            <img class="avatar" src="{{ user.profile.photo.url }}"/>
+        </div>
+        <div class="peer-info">
+            {{ user.first_name }}
+        </div>
+        <button class="choose">Выбрать</button>
+    </div>
+    <div class="list-peers">
+        <div class="peers-pic">
+            <img class="avatar" src="{{ user.profile.photo.url }}"/>
+        </div>
+        <div class="peer-info">
+            {{ user.first_name }}
+        </div>
+        <button class="choose">Выбрать</button>
+    </div>
+    <div class="list-peers">
+        <div class="peers-pic">
+            <img class="avatar" src="{{ user.profile.photo.url }}"/>
+        </div>
+        <div class="peer-info">
+            {{ user.first_name }}
+        </div>
+        <button class="choose">Выбрать</button>
+    </div>
 </div>
-<a href="" class="close-popup" onclick="close_add_peers()"></a>
-{% csrf_token %}
+<a href="" class="close-popup"></a>
 
+<script src="{% static 'js/peers_modal_window.js' %}"></script>
+<script src="{% static 'js/peers_main_functions.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/peers.css' %}">

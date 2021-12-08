@@ -49,131 +49,94 @@
                 </button>
                 <div id="myDropdown" class="dropdown-content">
                     <div class="dropdown-container">
-
-                        <form method="post">
-                            {% csrf_token %}
-                            {% load widget_tweaks %}
-                            <h3 class="dropdownTitle">
-                                Соблюдение сроков
-                            </h3>
-
-                            {% render_field review.deadlines id='deadlines' class='ta' %}
-
-                            <div>
-                                {% for choice in review.rates_deadlines %}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Пути достижения целей
-                            </h3>
-
-                            <p class="description">
-                                Идет ли человек по головам или находит пути решения договариваясь
-                                с коллегами
-                            </p>
-
-                            {% render_field review.approaches id='goals' class='ta' %}
-
-                            <div>
-                                {% for choice in review.rates_approaches %}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Умение работать в команде
-                            </h3>
-
-                            <p class="description">
-                                Насколько активно человек вовлечен в командную работу
-                            </p>
-
-                            {% render_field review.teamwork id='teamwork' class='ta' %}
-
-                            <div>
-                                {% for choice in review.rates_teamwork %}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Приверженность к хорошим
-                                теx.практикам
-                            </h3>
-
-                            <p class="description">
-                                Насколько человек придерживается покрытия кода авто тестами,
-                                проектирует хорошую архитектуру, использует хорошие паттерны.
-                            </p>
-
-                            {% render_field review.practices id='techPrac' class='ta' %}
-
-                            <div>
-                                {% for choice in review.rates_practices %}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Уровень владения
-                                технологиями
-                            </h3>
-
-                            <p class="description">
-                                Насколько хорошо человек владеет технологиями разработки,
-                                используемым стеком и т.д.
-                            </p>
-
-                            {% render_field review.experience id='techSkills' class='ta' %}
-
-                            <div>
-                                {% for choice in review.rates_experience %}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Адаптивность
-                            </h3>
-
-                            <p class="description">
-                                Насколько быстро человек адаптируется к новым условиям работы,
-                                вливается в новый коллектив
-                            </p>
-
-                            {% render_field review.adaptation id='adaptive' class='ta' %}
-
-                            <div>
-                                {% for choice in review.rates_adaptation %}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <input type="submit" value="Отправить отзыв"/>
-
-                        </form>
-
-
+                        <h3 class="dropdownTitle">
+                            Соблюдение сроков
+                        </h3>
+                        <!--            <div class="rating">-->
+                        <!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+                        <!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+                        <!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+                        <!--              <img src="@/assets/rate.svg" alt="rating" class="rate">-->
+                        <!--            </div>-->
+                        <textarea
+                                name="deadlines"
+                                id="deadlines"
+                                rows="4"
+                                class="ta"
+                                maxlength="512"
+                        ></textarea>
+                        <h3 class="dropdownTitle">
+                            Пути достижения целей
+                        </h3>
+                        <p class="description">
+                            Идет ли человек по головам или находит пути решения договариваясь
+                            с коллегами
+                        </p>
+                        <textarea
+                                name="goals"
+                                id="goals"
+                                rows="4"
+                                class="ta"
+                                maxlength="512"
+                        ></textarea>
+                        <h3 class="dropdownTitle">
+                            Умение работать в команде
+                        </h3>
+                        <p class="description">
+                            Насколько активно человек вовлечен в командную работу
+                        </p>
+                        <textarea
+                                name="teamwork"
+                                id="teamwork"
+                                rows="4"
+                                class="ta"
+                                maxlength="512"
+                        ></textarea>
+                        <h3 class="dropdownTitle">
+                            Приверженность к хорошим
+                            теx.практикам
+                        </h3>
+                        <p class="description">
+                            Насколько человек придерживается покрытия кода авто тестами,
+                            проектирует хорошую архитектуру, использует хорошие паттерны.
+                        </p>
+                        <textarea
+                                name="techPrac"
+                                id="techPrac"
+                                rows="4"
+                                class="ta"
+                                maxlength="512"
+                        ></textarea>
+                        <h3 class="dropdownTitle">
+                            Уровень владения
+                            технологиями
+                        </h3>
+                        <p class="description">
+                            Насколько хорошо человек владеет технологиями разработки,
+                            используемым стеком и т.д.
+                        </p>
+                        <textarea
+                                name="techSkills"
+                                id="techSkills"
+                                rows="4"
+                                class="ta"
+                                maxlength="512"
+                        ></textarea>
+                        <h3 class="dropdownTitle">
+                            Адаптивность
+                        </h3>
+                        <p class="description">
+                            Насколько быстро человек адаптируется к новым условиям работы,
+                            вливается в новый коллектив
+                        </p>
+                        <textarea
+                                name="adaptive"
+                                id="adaptive"
+                                rows="4"
+                                class="ta"
+                                maxlength="512"
+                        ></textarea>
+                        <input type="submit" value="Отправить отзыв"/>
                     </div>
 
                 </div>
