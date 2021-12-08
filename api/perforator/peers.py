@@ -38,7 +38,7 @@ def get_all_peers(request):
                 profile.save()
             profile = Profile.objects.filter(user=u)[0]
             obj = {'user_id': u.id, 'profile_id': profile.id,
-                   'username': u.first_name, 'photo': profile.photo.url, 'sbis': profile.sbis}
+                   'username': u.first_name, 'photo': profile.photo.url, 'sbis': profile.sbis, 'approve': profile.approve}
             result.append(obj)
         return result
     else:
@@ -65,7 +65,7 @@ def get_all_current_user_peers(request):
         peers = profile.peers.all()
         for p in peers:
             obj = {'user_id': p.user.id, 'profile_id': p.id,
-                   'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis}
+                   'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis, 'approve': p.approve}
             result.append(obj)
         return result
     else:
@@ -174,7 +174,7 @@ def get_where_user_id_is_peer(request, id):
         profiles = Profile.objects.filter(peers__user_id=user.id)
         for p in profiles:
             obj = {'user_id': p.user.id, 'profile_id': p.id,
-                   'username': p.user.first_name, 'photo': p.photo.url}
+                   'username': p.user.first_name, 'photo': p.photo.url, 'approve': p.approve}
             result.append(obj)
         return result
     else:
@@ -189,7 +189,7 @@ def get_user_peers(request, id):
         peers = profile.peers.all()
         for p in peers:
             obj = {'user_id': p.user.id, 'profile_id': p.id,
-                   'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis}
+                   'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis, 'approve': p.approve}
             result.append(obj)
         return result
     else:
@@ -243,6 +243,17 @@ def save_user_peers(request, id):
                 continue
             profile_user.peers.add(peer)
             profile_user.save()
+        return {'message': 'ОК'}
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+
+
+def approve_user(request, id):
+    if request.user.is_authenticated:
+        user = User.objects.filter(id=id).first()
+        profile = Profile.objects.filter(user=user)[0]
+        profile.approve = True
+        profile.save()
         return {'message': 'ОК'}
     else:
         return {'error': True, 'message': 'Вы не авторизовались'}

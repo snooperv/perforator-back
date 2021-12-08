@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 
 from . import reviews
+from .form import SelfReviewForm
 
 """
     Роуты для ревью (селф- и обычных).
@@ -12,8 +13,10 @@ from . import reviews
 
 
 def self_review(request):
+    form = SelfReviewForm('self')
+    review = reviews.get_self_review(request)
     return render(request,
-                  'reviews/self.review.html')
+                  'reviews/self_review.html', {'review_form': form, 'review': review})
 
 
 @api_view(['GET'])

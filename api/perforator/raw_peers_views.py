@@ -62,3 +62,8 @@ def delete_user_peers(request):
 @api_view(['POST'])
 def save_user_peers(request):
     return Response(data=peers.save_user_peers(request, request.GET['id']), status=200)
+
+
+@api_view(['POST'])
+def approve_user(request):
+    return Response(data=peers.approve_user(request, request.GET['id']), status=200)
