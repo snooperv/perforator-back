@@ -50,9 +50,9 @@ def get_self_review(request):
     if (not review):
         performance_review = PerformanceReview.objects.get(id=1)
         review = Review.objects.create(appraising_person=profile,
-                                       evaluated_person=profile,
-                                       performance_review=performance_review,
-                                       is_draft=True)
+                        evaluated_person=profile,
+                        performance_review=performance_review,
+                        is_draft=True)
         for grade_category in performance_review.self_review_categories.all():
             Grade.objects.create(
                 review=review,
@@ -146,9 +146,9 @@ def save_review(request):
         return {'error': True, 'message': 'Вы не авторизовались'}
     profile = Profile.objects.filter(user=request.user)[0]
     review = Review.objects.create(appraising_person=profile,
-                                   evaluated_person_id=int(request.data['evaluated_person_id']),
-                                   performance_review_id=1,
-                                   is_draft=False)
+                    evaluated_person_id=int(request.data['evaluated_person_id']),
+                    performance_review_id=1,
+                    is_draft=False)
     if not request.data['is_not_enough_data']:
         for grade in request.data['grades']:
             Grade.objects.create(review=review,
