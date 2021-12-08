@@ -21,6 +21,8 @@ urlpatterns = [
     path('peers/save/', raw_peers_views.save_peers),
     path('peers/id', raw_peers_views.get_where_user_id_is_peer),
     path('peers/uid', raw_peers_views.get_user_peers),
+    path('peers/delete/user', raw_peers_views.delete_user_peers),
+    path('peers/save/user', raw_peers_views.save_user_peers),
 
 
     path('self-review/', raw_reviews_views.get_self_review),
@@ -32,4 +34,6 @@ urlpatterns = [
     path('manager', raw_hierarchy_views.get_profile_manager),
     path('team', raw_hierarchy_views.get_profile_team),
     path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),
+
+    path('peers/approve', raw_peers_views.approve_user),
 ]

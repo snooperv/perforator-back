@@ -52,3 +52,18 @@ def get_where_user_id_is_peer(request):
 @api_view(['GET'])
 def get_user_peers(request):
     return Response(data=peers.get_user_peers(request, request.GET['id']), status=200)
+
+
+@api_view(['POST'])
+def delete_user_peers(request):
+    return Response(data=peers.delete_user_peers(request, request.GET['id']), status=200)
+
+
+@api_view(['POST'])
+def save_user_peers(request):
+    return Response(data=peers.save_user_peers(request, request.GET['id']), status=200)
+
+
+@api_view(['POST'])
+def approve_user(request):
+    return Response(data=peers.approve_user(request, request.GET['id']), status=200)
