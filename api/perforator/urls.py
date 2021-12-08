@@ -34,4 +34,6 @@ urlpatterns = [
     path('manager', raw_hierarchy_views.get_profile_manager),
     path('team', raw_hierarchy_views.get_profile_team),
     path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),
+
+    path('peers/approve', raw_peers_views.approve_user),
 ]

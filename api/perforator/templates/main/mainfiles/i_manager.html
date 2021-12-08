@@ -14,58 +14,12 @@
                 моя команда
             </a>
         </div>
+
         <div class="block-container">
-            <h2 class="block-title">Неутвержденные пользователи<div class="peers-amount"> 1 </div></h2>
-            <div id="team">
-
-            <div class="peers">
-                <button onclick="myFunction()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                    <span class="name">Коновалов Илья</span>
-                    <a href="#" class="chevron">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                    <div class="dropdown-container" >
-                        <div class="dropdown-description">
-                            пиры, которых выбрал сотрудник
-                        </div>
-
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
-                        <div>
-                        <button class="add-peer">
-                            <i class="icon-plus fas fa-plus"></i>
-                            Добавить пира
-                        </button>
-                        <input class="accept" type="submit" value="утвердить"/>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="block-title">Неутвержденные пользователи<div class="peers-amount" id="not_approve_users_count">0</div></h2>
+            <div id="team_not_approve">
+                <div class="peers"></div>
             </div>
-
-        </div>
         </div>
 
         <div class="block-container">
@@ -83,31 +37,11 @@
                 </div>
             </div>
         </div>
+
         <div class="block-container">
-            <h2 class="block-title">Утверждённые пользователи<div class="peers-amount last"> 1 </div></h2>
-            <div class="peers">
-                <button onclick="myFunction2()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                    <span class="name">Коновалов Илья</span>
-                    <a href="#" class="chevron">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </button>
-                <div id="myDropdown1" class="dropdown-content">
-                    <div class="dropdown-container">
-                        <div class="dropdown-description">
-                            коллеги, которых выбрал сотрудник
-                        </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                        </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="block-title">Утверждённые пользователи<div class="peers-amount last" id="approve_users_count">0</div></h2>
+            <div id="team_approve">
+                <div class="peers"></div>
             </div>
         </div>
 
@@ -243,5 +177,6 @@
     </div>
 
 {% include "main/mainfiles/addons/peers.html" %}
+{% include "main/mainfiles/addons/confirm.html" %}
 <link rel="stylesheet" href="{% static 'css/manager.css' %}">
 {% endblock %}

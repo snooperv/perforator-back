@@ -23,6 +23,7 @@ class Profile(models.Model):
     manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
     peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True, related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
+    approve = models.BooleanField(default=False)
 
 
 class PeerReviews(models.Model):

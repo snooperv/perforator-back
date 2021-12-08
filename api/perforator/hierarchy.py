@@ -8,7 +8,8 @@ def __format_profile_to_data(p):
         'profile_id': p.id,
         'username': p.user.first_name,
         'photo': p.photo.url,
-        'sbis': p.sbis
+        'sbis': p.sbis,
+        'approve': p.approve,
     }
 
 
