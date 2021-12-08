@@ -27,10 +27,19 @@
                     </a>
                 </button>
                 <div id="myDropdown" class="dropdown-content">
-                    <div class="dropdown-container">
+                    <div class="dropdown-container" >
                         <div class="dropdown-description">
                             пиры, которых выбрал сотрудник
                         </div>
+
+                        <div class="selected-peer">
+                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
+                            <span class="selected-peer-name">Коновалов Илья</span>
+                            <a href="#" class="delete-peer">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+
                         <div class="selected-peer">
                             <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
                             <span class="selected-peer-name">Коновалов Илья</span>
@@ -45,18 +54,13 @@
                                 <i class="fas fa-times"></i>
                             </a>
                         </div>
-                        <div class="selected-peer">
-                            <img src="{% static 'img/pic.png' %}" class="selected-peer-avatar"/>
-                            <span class="selected-peer-name">Коновалов Илья</span>
-                            <a href="#" class="delete-peer">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        </div>
+                        <div>
                         <button class="add-peer">
                             <i class="icon-plus fas fa-plus"></i>
                             Добавить пира
                         </button>
                         <input class="accept" type="submit" value="утвердить"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -238,6 +242,6 @@
         </script>
     </div>
 
-
+{% include "main/mainfiles/addons/peers.html" %}
 <link rel="stylesheet" href="{% static 'css/manager.css' %}">
 {% endblock %}
