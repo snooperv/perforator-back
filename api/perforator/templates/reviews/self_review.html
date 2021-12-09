@@ -18,7 +18,7 @@
             window.onload = function () {
                 get_self_review()
                     .then(response => response.json())
-                .then(json => {
+                    .then(json => {
                     var selfReview = document.getElementById("self-review");
 
                     grades = json['grades']

@@ -87,8 +87,9 @@ class SelfReview(models.Model):
 # Модель Категория оценки (по которой пользователю предлагают
 # оценить сотрудника)
 class GradeCategory(models.Model):
-    name = models.CharField(max_length=60)
-    description = models.CharField(max_length=60)
+    name = models.CharField(max_length=64, null=True)
+    preview_description = models.CharField(max_length=512, null=True)
+    description = models.CharField(max_length=512, null=True)
 
 
 # Модель Перформанс-Ревью
