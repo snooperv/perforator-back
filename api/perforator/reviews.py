@@ -47,7 +47,7 @@ def get_self_review(request):
     review = Review.objects.filter(
         appraising_person=profile.id,
         evaluated_person=profile.id).first()
-    if (not review):
+    if not review:
         performance_review = PerformanceReview.objects.get(id=1)
         review = Review.objects.create(appraising_person=profile,
                                        evaluated_person=profile,

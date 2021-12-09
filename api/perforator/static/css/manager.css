@@ -5,15 +5,37 @@
 .double-links {
     display: inline-block;
     margin-top: 25px;
-    padding: 10px 35px;
+    padding: 10px 0px;
     background-color: #fff;
     border-radius: 25px;
     border: 1px solid #EDBD31;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
 }
 
+.d-link {
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 12px 30px 11px 30px;
+    letter-spacing: 1px;
+    font-weight: 1000;
+    font-family: 'Gotham Pro light';
+}
+
+.dactive {
+    background: #A5A4F5;
+    color: #fff;
+}
+
+.main-cont {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
 .second-link {
-    margin-left: 30px;
+    margin-left: -15px;
 }
 
 .block-container {
@@ -215,8 +237,10 @@ input[type=submit]:active {
     float: left;
     position: relative;
     width: 57px;
+    height: 57px;
     left: -20px;
     top: -15px;
+    border-radius: 50%;
 }
 
 .add-peer {
@@ -378,13 +402,13 @@ input[type=submit]:active {
 }
 
 .peers-pic {
-    width: 75px;
-    height: 75px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
     display: inline-block;
     float: left;
-    left: -15px;
+    left: -25px;
     top: -22px;
 }

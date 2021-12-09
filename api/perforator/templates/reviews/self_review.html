@@ -6,33 +6,55 @@
 </head>
 <body>
 <h2>Сэлф-ревью</h2>
-        <div id="self-review">
-            <form>
+        <form id="self-review">
 
-            </form>
-        </div>
+        </form>
         <div id="buttons">
-            <button onclick="save_self_review()">Сохранить сэлф-ревью</button>
+            <button onclick="save_self_review(false)">Отправить сэлф-ревью</button>
+            <button onclick="save_self_review(true)">Сохранить черновик</button>
         </div>
         {% csrf_token %}  <!-- этот токен нужен для POST-запросов -->
         <script>
             window.onload = function () {
                 get_self_review()
                     .then(response => response.json())
-                    .then(json => {
-                        console.log(json)
-                        for (let p of json) {
+                .then(json => {
+                    var selfReview = document.getElementById("self-review");
 
-                        }
-                    })
+                    grades = json['grades']
+                    for (var grade of grades) {
+                        const allDiv = document.createElement("div");
+                        allDiv.setAttribute("category_id", `${grade['id']}`);
+                        allDiv.innerHTML = `<p>${grade['grade_category_description']}</p><textarea>${grade['comment']}</textarea>`;
+                        selfReview.appendChild(allDiv);
+                    }
+                })
             }
 
             function get_self_review() {
                 return fetch(window.location.origin + "/perforator/self-review/");
             }
 
-            function save_self_review() {
+            function save_self_review(is_draft) {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
+                data = {'is_draft': is_draft, 'grades': []}
+                let selfReviewGrades = document.getElementById("self-review").children;
+                for (let gradeDiv of selfReviewGrades) {
+                    data['grades'].push({
+                        'grade_category_id': gradeDiv.getAttribute('category_id'),
+                        'comment': gradeDiv.getElementsByTagName('textarea')[0].value,
+                    })
+                }
+
+                fetch(window.location.origin + "/perforator/self-review/save/", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify(data)
+                })
             }
         </script>
 </body>

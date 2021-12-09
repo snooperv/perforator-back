@@ -1,16 +1,44 @@
-h1 {
-  text-align: left;
-  color: #222;
-  margin-top: 30px;
-  font-size: 38px;
-  align-self: start;
-  margin-left: 75px;
-}
 
 h2 {
   display: inline-block;
   color: #222;
   font-size: 32px;
+}
+
+.main-title {
+  text-align: left;
+  color: #222;
+  margin-top: 30px;
+  font-size: 38px;
+  margin-bottom: 0;
+}
+
+.double-links {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 0px;
+    background-color: #fff;
+    border-radius: 25px;
+    border: 1px solid #EDBD31;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.d-link {
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 12px 50px 11px 50px;
+    letter-spacing: 1px;
+    font-weight: 1000;
+    font-family: 'Gotham Pro light';
+}
+
+.dactive {
+    background: #A5A4F5;
+    color: #fff;
+}
+
+.second-link {
+    margin-left: -5px;
 }
 
 .date {
@@ -21,19 +49,6 @@ h2 {
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  font-size: 20px;
-  color: rgb(167, 167, 167);
-  font-weight: 600;
-}
-
-.links {
-  align-self: flex-start;
   margin-left: 50px;
 }
 
@@ -133,6 +148,7 @@ h2 {
   color: #000;
   margin-left: 30px;
   margin-bottom: 10px;
+  font-size: 22px;
 }
 
 .show {
@@ -161,23 +177,6 @@ h2 {
   margin-right: -2px;
 }
 
-.double-links {
-    display: inline-block;
-    padding: 10px 35px;
-    background-color: #fff;
-    border-radius: 25px;
-    border: 1px solid #EDBD31;
-    font-weight: 400;
-     align-self: flex-start;
-    margin-left: 50px;
-    font-size: 16px;
-    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
-}
-
-.second-link {
-    margin-left: 30px;
-}
-
 .rotate{
     -moz-transition: all 0.2s linear;
     -webkit-transition: all 0.2s linear;
@@ -189,4 +188,8 @@ h2 {
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
+}
+
+.hide {
+  display: none;
 }

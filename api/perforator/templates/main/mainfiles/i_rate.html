@@ -59,12 +59,14 @@
 
                             {% render_field review.deadlines id='deadlines' class='ta' %}
 
-                            <fieldset>
-{#                                {% for choice in review.rates_deadlines %}#}
-{#                                    <span>{{ choice.tag }}</span>#}
-{#                                    {{ choice.choice_label }}#}
-{#                                {% endfor %}#}
-                            </fieldset>
+                            <div>
+                                {% for choice in review.rates_deadlines %}
+                                    <label for="{{ choice.id_for_label }}">
+                                        <span>{{ choice.tag }}</span>
+                                        {{ choice.choice_label }}
+                                    </label>
+                                {% endfor %}
+                            </div>
 
                             <h3 class="dropdownTitle">
                                 Пути достижения целей
@@ -77,6 +79,15 @@
 
                             {% render_field review.approaches id='goals' class='ta' %}
 
+                            <div>
+                                {% for choice in review.rates_approaches %}
+                                    <label for="{{ choice.id_for_label }}">
+                                        <span>{{ choice.tag }}</span>
+                                        {{ choice.choice_label }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+
                             <h3 class="dropdownTitle">
                                 Умение работать в команде
                             </h3>
@@ -86,6 +97,15 @@
                             </p>
 
                             {% render_field review.teamwork id='teamwork' class='ta' %}
+
+                            <div>
+                                {% for choice in review.rates_teamwork %}
+                                    <label for="{{ choice.id_for_label }}">
+                                        <span>{{ choice.tag }}</span>
+                                        {{ choice.choice_label }}
+                                    </label>
+                                {% endfor %}
+                            </div>
 
                             <h3 class="dropdownTitle">
                                 Приверженность к хорошим
@@ -99,6 +119,15 @@
 
                             {% render_field review.practices id='techPrac' class='ta' %}
 
+                            <div>
+                                {% for choice in review.rates_practices %}
+                                    <label for="{{ choice.id_for_label }}">
+                                        <span>{{ choice.tag }}</span>
+                                        {{ choice.choice_label }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+
                             <h3 class="dropdownTitle">
                                 Уровень владения
                                 технологиями
@@ -111,6 +140,15 @@
 
                             {% render_field review.experience id='techSkills' class='ta' %}
 
+                            <div>
+                                {% for choice in review.rates_experience %}
+                                    <label for="{{ choice.id_for_label }}">
+                                        <span>{{ choice.tag }}</span>
+                                        {{ choice.choice_label }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+
                             <h3 class="dropdownTitle">
                                 Адаптивность
                             </h3>
@@ -121,6 +159,15 @@
                             </p>
 
                             {% render_field review.adaptation id='adaptive' class='ta' %}
+
+                            <div>
+                                {% for choice in review.rates_adaptation %}
+                                    <label for="{{ choice.id_for_label }}">
+                                        <span>{{ choice.tag }}</span>
+                                        {{ choice.choice_label }}
+                                    </label>
+                                {% endfor %}
+                            </div>
 
                             <input type="submit" value="Отправить отзыв"/>
 
