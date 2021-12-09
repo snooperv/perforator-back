@@ -188,11 +188,40 @@ input[type=submit]:active {
 
 .ta {
     border-radius: 15px;
-    border: 1px solid #222222;
+    border: 1px solid #8683F8;
     width: 90%;
-    padding: 20px;
+    min-height: 100px;
+    height: 100%;
+    padding: 10px 15px;
     font-size: 16px;
     resize: none;
+}
+
+.smaller-ta {
+    border-radius: 15px;
+    border: 1px solid #222222;
+    width: 90%;
+    min-height: 75px;
+    height: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    resize: none;
+}
+
+.char-count {
+    text-align: right;
+    font-size: 14px;
+    position: relative;
+    top: -30px;
+    right: 10%;
+}
+
+.chars, .max {
+    position: relative;
+    display: inline-block;
+    font-family: 'Gotham Pro light';
+    font-weight: 400;
+    color: #979797;
 }
 
 .add-peer {

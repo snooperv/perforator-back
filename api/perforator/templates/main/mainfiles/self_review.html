@@ -51,7 +51,11 @@
                         развивать, чтобы выполнять работу эффективнее. Например, ваша работа страдает из-за того, что
                         сложно вести переговоры. Значит, это ваша зона роста.
                     </p>
-                    <textarea name="improvement-zones" id="imp-zones" rows="5" class="ta"></textarea>
+                    <textarea name="improvement-zones" id="imp-zones" maxlength="512" rows="5" class="ta"></textarea>
+                    <div class="char-count">
+                        <span id="imp-zones-chars" class="chars">0</span>
+                        <span id="plan-max" class="max">/ 512 символов</span>
+                    </div>
                 </div>
                 <div id="plans">
                     <h4>Планы на будущее</h4>
@@ -59,7 +63,11 @@
                         Напишите долгосрочные планы — к чему хотите прийти в течение следующих нескольких месяцев, и
                         свои пожелания. Подумайте, что вы хотели бы видеть в вашем следующем селф-ревью.
                     </p>
-                    <textarea name="plans" id="plan" rows="5" class="ta"></textarea>
+                    <textarea name="plans" id="plan" rows="5" maxlength="512" class="ta"></textarea>
+                    <div class="char-count">
+                        <span id="plan-chars" class="chars">0</span>
+                        <span id="plan-max" class="max">/ 512 символов</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,6 +98,19 @@
             <p>Здесь будут результаты вашего ревью!</p>
         </div>
     </div>
+
+    <script>
+
+    $('#plan, #imp-zones').each(function() {
+        $(this).keyup(function () {
+            var characterCount = $(this).val().length,
+            current = $(this).next().find('.chars')
+        current.text(characterCount);
+        })
+    });
+
+    </script>
+
     {% include "main/mainfiles/addons/peers.html" %}
     <script src="{% static 'js/disable_button.js' %}"></script>
     <script src="{% static 'js/peers_main_functions.js' %}"></script>

@@ -182,9 +182,17 @@
     </div>
 
     <script>
-        function myFunction() {
-            document.getElementById('myDropdown').classList.toggle('show')
-        }
+        document.querySelectorAll(".dropbtn")
+        .forEach(element => element.addEventListener("click", function () {
+                nextNode = this.nextElementSibling;
+                if(!nextNode.classList.contains("show")){
+                	nextNode.classList.add("show");
+                }
+                else{
+                  nextNode.classList.remove('show');
+                }
+            })
+        );
     </script>
 
     <link rel="stylesheet" href="{% static 'css/me-estimate.css' %}">

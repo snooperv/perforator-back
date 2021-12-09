@@ -99,7 +99,8 @@ h2 {
   color: #edbd31;
   font-weight: 400;
   position: relative;
-  left: 350px;
+  float: right;
+  margin-right: 25px;
 }
 
 .peer-avatar {

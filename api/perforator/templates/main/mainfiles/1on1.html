@@ -34,12 +34,42 @@
                 <button onclick="myFunction1()" class="peer dropbtn">
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
                     <span class="name">Коновалов Илья</span>
+                    <a href="#" id="chev" class="chevron rotate">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
                     <span class="position"> Мой руководитель</span>
-                    <a href="#" id="chev1" class="chevron rotate">
+                </button>
+                <div id="myDropdown" class="dropdown-content">
+                    <h3 class="dropdownTitle">Общие заметки</h3>
+                    <textarea
+                            name="generalNotes"
+                            id="generalNotes"
+                            rows="5"
+                            class="ta big"
+                            maxlength="512"
+                            style="margin-left: 35px;"
+                    ></textarea>
+                    <h3 class="dropdownTitle">
+                        <i class="icon-lock fas fa-lock"></i>
+                        Личные заметки
+                    </h3>
+                    <textarea
+                            name="personalNotes"
+                            id="personalNotes"
+                            rows="5"
+                            class="ta big"
+                            maxlength="512"
+                            style="margin-left: 35px;"
+                    ></textarea>
+                </div>
+                <button onclick="myFunction1()" class="peer dropbtn">
+                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
+                    <span class="name">Коновалов Илья</span>
+                    <a href="#" id="chev" class="chevron rotate">
                         <i class="fas fa-chevron-right"></i>
                     </a>
                 </button>
-                <div id="myDropdown1" class="dropdown-content">
+                <div id="myDropdown" class="dropdown-content">
                     <h3 class="dropdownTitle">Общие заметки</h3>
                     <textarea
                             name="generalNotes"
@@ -73,8 +103,7 @@
                 <button onclick="myFunction2()" class="peer dropbtn">
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
                     <span class="name">Коновалов Илья</span>
-                    <span class="position"> Мой руководитель</span>
-                    <a href="#" id="chev2" class="chevron rotate">
+                    <a href="#" id="chev" class="chevron rotate">
                         <i class="fas fa-chevron-right"></i>
                     </a>
                 </button>
@@ -112,15 +141,21 @@
             $(this).addClass('dactive');
         });
 
-        function myFunction1() {
-            document.getElementById('myDropdown1').classList.toggle('show');
-            document.getElementById('chev1').classList.toggle('down');
-        };
+        {#function myFunction() {#}
+        {#    document.getElementById('myDropdown1').classList.toggle('show');#}
+        {#    document.getElementById('chev1').classList.toggle('down');#}
 
-        function myFunction2() {
-            document.getElementById('myDropdown2').classList.toggle('show');
-            document.getElementById('chev2').classList.toggle('down');
-        };
+        document.querySelectorAll(".dropbtn")
+        .forEach(element => element.addEventListener("click", function () {
+                nextNode = this.nextElementSibling;
+                if(!nextNode.classList.contains("show")){
+                	nextNode.classList.add("show");
+                }
+                else{
+                  nextNode.classList.remove('show');
+                }
+            })
+        );
 
     </script>
 
