@@ -19,6 +19,12 @@ def index(request):
                   context={'num_self': num_self})
 
 
+def process_rate_form(request):
+    if request.method == 'POST':
+        print(request.cleaned_data)
+
+
+
 class I_Rate(LoginRequiredMixin, View):
     model = Grade
 
