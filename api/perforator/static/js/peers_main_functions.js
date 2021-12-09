@@ -12,6 +12,7 @@
 // Если у вас есть другой вариант реализации - можете его реализовать
 window.onload = function () {
     console.log('page loaded');
+    remove_button_imanager();
     get_all_peers()
         .then(response => response.json())
         .then(json => {

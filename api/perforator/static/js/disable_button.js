@@ -1,5 +1,5 @@
 
-window.onload = function () {
+function remove_button_imanager() {
     fetch(window.location.origin + "/perforator/team")
         .then(response => response.json())
         .then(json => {
