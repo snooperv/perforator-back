@@ -10,6 +10,7 @@ from .form import *
 from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .ratings import *
 
 
 def index(request):
@@ -21,8 +22,12 @@ def index(request):
 
 def process_rate_form(request):
     if request.method == 'POST':
-        print(request.cleaned_data)
-
+        form = RateForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            print('rate_submit' in request.POST)
+            print('rate_submit1' in request.POST)
+        return redirect('irate')
 
 
 class I_Rate(LoginRequiredMixin, View):
@@ -32,7 +37,9 @@ class I_Rate(LoginRequiredMixin, View):
     def get(request):
         form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
         review_form = RateForm()
-        return render(request, 'main/mainfiles/i_rate.html', {'form': form, 'review': review_form})
+
+        #matches = generate_matched_profiles_and_forms(request, Profile.objects.filter(user=request.user).first())
+        return render(request, 'main/mainfiles/i_rate.html', {'form': form, 'review': review_form, 'matches': {} })
 
     @staticmethod
     def post(request):

@@ -40,9 +40,12 @@
         <div class="wait">
             <h2>Ожидают моей оценки</h2>
             <div class="peers">
+
+            {% for key, value in matches.iteritems() %}
+
                 <button onclick="myFunction()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                    <span class="name">Коновалов Илья</span>
+                    <img src="{{ key.photo.url }}" class="peer-avatar"/>
+                    <span class="name"> {{ key.user.first_name }} </span>
                     <a href="#" class="chevron">
                         <i class="fas fa-chevron-right"></i>
                     </a>
@@ -50,7 +53,7 @@
                 <div id="myDropdown" class="dropdown-content">
                     <div class="dropdown-container">
 
-                        <form method="post">
+                        <!-- <form action="/perforator/process_rate/" method="post">
                             {% csrf_token %}
                             {% load widget_tweaks %}
                             <h3 class="dropdownTitle">
@@ -169,14 +172,16 @@
                                 {% endfor %}
                             </div>
 
-                            <input type="submit" value="Отправить отзыв"/>
+                            <input type="submit" value="Отправить отзыв" name="rate_submit"/>
 
-                        </form>
-
+                        </form>-->
 
                     </div>
 
                 </div>
+
+            {% endfor %}
+
             </div>
         </div>
     </div>

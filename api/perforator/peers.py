@@ -147,14 +147,6 @@ def search_peers(request):
         return {'error': True, 'message': 'Вы не авторизовались'}
 
 
-def get_where_current_user_is_peer(request):
-    """
-        Найти пользователей, у которых залогиненный пользователь
-        является пиром
-    """
-    pass
-
-
 def get_where_user_id_is_peer(request, id):
     """
                Получить текущий список пиров любого пользователя по его id
