@@ -144,7 +144,3 @@ function save_peers(id) {
     document.getElementById(`my-peer-${id}`).style.display = 'block';
     document.getElementById(`peer-${id}`).style.display = 'none';
 }
-
-function close_add_peers() {
-    window.scrollTo(0, 5000);
-}

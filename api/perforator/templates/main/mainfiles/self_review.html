@@ -71,12 +71,12 @@
                 3-7 человек
             </p>
             <div id="my_peers"></div> <!--Сюда добавляются выбранные пиры-->
-            <a href="#peers">
-                <button type="button" class="add-peer">
-                    <i class="icon-plus fas fa-plus"></i>
-                    Добавить пира
-                </button>
-            </a>
+            <!--<a href="#peers">-->
+            <button type="button" class="add-peer" onclick="add_peers()">
+                <i class="icon-plus fas fa-plus"></i>
+                Добавить пира
+            </button>
+            <!--</a>-->
         </div>
         <div class="wrapper-submit">
             <input type="submit" value="Отправить">
@@ -93,5 +93,6 @@
     {% include "main/mainfiles/addons/peers.html" %}
     <script src="{% static 'js/disable_button.js' %}"></script>
     <script src="{% static 'js/peers_main_functions.js' %}"></script>
+    <script src="{% static 'js/buttons_peers.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/self-review.css' %}">
 {% endblock %}

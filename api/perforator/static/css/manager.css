@@ -52,16 +52,16 @@
 }
 
 .main-title {
-  color: #000;
-  text-align: left;
-  padding: 25px 0 0 10px;
-  font-size: 26px;
-  letter-spacing: -0.5px;
-  margin-bottom: 0;
+    color: #000;
+    text-align: left;
+    padding: 25px 0 0 10px;
+    font-size: 26px;
+    letter-spacing: -0.5px;
+    margin-bottom: 0;
 }
 
 .me-estimate {
-  margin-left: 50px;
+    margin-left: 50px;
 }
 
 .peers {
@@ -70,48 +70,51 @@
 }
 
 .peers span {
-  font-size: 22px;
-  color: #222222;
+    font-size: 22px;
+    color: #222222;
 }
 
 .peers p {
-  font-weight: 1000;
-  text-align: left;
-  font-size: 14px;
-  margin-left: 30px;
-  color: #414141;
+    font-weight: 1000;
+    text-align: left;
+    font-size: 14px;
+    margin-left: 30px;
+    color: #414141;
 }
 
 .peer {
-  display: block;
-  width: 95%;
-  background-color: #ececf2;
-  border-radius: 20px;
-  height: 65px;
+    display: block;
+    width: 95%;
+    background-color: #ececf2;
+    border-radius: 20px;
+    height: 65px;
 }
 
 .peer .name {
-  float: left;
-  margin-left: 60px;
-  position: relative;
-  top: -2px;
-  color: #331969;
-  font-family: "Gotham Pro";
-  font-size: 26px;
-  font-weight: 400;
-  letter-spacing: -1px;
+    float: left;
+    margin-left: 60px;
+    position: relative;
+    top: -2px;
+    color: #331969;
+    font-family: "Gotham Pro";
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -1px;
 }
 
 .selected-peer-name {
+    font-size: 22px;
+    margin-top: -60px;
+    margin-left: 40px;
     color: #2C286D;
 }
 
 .peer-avatar {
-  position: absolute;
-  float: left;
-  left: -15px;
-  top: -4px;
-  width: 75px;
+    position: absolute;
+    float: left;
+    left: -15px;
+    top: -4px;
+    width: 75px;
 }
 
 .block-peer-avatar {
@@ -122,72 +125,74 @@
 
 .block-peer {
     display: block;
-  width: 95%;
-  background-color: #ececf2;
-  border-radius: 20px;
-  height: 65px;
-  margin-top: 20px;
+    width: 95%;
+    background-color: #ececf2;
+    border-radius: 20px;
+    height: 65px;
+    margin-top: 20px;
     margin-right: 20px;
 }
 
 .chevron {
-  position: relative;
-  float: right;
-  margin-right: 25px;
-  font-size: 1.5em;
-  color: #331969;
+    position: relative;
+    float: right;
+    margin-right: 25px;
+    font-size: 1.5em;
+    color: #331969;
 }
+
 .delete-peer {
     position: relative;
-  float: right;
-  margin-right: 10px;
-  font-size: 1.5em;
-  color: #D32E2E;
+    float: right;
+    margin-top: -25px;
+    margin-right: 10px;
+    font-size: 1.5em;
+    color: #D32E2E;
 }
 
 .dropbtn {
-  background-color: #ececf2;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
+    background-color: #ececf2;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
 }
 
 .dropbtn:hover,
 .dropbtn:focus {
-  background-color: #ececf2;
+    background-color: #ececf2;
 }
 
 .dropdown-content {
-  display: none;
-  padding-top: 50px;
-  background-color: #ececf2;
-  width: 95%;
-  border-radius: 15px;
-  transform: translateY(-50px);
-  position: relative;
-  z-index: 1;
+    display: none;
+    padding-top: 50px;
+    background-color: #ececf2;
+    width: 95%;
+    border-radius: 15px;
+    transform: translateY(-50px);
+    position: relative;
+    z-index: 1;
 }
 
 .dropdown-container {
-  margin-left: 70px;
+    margin-left: 70px;
     padding-bottom: 10px;
 }
 
 .show {
-  display: block;
+    display: block;
 }
 
 .dropdownTitle {
-  margin: 20px 0 5px 0;
-  color: #2b2b2b;
-  font-size: 28px;
-  font-weight: 400;
-  letter-spacing: -1px;
-  text-align: left;
+    margin: 20px 0 5px 0;
+    color: #2b2b2b;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    text-align: left;
 }
 
 
@@ -230,11 +235,11 @@ input[type=submit]:active {
     width: 95%;
     background-color: #fff;
     border-radius: 20px;
-    margin-bottom: 7px;
+    margin-bottom: 10px;
 }
 
 .selected-peer-avatar {
-    float: left;
+    /*float: left;*/
     position: relative;
     width: 57px;
     height: 57px;
@@ -262,7 +267,7 @@ input[type=submit]:active {
     padding: 7px 12px;
     margin-top: 5px;
     position: relative;
-    left: -60px;
+    /*left: -60px;*/
 }
 
 .add-peer:active {
@@ -310,7 +315,7 @@ input[type=submit]:active {
 }
 
 .last {
-     background-color: #A5A4F5;
+    background-color: #A5A4F5;
 }
 
 .inside-wrapper {

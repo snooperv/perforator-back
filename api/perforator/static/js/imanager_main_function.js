@@ -94,7 +94,7 @@ window.onload = function () {
                             peer.setAttribute("id", `my-peer${p.user_id}${u['user_id']}`);
                             peer.innerHTML = `
                                 <img class="selected-peer-avatar" src="${u.photo}"/>
-                                 <span class="selected-peer-name">${u.username}</span>`
+                                 <div class="selected-peer-name">${u.username}</div>`
                             if (!p.approve) {
                                 peer.innerHTML += `
                                     <a class="close delete-peer" onclick="remove_peer_remote(${p.user_id}, ${u.user_id})">
@@ -107,7 +107,7 @@ window.onload = function () {
                             const myDiv = document.createElement("div");
                             myDiv.setAttribute("id", `peer${p.user_id}${u.user_id}`);
                             myDiv.innerHTML = `
-                                <div class="peer-sel">
+                                <div class="one-peer">
                                     <div class="peers-pic">
                                         <img class="avatar" src="${u.photo}"/>
                                     </div>
@@ -120,8 +120,8 @@ window.onload = function () {
                         dict_of_list_peers[p.user_id] = my;
 
                         peers_add.innerHTML = `
-                            <a href="#peers" id="choose${p.user_id}" onclick="replace_list_peers(${p.user_id})">
-                                <button class="add-peer">
+                            <a id="choose${p.user_id}" onclick="replace_list_peers(${p.user_id})">
+                                <button class="add-peer" onclick="add_peers()">
                                     <i class="icon-plus fas fa-plus"></i>
                                     Добавить пира
                                 </button>
