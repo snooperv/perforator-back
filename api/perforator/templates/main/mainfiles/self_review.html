@@ -13,54 +13,14 @@
                 <br>Убедительная просьба отвечать на вопросы честно, а не "для галочки", так как это инструмент,
                 направленный в первую очередь на улучшение ваших профессиональных навыков.
             </p>
+
         </div>
         <h2 class="title">Self Review</h2>
         <div class="form">
             <div class="container">
-                <div id="introduction">
-                    <h4>Вводная часть</h4>
-                    <p class="description">Напишите два-три предложения об общем впечатлении от работы за последнее
-                        время</p>
-                    <p class="question">Что вам нравится в вашей текущей работе, задачах, отношениях с коллегами,
-                        процессах в компании и т.д.? </p>
-                    <input type="text" class="input-text">
-                    <p class="question">Что не нравится, что можно улучшить/ исправить?</p>
-                    <input type="text" class="input-text">
-                </div>
-                <div id="progress">
-                    <h4>Успехи и неудачи</h4>
-                    <p class="description">
-                        Расскажите, что было сделано за этот период. Выделите те проекты, которыми особенно гордитесь.
-                        Чтобы у руководителя была полная картина ваших достижений, укажите название проекта и
-                        продолжительность работы над ним
-                    </p>
-                    <p class="question">
-                        Какие у вас были успехи?
-                    </p>
-                    <input type="text" class="input-text">
-                    <p class="question">
-                        Какие у вас были неудачи?
-                    </p>
-                    <input type="text" class="input-text">
-                </div>
-                <div id="improvement-zones">
-                    <h4>Зоны роста</h4>
-                    <p class="description" style="margin-bottom: 25px;">
-                        Определите, какие навыки вам важно развивать в ближайшее время и что для этого вы планируете
-                        делать. Если вы не можете вспомнить проблемы с задачами, подумайте, какие компетенции стоит
-                        развивать, чтобы выполнять работу эффективнее. Например, ваша работа страдает из-за того, что
-                        сложно вести переговоры. Значит, это ваша зона роста.
-                    </p>
-                    <textarea name="improvement-zones" id="imp-zones" rows="5" class="ta"></textarea>
-                </div>
-                <div id="plans">
-                    <h4>Планы на будущее</h4>
-                    <p class="description">
-                        Напишите долгосрочные планы — к чему хотите прийти в течение следующих нескольких месяцев, и
-                        свои пожелания. Подумайте, что вы хотели бы видеть в вашем следующем селф-ревью.
-                    </p>
-                    <textarea name="plans" id="plan" rows="5" class="ta"></textarea>
-                </div>
+                <form id="self-review">
+                    <!--сюда вставляются все контейнеры с вопросами self-review-->
+                </form>
             </div>
         </div>
         <h2 class="title">Оценивающие</h2>
@@ -79,8 +39,10 @@
             <!--</a>-->
         </div>
         <div class="wrapper-submit">
-            <input type="submit" value="Отправить">
-            <button class="save">
+            <button class="send" onclick="save_self_review(false)">
+                Отправить
+            </button>
+            <button class="save" onclick="save_self_review(true)">
                 Сохранить черновик
             </button>
         </div>
@@ -92,7 +54,11 @@
     </div>
     {% include "main/mainfiles/addons/peers.html" %}
     <script src="{% static 'js/disable_button.js' %}"></script>
+    <script src="{% static 'js/self_review_main_function.js' %}"></script>
     <script src="{% static 'js/peers_main_functions.js' %}"></script>
     <script src="{% static 'js/buttons_peers.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/self-review.css' %}">
+    <script>
+
+    </script>
 {% endblock %}

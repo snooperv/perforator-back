@@ -1,4 +1,4 @@
-from .models import Profile, Review, GradeCategory, Grade, PerformanceReview
+from .models import Profile, User, Review, GradeCategory, Grade, PerformanceReview
 from django.conf import settings
 
 """
@@ -20,6 +20,7 @@ def __format_review_data(review):
             'grade_category_id': grade.grade_category.id,
             'grade_category_name': grade.grade_category.name,
             'grade_category_description': grade.grade_category.description,
+            'grade_category_preview_description': grade.grade_category.preview_description,
             'comment': grade.comment,
         })
     return result
@@ -93,6 +94,21 @@ def edit_self_review(request):
         review.is_draft = False
     review.save()
     return {'message': 'ОК'}
+
+
+def is_draft(request, id):
+    if not request.user.is_authenticated:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+    user = User.objects.filter(id=id).first()
+    profile = Profile.objects.filter(user=user)[0]
+    review = Review.objects.get(
+        appraising_person=profile.id,
+        evaluated_person=profile.id)
+    result = {
+        'is_draft': review.is_draft,
+    }
+    return result
+
 
 
 def get_empty_review_form(request):

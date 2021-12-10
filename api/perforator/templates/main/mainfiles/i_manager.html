@@ -36,19 +36,10 @@
 
             <div class="block-container">
                 <h2 class="block-title">Пользователь не отправил Self Review
-                    <div class="peers-amount"> 2</div>
+                    <div class="peers-amount" id="without_sr_users_count">0</div>
                 </h2>
-                <div class="peers">
-                    <div class="peer">
-                        <img src="{% static 'img/pic.png' %}" class="no-sr-peer-avatar"/>
-                        <span class="block-name">Коновалов Илья</span>
-                    </div>
-                </div>
-                <div class="peers">
-                    <div class="peer">
-                        <img src="{% static 'img/pic.png' %}" class="no-sr-peer-avatar"/>
-                        <span class="block-name">Коновалов Илья</span>
-                    </div>
+                <div id="team_without_self_review">
+                    <div class="peers"></div>
                 </div>
             </div>
 

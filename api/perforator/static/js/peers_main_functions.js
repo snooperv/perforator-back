@@ -13,6 +13,7 @@
 window.onload = function () {
     console.log('page loaded');
     remove_button_imanager();
+    self_review_main();
     get_all_peers()
         .then(response => response.json())
         .then(json => {

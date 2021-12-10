@@ -7,6 +7,20 @@ function get_user_peers(id){
 function get_all_peers(){
     return fetch(window.location.origin + "/perforator/peers/all/");
 }
+function is_draft(id){
+    let is_draft = false
+    console.log(id)
+
+    fetch(window.location.origin + "/perforator/self-review/is-draft/?id=" + id)
+        .then(response => response.json())
+        .then(json => {
+
+            return json['is_draft'];
+        });
+    //console.log(is_draft)
+
+    //return is_draft;
+}
 function replace_list_peers(list){
     let window = document.getElementById("peers")
     window.replaceChild(dict_of_list_peers[list], document.getElementById("list_peers"))
@@ -30,12 +44,14 @@ window.onload = function () {
         .then(json => {
             let team_list_not_approve = document.getElementById("team_not_approve");
             let team_list_approve = document.getElementById("team_approve");
+            let team_without_sr = document.getElementById("team_without_self_review");
+
             let script_list = document.getElementById("script");
             let el_approve_counter = document.getElementById("approve_users_count");
             let el_not_approve_counter = document.getElementById("not_approve_users_count");
             let approve_counter = 0;
             let not_approve_counter = 0;
-
+            let without_sr_counter = 0;
 
             for (let p of json) {
                 const allDiv = document.createElement("div");
@@ -60,6 +76,19 @@ window.onload = function () {
 
                 script_list.appendChild(scripts)
 
+                fetch(window.location.origin + "/perforator/self-review/is-draft/?id=" + p.user_id)
+                    .then(response => response.json())
+                    .then(json => {
+                        if (json['is_draft']){
+                            let el_without_sr_counter = document.getElementById("without_sr_users_count");
+                            team_without_sr.appendChild(allDiv);
+                            without_sr_counter++;
+                            not_approve_counter--;
+                            el_without_sr_counter.innerHTML = without_sr_counter.toString();
+                            el_approve_counter.innerHTML = approve_counter.toString();
+                            el_not_approve_counter.innerHTML = not_approve_counter.toString();
+                        }
+                    });
                 if (!p.approve) {
                     team_list_not_approve.appendChild(allDiv);
                     not_approve_counter++;
@@ -67,7 +96,6 @@ window.onload = function () {
                 else {
                     team_list_approve.appendChild(allDiv);
                     approve_counter++;
-                    //continue
                 }
 
 
@@ -145,8 +173,8 @@ window.onload = function () {
                             });
                     });
             }
-            el_approve_counter.innerHTML = approve_counter.toString();
-            el_not_approve_counter.innerHTML = not_approve_counter.toString();
+
+
         })
 };
 
