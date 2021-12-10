@@ -37,3 +37,8 @@ def get_empty_review_form(request):
 @api_view(['POST'])
 def save_review(request):
     return Response(data=reviews.save_review(request), status=200)
+
+
+@api_view(['GET'])
+def get_is_draft_status(request):
+    return Response(data=reviews.is_draft(request, request.GET['id']), status=200)

@@ -7,7 +7,5 @@ function remove_button_imanager() {
             if (!json.length >= 1){
                 link.style.display = "none";
             }
-            console.log(json.length)
-            console.log(link.href)
         })
 };
