@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Регистрация -
+{% endblock %}
+{% block content %}
+    <div class="background">
+        <div class="register" id="reg">
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <div class="fadeIn first"></div>
+                    <div class="logo-title">
+                        <img src="{% static 'img/logo.svg' %}" alt="Picture" class="logo"/>
+                        <h1>Perforator</h1>
+                    </div>
+                    <form action="" method="post" id="register" enctype=multipart/form-data>
+                        {% csrf_token %}
+                        {% load widget_tweaks %}
+                        {% render_field form.name pattern="^\S+ \S+$" title="Формат данных: Имя Фамилия" class="fadeIn second" placeholder="Имя и фамилия" %}
+                        {% render_field form.phone title="Формат номера: +79... или 89..." pattern="([\+]*[7-8]{1}\s?[\(]*9[0-9]{2}[\)]*\s?\d{3}[-]*\d{2}[-]*\d{2})" minlength="11" maxlength="12" class="fadeIn second" placeholder="Номер телефона" %}
+                        {% render_field form.sbis onblur="checkURL(this)" class="fadeIn third" placeholder="Ссылка на профиль СБИС" %}
+                        {% render_field form.password class="fadeIn third" placeholder="Пароль" %}
+
+
+                        <div class="photo fadeIn third">
+                            <div class="empty">
+                                <img id="myImg" src="{% static 'img/avatar.png' %}" alt="Picture" class="avatar"/>
+                            </div>
+                            <div class="background-photo-upload">
+                                <div class="inner-wrapper">
+                                    <p class="photo-text">Ваша аватарка</p>
+                                    <label>Выбрать файл
+                                        {% render_field form.photo id="myfile" class="photo-btn" placeholder="Фото" %}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" value="Зарегистрироваться"/>
+                    </form>
+                    <p class="agreement">
+                        Регистрируясь, вы принимаете наши
+                        <a href="#">Условия, Политику использования данных</a> и
+                        <a href="#">Политику в отношении файлов cookie.</a>
+                    </p>
+                </div>
+            </div>
+            <div class="enter fadeInDown">
+                <div id="formEnter">
+                    <p>
+                        Уже есть аккаунт? <a href="{% url 'login' %}" style="color: #2c286d">Войти</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="{% static 'css/logAndReg.css' %}">
+
+    <script>
+        function checkURL(abc) {
+            let string = abc.value;
+            if (!~string.indexOf("http")) {
+                string = "http://" + string;
+            }
+            abc.value = string;
+            return abc
+        }
+
+        myfile.onchange = function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    myImg.src = e.target.result;
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+            ;
+        };
+    </script>
+{% endblock %}
