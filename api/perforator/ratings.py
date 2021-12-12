@@ -1,6 +1,6 @@
 from .models import PeerReviews, Profile
 from .form import RateForm
-import peers
+from .peers import *
 
 """
     Модуль для работы с ревью на странице 'Я оцениваю'
