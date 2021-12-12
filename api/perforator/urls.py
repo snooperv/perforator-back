@@ -12,6 +12,7 @@ urlpatterns = [
     path('1to1/', views.OneToOne.as_view(), name='1to1'),
     path('imanager/', views.I_Manager.as_view(), name='imanager'),
     path('registration/', views.registration, name='registration'),
+    path('process_rate/', views.process_rate_form, name='process_rate'),
 
     path('peers/demo', raw_peers_views.peers_demo),
     path('peers/all/', raw_peers_views.get_all_peers),

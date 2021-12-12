@@ -86,16 +86,30 @@ def save_review_form(request, profile_from, profile_rated, form):
     """
     if request.user.is_authenticated:
         if form.is_valid():
+            td = transform_form(form)
+            print(td)
+
             review, created = PeerReviews.objects \
                 .update_or_create(peer_id=profile_from,
                                   rated_person=profile_rated,
-                                  defaults=form.cleaned_data)
+                                  defaults=td)
             review.save()
             return {'message': 'OK'}
         else:
             return {'error': 'Невалидная форма', 'form': form}
     else:
         return {"error": 'Вы не авторизованы'}
+
+
+def transform_form(form):
+    answer = form.cleaned_data
+    answer['rates_deadlines'] = int(answer['rates_deadlines'])
+    answer['rates_approaches'] = int(answer['rates_approaches'])
+    answer['rates_teamwork'] = int(answer['rates_teamwork'])
+    answer['rates_practices'] = int(answer['rates_practices'])
+    answer['rates_experience'] = int(answer['rates_experience'])
+    answer['rates_adaptation'] = int(answer['rates_adaptation'])
+    return answer
 
 
 def generate_matched_profiles_and_forms_from_current_user(request):
@@ -109,18 +123,19 @@ def generate_matched_profiles_and_forms_from_current_user(request):
 def generate_matched_profiles_and_forms(request, profile_from):
     """
         :return: словарь след. вида:
-        { profile_object: rate_form, ... }
+        { profile.id: rate_form, ... }
         или словарь с ошибкой
     """
     if request.user.is_authenticated:
-        reviews = PeerReviews.objects.filter(peer_id=profile_from)
-        if (len(reviews) == 0):
+        rated = get_where_user_id_is_peer(request, profile_from.user.id)
+        if (len(rated) == 0):
             return {}
 
         answer = {}
-        for r in reviews:
-            form = generate_review_form(request, profile_from, r.rated_person)
-            answer[r.rated_person] = form
+        for r in rated:
+            p = Profile.objects.filter(id=r['profile_id']).first()
+            form = generate_review_form(request, profile_from, p)
+            answer[p] = form
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
