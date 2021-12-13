@@ -23,6 +23,7 @@ window.onload = function () {
             for (var p of json) {
                 const allDiv = document.createElement("div");
                 allDiv.setAttribute("id", `peer-${p['user_id']}`);
+                allDiv.setAttribute("style", `margin: 0 25px 0 5px`);
                 allDiv.innerHTML =
                     `<div class="one-peer">
                         <div class="peers-pic">

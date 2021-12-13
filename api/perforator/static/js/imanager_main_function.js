@@ -134,6 +134,7 @@ window.onload = function () {
 
                             const myDiv = document.createElement("div");
                             myDiv.setAttribute("id", `peer${p.user_id}${u.user_id}`);
+                            myDiv.setAttribute("style", `margin: 0 25px 0 15px`);
                             myDiv.innerHTML = `
                                 <div class="one-peer">
                                     <div class="peers-pic">
