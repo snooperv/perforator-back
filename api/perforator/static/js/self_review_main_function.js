@@ -1,4 +1,4 @@
-
+let btn_status = [false, false]
 function self_review_main() {
     get_self_review()
         .then(response => response.json())
@@ -7,7 +7,6 @@ function self_review_main() {
             let flag = '';
             let el_id = 0;
             let is_draft = json['is_draft']
-            //console.log(json['grades'])
             for (let grade of json['grades']) {
                 const allDiv = document.createElement("div");
                 allDiv.setAttribute("id", `id${grade.id}`)
@@ -34,7 +33,7 @@ function self_review_main() {
                         }
                     }
                     else {
-                        if (!is_draft){
+                            if (!is_draft){
                             allDiv.innerHTML += `
                                 <textarea name="plans" id="plan" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}" disabled>${grade.comment}</textarea>
                             `;
@@ -73,8 +72,9 @@ function self_review_main() {
             if (!is_draft){
                 document.querySelector(".save").setAttribute("disabled", "disabled");
                 document.querySelector(".send").setAttribute("disabled", "disabled");
-            }
 
+            }
+            check_free_fields_onload();
         })
 
 }
@@ -82,8 +82,61 @@ function self_review_main() {
 function get_self_review() {
     return fetch(window.location.origin + "/perforator/self-review/");
 }
+function disable_btn_send(){
+    let btn = document.querySelector(".send")
+    btn.setAttribute("disabled", "disabled")
+    btn.setAttribute("style", "background-color: #8e8e8e")
+}
+function enable_btn_send(){
+    let btn = document.querySelector(".send")
+    btn.removeAttribute("disabled")
+    btn.setAttribute("style", "background-color: #A5A4F5")
+}
+function check_free_fields() {
+    let inputs = document.querySelectorAll("[field='yes']");
+    for (let i of inputs){
+        if (i.value == ""){
+            btn_status[0] = false;
+            update_btn();
+            return
+        }
+    }
+    btn_status[0] = true;
+    update_btn();
+}
+function check_peers_list(){
+    let peers = document.getElementById("my_peers").children
+    for (let p of peers){
 
+        console.log(p.style.display)
+
+        if (p.style.display != "none"){
+            btn_status[1] = true;
+            update_btn();
+            return;
+        }
+    }
+    btn_status[1] = false;
+    update_btn();
+}
+function check_free_fields_onload(){
+    let inputs = document.querySelectorAll("[field='yes']");
+    for (let i of inputs){
+        i.addEventListener('blur', (event) => {
+            check_peers_list();
+            check_free_fields();
+        })
+    }
+    check_free_fields();
+    check_peers_list();
+}
+function update_btn(){
+    btn_status[0] === true && btn_status[1] === true ? enable_btn_send(): disable_btn_send();
+}
 function save_self_review(is_draft) {
+    check_peers_list();
+    check_free_fields();
+    if (btn_status[0] !== true && btn_status[1] !== true) return
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     data = {'is_draft': is_draft, 'grades': []}
