@@ -41,7 +41,7 @@ class PeerReviews(models.Model):
     practices = models.CharField(max_length=512)
     experience = models.CharField(max_length=512)
     adaptation = models.CharField(max_length=512)
-    rates_deadlines = models.CharField(max_length=512)
+    rates_deadlines = models.IntegerField(choices=Rates.choices)
     rates_approaches = models.IntegerField(choices=Rates.choices)
     rates_teamwork = models.IntegerField(choices=Rates.choices)
     rates_practices = models.IntegerField(choices=Rates.choices)
