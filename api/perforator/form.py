@@ -58,6 +58,3 @@ class RateForm(forms.Form):
     rates_practices = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
     rates_experience = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
     rates_adaptation = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
-
-    def __dict__(self):
-        return self.cleaned_data

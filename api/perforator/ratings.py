@@ -37,7 +37,7 @@ def get_review_to_profile(request, profile_from, profile_rated):
             .filter(peer_id=profile_from).first()
         answer = {}
         if review is not None:
-            answer = dict(review)
+            answer = peer_review_to_dict(review)
             answer['created'] = True
         else:
             answer['created'] = False
@@ -89,11 +89,21 @@ def save_review_form(request, profile_from, profile_rated, form):
             td = transform_form(form)
             print(td)
 
-            review, created = PeerReviews.objects \
-                .update_or_create(peer_id=profile_from,
-                                  rated_person=profile_rated,
-                                  defaults=td)
-            review.save()
+            try:
+                obj = PeerReviews.objects.get(peer_id=profile_from, rated_person=profile_rated)
+                for key, value in td.items():
+                    setattr(obj, key, value)
+                obj.save()
+            except PeerReviews.DoesNotExist:
+                new_values = {'peer_id': profile_from, 'rated_person': profile_rated}
+                new_values.update(td)
+                obj = PeerReviews(**new_values)
+                obj.save()
+
+            # review, created = PeerReviews.objects.update_or_create(peer_id=profile_from,
+            #                       rated_person=profile_rated,
+            #                       defaults=td)
+
             return {'message': 'OK'}
         else:
             return {'error': 'Невалидная форма', 'form': form}
@@ -139,3 +149,23 @@ def generate_matched_profiles_and_forms(request, profile_from):
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
+
+
+def peer_review_to_dict(review):
+    return {
+            'peer_id': review.peer_id,
+            'rated_person': review.rated_person,
+            'deadlines': review.deadlines,
+            'approaches': review.approaches,
+            'teamwork': review.teamwork,
+            'practices': review.practices,
+            'experience': review.experience,
+            'adaptation': review.adaptation,
+            'rates_deadlines': review.rates_deadlines,
+            'rates_approaches': review.rates_approaches,
+            'rates_teamwork': review.rates_teamwork,
+            'rates_practices': review.rates_practices,
+            'rates_experience': review.rates_experience,
+            'rates_adaptation': review.rates_adaptation
+        }
+

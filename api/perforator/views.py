@@ -26,10 +26,15 @@ def process_rate_form(request):
         if form.is_valid():
             d = request.POST.dict()
             print(d)
-            profile_id = d['profile']
+            profile_id = int(d['profile'])
             rated = Profile.objects.filter(id=profile_id).first()
             cur = Profile.objects.filter(user=request.user).first()
+
+            td = transform_form(form)
+            print(td)
+
             save_review_form(request, cur, rated, form)
+
         return redirect('irate')
 
 
