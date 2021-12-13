@@ -69,12 +69,7 @@ function self_review_main() {
                     container.appendChild(input);
                 }
             }
-            if (!is_draft){
-                document.querySelector(".save").setAttribute("disabled", "disabled");
-                document.querySelector(".send").setAttribute("disabled", "disabled");
-
-            }
-            check_free_fields_onload();
+            if (!is_draft) disable_btn_peers()
         })
 
 }
@@ -83,6 +78,7 @@ function get_self_review() {
     return fetch(window.location.origin + "/perforator/self-review/");
 }
 function disable_btn_send(){
+    console.log('yes')
     let btn = document.querySelector(".send")
     btn.setAttribute("disabled", "disabled")
     btn.setAttribute("style", "background-color: #8e8e8e")
@@ -91,6 +87,13 @@ function enable_btn_send(){
     let btn = document.querySelector(".send")
     btn.removeAttribute("disabled")
     btn.setAttribute("style", "background-color: #A5A4F5")
+}
+function disable_btn_peers(){
+    let btn = document.querySelector(".add-peer")
+    let btn_close = document.querySelectorAll("[id='close']");
+    for (let b of btn_close) b.style.display = "none";
+    btn.setAttribute("disabled", "disabled")
+    btn.setAttribute("style", "background-color: #8e8e8e")
 }
 function check_free_fields() {
     let inputs = document.querySelectorAll("[field='yes']");
@@ -107,9 +110,6 @@ function check_free_fields() {
 function check_peers_list(){
     let peers = document.getElementById("my_peers").children
     for (let p of peers){
-
-        console.log(p.style.display)
-
         if (p.style.display != "none"){
             btn_status[1] = true;
             update_btn();
@@ -137,6 +137,11 @@ function save_self_review(is_draft) {
     check_peers_list();
     check_free_fields();
     if (btn_status[0] !== true && btn_status[1] !== true) return
+    if (!is_draft) {
+        disable_btn_send();
+        disable_btn_peers();
+    }
+    //disable_btn_peers();
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     data = {'is_draft': is_draft, 'grades': []}
@@ -165,22 +170,3 @@ function save_self_review(is_draft) {
 }
 
 
-function disable_form(){
-    let is_draft = false
-    fetch(window.location.origin + "/perforator/self-review/is-draft/")
-        .then(response => response.json())
-        .then(json => {
-            is_draft = json["is_draft"];
-    })
-    let selfReviewGrades = document.querySelectorAll("[field='yes']");
-    //console.log(is_draft);
-    //console.log(selfReviewGrades)
-    for (let gradeDiv of selfReviewGrades) {
-
-        if (!is_draft){
-            gradeDiv.setAttribute("disabled", "disabled");
-            document.querySelector(".save").setAttribute("disabled", "disabled");
-            document.querySelector(".send").setAttribute("disabled", "disabled");
-        }
-    }
-}

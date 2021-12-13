@@ -13,69 +13,93 @@
 window.onload = function () {
     console.log('page loaded');
     remove_button_imanager();
-    self_review_main();
-    get_all_peers()
-        .then(response => response.json())
-        .then(json => {
-            var peers_list = document.getElementById("list_peers");
-            var my_peers = document.getElementById("my_peers");
+    //self_review_main();
 
-            for (var p of json) {
-                const allDiv = document.createElement("div");
-                allDiv.setAttribute("id", `peer-${p['user_id']}`);
-                allDiv.setAttribute("style", `margin: 0 25px 0 5px`);
-                allDiv.innerHTML =
-                    `<div class="one-peer">
-                        <div class="peers-pic">
-                            <img class="avatar" src="${p.photo}"/>
-                        </div>
-                        <div class="peer-info">
-                            ${p.username}
-                        </div>
-                        <button class="choose" onclick="select_peer_remote(${p.user_id})">Выбрать</button>
-                    </div>`;
-                peers_list.appendChild(allDiv);
+    fetch(window.location.origin + "/perforator/manager")
+    .then(response => response.json())
+        .then(manager => {
 
-                const myDiv = document.createElement("div");
-                myDiv.setAttribute("id", `my-peer-${p.user_id}`);
-                myDiv.innerHTML =
-                    `<div class="peer-sel">
-                        <div class="peers-pic">
-                            <img class="avatar" src="${p.photo}"/>
-                        </div>
-                        <div class="peer-info">
-                            ${p.username}
-                        </div>
-                        <a class="close" onclick="remove_peer_remote(${p.user_id})">
-                            <i class="close-icon fas fa-times"></i>
-                        </a>
-                    </div>`;
-                myDiv.style.display = 'none';
-                my_peers.appendChild(myDiv);
-            }
-        })
-        .then(() => {
-            get_my_peers()
+            get_all_peers()
                 .then(response => response.json())
                 .then(json => {
-                    for (var p of json) {
-                        var id = p.user_id;
-                        save_peers(id);
+                    let peers_list = document.getElementById("list_peers");
+                    let my_peers = document.getElementById("my_peers");
+
+                    for (let p of json) {
+                        if (manager.message === "ok")
+                            if (manager.user_id === p.user_id)
+                                continue
+                        if (p.user_id == '1') {
+                                //console.log(u.user_id == '1', p.user_id, u.user_id)
+                            continue
+                        }
+                        const allDiv = document.createElement("div");
+                        allDiv.setAttribute("id", `peer-${p['user_id']}`);
+                        allDiv.setAttribute("style", `margin: 0 25px 0 5px`);
+                        allDiv.innerHTML =
+                            `<div class="one-peer">
+                                <div class="peers-pic">
+                                    <img class="avatar" src="${p.photo}"/>
+                                </div>
+                                <div class="peer-info">
+                                    ${p.username}
+                                </div>
+                                <button class="choose" onclick="select_peer_remote(${p.user_id})">Выбрать</button>
+                            </div>`;
+                        peers_list.appendChild(allDiv);
+
+                        const myDiv = document.createElement("div");
+                        myDiv.setAttribute("id", `my-peer-${p.user_id}`);
+                        myDiv.innerHTML =
+                            `<div class="peer-sel">
+                                <div class="peers-pic">
+                                    <img class="avatar" src="${p.photo}"/>
+                                </div>
+                                <div class="peer-info">
+                                    ${p.username}
+                                </div>
+                                <a class="close" id="close" onclick="remove_peer_remote(${p.user_id})">
+                                    <i class="close-icon fas fa-times"></i>
+                                </a>
+                            </div>`;
+                        myDiv.style.display = 'none';
+                        my_peers.appendChild(myDiv);
                     }
                 })
                 .then(() => {
                     get_my_peers()
                         .then(response => response.json())
                         .then(json => {
-
-                            for (var p of json) {
-                                var id = p.user_id;
+                            for (let p of json) {
+                                let id = p.user_id;
                                 save_peers(id);
-                                check_free_fields_onload();
                             }
+                        })
+                        .then(() => {
+                            get_my_peers()
+                                .then(response => response.json())
+                                .then(json => {
+
+                                    for (let p of json) {
+                                        let id = p.user_id;
+                                        save_peers(id);
+
+                                    }
+                                    check_free_fields_onload();
+                                    get_self_review()
+                                        .then(response => response.json())
+                                        .then(json => {
+                                           let is_draft = json['is_draft']
+                                           if (!is_draft) {
+                                               disable_btn_peers();
+                                               disable_btn_send();
+                                           }
+                                        });
+                                });
                         });
                 });
-        });
+    })
+    self_review_main();
 }
 
 // посылаем post-запрос на сервер, что пользователь выбрал пира

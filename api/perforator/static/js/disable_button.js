@@ -4,8 +4,8 @@ function remove_button_imanager() {
         .then(response => response.json())
         .then(json => {
             let link = document.getElementById('i_manager_button')
-            if (!json.length >= 1){
-                link.style.display = "none";
+            if (json.length >= 1){
+                link.style.display = "block";
             }
         })
 };

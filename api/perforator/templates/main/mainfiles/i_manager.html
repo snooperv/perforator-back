@@ -192,4 +192,16 @@
     {% include "main/mainfiles/addons/confirm.html" %}
     <link rel="stylesheet" href="{% static 'css/manager.css' %}">
     <script src="{% static 'js/buttons_peers.js' %}"></script>
+    <script>
+    fetch(window.location.origin + "/perforator/team")
+        .then(response => response.json())
+        .then(json => {
+            let link = document.getElementById('i_manager_button')
+            if (json.length >= 1){
+                link.style.display = "block";
+            }
+            console.log(json.length)
+            console.log(link.href)
+        })
+    </script>
 {% endblock %}

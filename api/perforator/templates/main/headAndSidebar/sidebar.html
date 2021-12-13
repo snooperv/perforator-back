@@ -41,7 +41,7 @@
                 </div>
             </a>
         </nav>
-        <nav class="side-btn small" id="i_manager_button">
+        <nav class="side-btn small" id="i_manager_button" style="display: none">
             <a href="{% url 'imanager' %} ">
                 <div class="link-container">
                     я менеджер
@@ -78,8 +78,8 @@ window.onload = function () {
         .then(response => response.json())
         .then(json => {
             let link = document.getElementById('i_manager_button')
-            if (!json.length >= 1){
-                link.style.display = "none";
+            if (json.length >= 1){
+                link.style.display = "block";
             }
             console.log(json.length)
             console.log(link.href)

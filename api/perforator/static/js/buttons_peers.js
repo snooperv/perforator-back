@@ -3,9 +3,7 @@ let btn_add = document.querySelector('#btn_add');
 let btn_close1 = document.querySelector('#btn_close1');
 let btn_close2 = document.querySelector('#btn_close2');
 let addPeers = document.getElementById('peers');
-console.log(addPeers);
 function add_peers() {
-    console.log('Click');
     addPeers.style.visibility = 'visible';
     addPeers.style.opacity = '1';
     btn_close2.style.visibility = 'visible';

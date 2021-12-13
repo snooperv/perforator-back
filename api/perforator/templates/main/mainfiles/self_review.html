@@ -53,6 +53,16 @@
         </div>
     </div>
     {% include "main/mainfiles/addons/peers.html" %}
+    <script>
+    fetch(window.location.origin + "/perforator/team")
+        .then(response => response.json())
+        .then(json => {
+            let link = document.getElementById('i_manager_button')
+            if (json.length >= 1){
+                link.style.display = "block";
+            }
+        })
+    </script>
     <script src="{% static 'js/disable_button.js' %}"></script>
     <script src="{% static 'js/self_review_main_function.js' %}"></script>
     <script src="{% static 'js/peers_main_functions.js' %}"></script>
