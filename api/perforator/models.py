@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from PIL import Image
 
 def savePhotoUnderRandomName(instance, filename):
     upload_to = 'photos'
@@ -24,6 +25,24 @@ class Profile(models.Model):
     peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True, related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
     approve = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.id and not self.photo:
+            return
+        super(Profile, self).save(*args, **kwargs)
+        image = Image.open(self.photo)
+        (width, height) = image.size
+        "Max width and height 800"
+        if width < height:
+            factor = height / width
+            height = 500
+            size = (int(height * factor), int(height))
+        else:
+            factor = width / height
+            width = 500
+            size = (int(width), int(width * factor))
+        image = image.resize(size, Image.ANTIALIAS)
+        image.save(self.photo.path)
 
 
 class PeerReviews(models.Model):
