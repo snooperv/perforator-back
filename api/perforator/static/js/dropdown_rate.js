@@ -1,3 +1,3 @@
-function myFunction() {
-    document.getElementById('myDropdown').classList.toggle('show')
+function toggleForm(num) {
+    document.getElementById('myDropdown-' + num).classList.toggle('show')
 }
