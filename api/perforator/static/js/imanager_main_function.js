@@ -62,12 +62,12 @@ window.onload = function () {
                 scripts.innerHTML = `function myFunction${p.user_id}() {
                                         document.getElementById('myDropdown${p.user_id}').classList.toggle('show')};`
                 allDiv.innerHTML = `
-                    <button onclick="myFunction${p.user_id}()" class="peer dropbtn">
+                    <button onclick="myFunction${p.user_id}()" id="remove_btn${p.user_id}" class="peer dropbtn">
                         <div class="peers-pic">
                             <img class="avatar" src="${p.photo}"/>
                         </div>
                         <span class="name" style="margin-left: 0">${p.username}</span>
-                        <a href="#" class="chevron">
+                        <a href="#" class="chevron" id="remove_ref${p.user_id}">
                             <i class="fas fa-chevron-right"></i>
                         </a>
                     </button> 
@@ -81,6 +81,10 @@ window.onload = function () {
                     .then(json => {
                         if (json['is_draft']){
                             let el_without_sr_counter = document.getElementById("without_sr_users_count");
+                            let btn = document.getElementById(`remove_btn${p.user_id}`)
+                            btn.removeAttribute("onclick");
+                            btn.setAttribute("style", "cursor: default")
+                            document.getElementById(`remove_ref${p.user_id}`).setAttribute("style", "pointer-events: none")
                             team_without_sr.appendChild(allDiv);
                             without_sr_counter++;
                             not_approve_counter--;
@@ -132,8 +136,13 @@ window.onload = function () {
                             peer.style.display = 'none';
                             peers_list.appendChild(peer);
 
+                            if (u.user_id == '1' || p.user_id == u.user_id) {
+                                console.log(u.user_id == '1', p.user_id, u.user_id)
+                                continue
+                            }
                             const myDiv = document.createElement("div");
                             myDiv.setAttribute("id", `peer${p.user_id}${u.user_id}`);
+                            myDiv.setAttribute("style", `margin: 0 25px 0 15px`);
                             myDiv.innerHTML = `
                                 <div class="one-peer">
                                     <div class="peers-pic">

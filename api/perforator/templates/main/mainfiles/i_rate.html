@@ -3,6 +3,9 @@
 {% block title %}
     Я оцениваю -
 {% endblock %}
+{% block mainstyles %}
+    <link rel="stylesheet" href="{% static 'css/me-estimate.css' %}">
+{% endblock %}
 {% block mainContent %}
     <div class="me-estimate">
         <div class="instruction">
@@ -191,11 +194,5 @@
         </div>
     </div>
 
-    <script>
-        function toggleForm(num) {
-            document.getElementById('myDropdown-'+num).classList.toggle('show')
-        }
-    </script>
-
-    <link rel="stylesheet" href="{% static 'css/me-estimate.css' %}">
+    <script src="{% static 'js/dropdown_rate.js' %}"></script>
 {% endblock %}

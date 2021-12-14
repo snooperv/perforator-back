@@ -6,6 +6,7 @@
 }
 
 .selection {
+    height: 364px;
     width: 30%;
     position: fixed;
     padding: 5px 50px 15px 30px;
@@ -19,6 +20,28 @@
     opacity: 0;
     z-index: 10;
     box-shadow: 0px 10.991px 19.7838px rgba(0, 0, 0, 0.25);
+}
+
+#list_peers {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 107%;
+    height: 250px;
+}
+
+#list_peers::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F1F1F1;
+    border-radius: 10px;
+}
+
+#list_peers::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #a6a6ef;
+}
+
+#list_peers::-webkit-scrollbar-track {
+    width: 0;
 }
 
 .selection:target {

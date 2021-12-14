@@ -249,6 +249,9 @@ def save_user_peers(request, id):
 
 
 def approve_user(request, id):
+    """
+        Проверяет, является ли пользователь утверждённым или нет (по id указанного пользователя)
+    """
     if request.user.is_authenticated:
         user = User.objects.filter(id=id).first()
         profile = Profile.objects.filter(user=user)[0]

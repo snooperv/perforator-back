@@ -3,6 +3,9 @@
 {% block title %}
     One to one -
 {% endblock %}
+{% block mainstyles %}
+    <link rel="stylesheet" href="{% static 'css/oneToOne.css' %}">
+{% endblock %}
 {% block mainContent %}
     <div class="container">
         <h1 class="main-title">1-on-1</h1>
@@ -106,23 +109,5 @@
 
     </div>
 
-    <script>
-        $('.d-link').on('click',function(){
-            $('.d-link.dactive').removeClass('dactive');
-            $(this).addClass('dactive');
-        });
-
-        function myFunction1() {
-            document.getElementById('myDropdown1').classList.toggle('show');
-            document.getElementById('chev1').classList.toggle('down');
-        };
-
-        function myFunction2() {
-            document.getElementById('myDropdown2').classList.toggle('show');
-            document.getElementById('chev2').classList.toggle('down');
-        };
-
-    </script>
-
-    <link rel="stylesheet" href="{% static 'css/oneToOne.css' %}">
+    <script src="{% static 'js/pages_1on1.js' %}"></script>
 {% endblock %}

@@ -23,6 +23,7 @@ window.onload = function () {
             for (var p of json) {
                 const allDiv = document.createElement("div");
                 allDiv.setAttribute("id", `peer-${p['user_id']}`);
+                allDiv.setAttribute("style", `margin: 0 25px 0 5px`);
                 allDiv.innerHTML =
                     `<div class="one-peer">
                         <div class="peers-pic">
@@ -66,11 +67,11 @@ window.onload = function () {
                     get_my_peers()
                         .then(response => response.json())
                         .then(json => {
-                            console.log(json);
 
                             for (var p of json) {
                                 var id = p.user_id;
                                 save_peers(id);
+                                check_free_fields_onload();
                             }
                         });
                 });
@@ -137,6 +138,7 @@ function get_my_peers() {
 function delete_peers(id) {
     document.getElementById(`my-peer-${id}`).style.display = 'none';
     document.getElementById(`peer-${id}`).style.display = 'block';
+    check_peers_list();
 }
 
 // выбираем пира, скрываем и показываем нужный элемент
@@ -144,4 +146,5 @@ function delete_peers(id) {
 function save_peers(id) {
     document.getElementById(`my-peer-${id}`).style.display = 'block';
     document.getElementById(`peer-${id}`).style.display = 'none';
+    check_peers_list();
 }

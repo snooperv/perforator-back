@@ -1,3 +1,4 @@
+let btn_status = [false, false]
 
 function self_review_main() {
     get_self_review()
@@ -7,7 +8,6 @@ function self_review_main() {
             let flag = '';
             let el_id = 0;
             let is_draft = json['is_draft']
-            //console.log(json['grades'])
             for (let grade of json['grades']) {
                 const allDiv = document.createElement("div");
                 allDiv.setAttribute("id", `id${grade.id}`)
@@ -20,26 +20,23 @@ function self_review_main() {
                         <p class="description">${grade.grade_category_preview_description}</p>
                     `
                     if (grade.grade_category_description != null) {
-                        if (!is_draft){
+                        if (!is_draft) {
                             allDiv.innerHTML += `
                                 <p class="question">${grade.grade_category_description}</p>
                                 <input type="text" class="input-text" category_id="${grade.grade_category_id}" field="yes" value="${grade.comment}" disabled>
                             `;
-                        }
-                        else {
+                        } else {
                             allDiv.innerHTML += `
                                 <p class="question">${grade.grade_category_description}</p>          
                                 <input type="text" class="input-text" category_id="${grade.grade_category_id}" field="yes" value="${grade.comment}">
                             `;
                         }
-                    }
-                    else {
-                        if (!is_draft){
+                    } else {
+                        if (!is_draft) {
                             allDiv.innerHTML += `
                                 <textarea name="plans" id="plan" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}" disabled>${grade.comment}</textarea>
                             `;
-                        }
-                        else {
+                        } else {
                             allDiv.innerHTML += `
                                 <textarea name="plans" id="plan" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}">${grade.comment}</textarea>
                             `;
@@ -49,8 +46,7 @@ function self_review_main() {
                     el_id = grade.id;
                     selfReview.appendChild(allDiv);
 
-                }
-                else{
+                } else {
                     let container = document.getElementById(`id${el_id}`)
                     let p = document.createElement("p");
                     p.setAttribute("class", "question")
@@ -61,7 +57,7 @@ function self_review_main() {
                     input.setAttribute("type", "text");
                     input.setAttribute("category_id", `${grade.grade_category_id}`);
                     input.setAttribute("field", "yes");
-                    if (!is_draft){
+                    if (!is_draft) {
                         input.setAttribute("disabled", "disabled");
                     }
                     input.setAttribute("value", `${grade.comment}`);
@@ -70,11 +66,12 @@ function self_review_main() {
                     container.appendChild(input);
                 }
             }
-            if (!is_draft){
+            if (!is_draft) {
                 document.querySelector(".save").setAttribute("disabled", "disabled");
                 document.querySelector(".send").setAttribute("disabled", "disabled");
-            }
 
+            }
+            check_free_fields_onload();
         })
 
 }
@@ -83,7 +80,67 @@ function get_self_review() {
     return fetch(window.location.origin + "/perforator/self-review/");
 }
 
+function disable_btn_send() {
+    let btn = document.querySelector(".send")
+    btn.setAttribute("disabled", "disabled")
+    btn.setAttribute("style", "background-color: #8e8e8e")
+}
+
+function enable_btn_send() {
+    let btn = document.querySelector(".send")
+    btn.removeAttribute("disabled")
+    btn.setAttribute("style", "background-color: #A5A4F5")
+}
+
+function check_free_fields() {
+    let inputs = document.querySelectorAll("[field='yes']");
+    for (let i of inputs) {
+        if (i.value == "") {
+            btn_status[0] = false;
+            update_btn();
+            return
+        }
+    }
+    btn_status[0] = true;
+    update_btn();
+}
+
+function check_peers_list() {
+    let peers = document.getElementById("my_peers").children
+    for (let p of peers) {
+
+        console.log(p.style.display)
+
+        if (p.style.display != "none") {
+            btn_status[1] = true;
+            update_btn();
+            return;
+        }
+    }
+    btn_status[1] = false;
+    update_btn();
+}
+
+function check_free_fields_onload() {
+    let inputs = document.querySelectorAll("[field='yes']");
+    for (let i of inputs) {
+        i.addEventListener('blur', (event) => {
+            check_peers_list();
+            check_free_fields();
+        })
+    }
+    check_free_fields();
+    check_peers_list();
+}
+
+function update_btn() {
+    btn_status[0] === true && btn_status[1] === true ? enable_btn_send() : disable_btn_send();
+}
+
 function save_self_review(is_draft) {
+    check_peers_list();
+    check_free_fields();
+    if (btn_status[0] !== true && btn_status[1] !== true) return
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     data = {'is_draft': is_draft, 'grades': []}
@@ -94,7 +151,7 @@ function save_self_review(is_draft) {
             'grade_category_id': gradeDiv.getAttribute('category_id'),
             'comment': gradeDiv.value,
         })
-        if (!is_draft){
+        if (!is_draft) {
             gradeDiv.setAttribute("disabled", "disabled");
             document.querySelector(".save").setAttribute("disabled", "disabled");
             document.querySelector(".send").setAttribute("disabled", "disabled");
@@ -109,22 +166,41 @@ function save_self_review(is_draft) {
         },
         body: JSON.stringify(data)
     })
+    //document.getElementById('draft').setAttribute("style", "opacity: 1; visibility: visible;");
+    //$('#').removeClass('hidden_draft');
+    //console.log(document.getElementsByTagName('draft').class);
+    //setTimeout(show_draft, 5000);
+    let elem = document.querySelector("#draft")
+    console.log(elem.classList);
+    console.log(elem.classList.contains("active_draft"));
+    if (elem.classList.contains("active_draft")) {
+        $('#draft').removeClass('active_draft');
+        $('#draft').addClass('hidden_draft');
+        setTimeout(show_draft, 300);
+    } else {
+        $('#draft').addClass('active_draft');
+    }
 }
 
+function show_draft() {
+    $('#draft').removeClass('hidden_draft');
+    $('#draft').addClass('active_draft');
+    //document.getElementById('draft').setAttribute("style", "opacity:0; transition: opacity 1s ease-in-out;");
+}
 
-function disable_form(){
+function disable_form() {
     let is_draft = false
     fetch(window.location.origin + "/perforator/self-review/is-draft/")
         .then(response => response.json())
         .then(json => {
             is_draft = json["is_draft"];
-    })
+        })
     let selfReviewGrades = document.querySelectorAll("[field='yes']");
     //console.log(is_draft);
     //console.log(selfReviewGrades)
     for (let gradeDiv of selfReviewGrades) {
 
-        if (!is_draft){
+        if (!is_draft) {
             gradeDiv.setAttribute("disabled", "disabled");
             document.querySelector(".save").setAttribute("disabled", "disabled");
             document.querySelector(".send").setAttribute("disabled", "disabled");
