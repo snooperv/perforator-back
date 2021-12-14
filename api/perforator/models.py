@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from PIL import Image
 
+
 def savePhotoUnderRandomName(instance, filename):
     upload_to = 'photos'
     ext = filename.split('.')[-1]
@@ -22,27 +23,25 @@ class Profile(models.Model):
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
     manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
-    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True, related_name='i_am_peer_to')
+    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True,
+                                   related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
     approve = models.BooleanField(default=False)
 
-    '''def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         if not self.id and not self.photo:
             return
         super(Profile, self).save(*args, **kwargs)
         image = Image.open(self.photo)
         (width, height) = image.size
-        "Max width and height 800"
-        if width < height:
-            factor = height / width
-            width = 400
-            size = (int(width), int(width * factor))
+        "Max width and height 500"
+        if height > width > 500 or height > 500:
+            factor = 500 / height
         else:
-            factor = width / height
-            height = 400
-            size = (int(height * factor), int(height))
+            factor = 500 / width
+        size = (int(width * factor), int(height * factor))
         image = image.resize(size, Image.ANTIALIAS)
-        image.save(self.photo.path)'''
+        image.save(self.photo.path)
 
 
 class PeerReviews(models.Model):
@@ -114,8 +113,10 @@ class GradeCategory(models.Model):
 # Модель Перформанс-Ревью
 class PerformanceReview(models.Model):
     self_review_categories = models.ManyToManyField(GradeCategory, related_name='self_review_categories', default=None)
-    manager_review_categories = models.ManyToManyField(GradeCategory, related_name='manager_review_categories', default=None)
-    peers_review_categories = models.ManyToManyField(GradeCategory, related_name='peers_review_categories', default=None)
+    manager_review_categories = models.ManyToManyField(GradeCategory, related_name='manager_review_categories',
+                                                       default=None)
+    peers_review_categories = models.ManyToManyField(GradeCategory, related_name='peers_review_categories',
+                                                     default=None)
     team_review_categories = models.ManyToManyField(GradeCategory, related_name='team_review_categories', default=None)
 
 
@@ -144,8 +145,8 @@ class Grade(models.Model):
 
 # Модель Средняя Оценка (на будущее)
 class AverageGrade(models.Model):
-        performance_review = models.ForeignKey(PerformanceReview, on_delete=models.CASCADE)
-        evaluated_person = models.ForeignKey(Profile, on_delete=models.CASCADE)
-        grade_category = models.ForeignKey(GradeCategory, on_delete=models.PROTECT)
-        raw_grade = models.FloatField()
-        normalized_grade = models.FloatField()
+    performance_review = models.ForeignKey(PerformanceReview, on_delete=models.CASCADE)
+    evaluated_person = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    grade_category = models.ForeignKey(GradeCategory, on_delete=models.PROTECT)
+    raw_grade = models.FloatField()
+    normalized_grade = models.FloatField()
