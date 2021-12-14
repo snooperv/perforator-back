@@ -26,7 +26,7 @@ class Profile(models.Model):
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
     approve = models.BooleanField(default=False)
 
-    def save(self, *args, **kwargs):
+    '''def save(self, *args, **kwargs):
         if not self.id and not self.photo:
             return
         super(Profile, self).save(*args, **kwargs)
@@ -35,14 +35,14 @@ class Profile(models.Model):
         "Max width and height 800"
         if width < height:
             factor = height / width
-            height = 500
-            size = (int(height * factor), int(height))
+            width = 400
+            size = (int(width), int(width * factor))
         else:
             factor = width / height
-            width = 500
-            size = (int(width), int(width * factor))
+            height = 400
+            size = (int(height * factor), int(height))
         image = image.resize(size, Image.ANTIALIAS)
-        image.save(self.photo.path)
+        image.save(self.photo.path)'''
 
 
 class PeerReviews(models.Model):
