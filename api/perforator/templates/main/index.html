@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    {% block mainstyles %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/mainStyles.css' %}">
+{% endblock %}
 {% block content %}
     <div class="header">
         {% include "main/headAndSidebar/header.html" %}
@@ -12,8 +18,4 @@
             {% block mainContent %}{% endblock %}
         </div>
     </div>
-
-
-
-    <link rel="stylesheet" href="{% static 'css/mainStyles.css' %}">
 {% endblock %}
