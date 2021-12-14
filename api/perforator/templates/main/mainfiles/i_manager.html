@@ -3,8 +3,11 @@
 {% block title %}
     Я менеджер -
 {% endblock %}
+{% block mainstyles %}
+    <link rel="stylesheet" href="{% static 'css/manager.css' %}">
+    <link rel="stylesheet" href="{% static 'css/peers.css' %}">
+{% endblock %}
 {% block mainContent %}
-    <script src="{% static 'js/imanager_main_function.js' %}"></script>
     <div class="manager">
         <div class="double-links" id="dl">
             <a href="#"
@@ -175,22 +178,12 @@
         </div>
     </div>
 
-    <div id="script">
-        <script>
-            $('.d-link').on('click', function () {
-                $('.d-link.dactive').removeClass('dactive');
-                $(this).addClass('dactive');
-            });
-
-            function myFunction() {
-                document.getElementById('myDropdown').classList.toggle('show')
-            };
-        </script>
-    </div>
-
     {% include "main/mainfiles/addons/peers.html" %}
     {% include "main/mainfiles/addons/confirm.html" %}
-    <link rel="stylesheet" href="{% static 'css/manager.css' %}">
+    <script src="{% static 'js/imanager_main_function.js' %}"></script>
+    <div id="script">
+        <script src="{% static 'js/pages_manager.js' %}"></script>
+    </div>
     <script src="{% static 'js/buttons_peers.js' %}"></script>
     <script>
     fetch(window.location.origin + "/perforator/team")

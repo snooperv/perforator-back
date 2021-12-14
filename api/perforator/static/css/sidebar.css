@@ -211,3 +211,7 @@ a {
         display: none;
     }
 }
+
+#i_manager_button {
+    display: none;
+}

@@ -3,6 +3,9 @@
 {% block title %}
     Я оцениваю -
 {% endblock %}
+{% block mainstyles %}
+    <link rel="stylesheet" href="{% static 'css/me-estimate.css' %}">
+{% endblock %}
 {% block mainContent %}
     <div class="me-estimate">
         <div class="instruction">
@@ -40,17 +43,20 @@
         <div class="wait">
             <h2>Ожидают моей оценки</h2>
             <div class="peers">
-                <button onclick="myFunction()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                    <span class="name">Коновалов Илья</span>
+
+                {% for profile, review in matches.items %}
+
+                <button onclick="toggleForm({{ profile.id }})" class="peer dropbtn">
+                    <img src="{{ profile.photo.url }}" class="peer-avatar"/>
+                    <span class="name"> {{ profile.user.first_name }} </span>
                     <a href="#" class="chevron">
                         <i class="fas fa-chevron-right"></i>
                     </a>
                 </button>
-                <div id="myDropdown" class="dropdown-content">
+                <div id="myDropdown-{{ profile.id }}" class="dropdown-content">
                     <div class="dropdown-container">
 
-                        <form method="post">
+                        <form action="/perforator/process_rate/" method="post">
                             {% csrf_token %}
                             {% load widget_tweaks %}
                             <h3 class="dropdownTitle">
@@ -61,6 +67,10 @@
 
                             <div>
                                 {% for choice in review.rates_deadlines %}
+                                    <!--
+                                    <input name="{{ radio.name }}" type="radio" id="radio_{{ radio.index }}" value={{ radio.choice_value }}>
+                                    <label for="radio_{{ radio.index }}">{{ radio.choice_label }}</label>
+                                    -->
                                     <label for="{{ choice.id_for_label }}">
                                         <span>{{ choice.tag }}</span>
                                         {{ choice.choice_label }}
@@ -169,23 +179,20 @@
                                 {% endfor %}
                             </div>
 
-                            <input type="submit" value="Отправить отзыв"/>
+                            <input type="hidden" name="profile" value={{ profile.id }}>
+                            <input type="submit" value="Отправить отзыв" name="rate-{{ profile.id }}"/>
 
                         </form>
-
 
                     </div>
 
                 </div>
+
+                {% endfor %}
+
             </div>
         </div>
     </div>
 
-    <script>
-        function myFunction() {
-            document.getElementById('myDropdown').classList.toggle('show')
-        }
-    </script>
-
-    <link rel="stylesheet" href="{% static 'css/me-estimate.css' %}">
+    <script src="{% static 'js/dropdown_rate.js' %}"></script>
 {% endblock %}
