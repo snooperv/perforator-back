@@ -10,6 +10,7 @@ def __format_profile_to_data(p):
         'photo': p.photo.url,
         'sbis': p.sbis,
         'approve': p.approve,
+        'message': "ok",
     }
 
 

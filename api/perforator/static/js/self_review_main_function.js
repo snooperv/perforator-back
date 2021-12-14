@@ -66,12 +66,7 @@ function self_review_main() {
                     container.appendChild(input);
                 }
             }
-            if (!is_draft) {
-                document.querySelector(".save").setAttribute("disabled", "disabled");
-                document.querySelector(".send").setAttribute("disabled", "disabled");
-
-            }
-            check_free_fields_onload();
+            if (!is_draft) disable_btn_peers()
         })
 
 }
@@ -92,6 +87,14 @@ function enable_btn_send() {
     btn.setAttribute("style", "background-color: #A5A4F5")
 }
 
+function disable_btn_peers(){
+    let btn = document.querySelector(".add-peer")
+    let btn_close = document.querySelectorAll("[id='close']");
+    for (let b of btn_close) b.style.display = "none";
+    btn.setAttribute("disabled", "disabled")
+    btn.setAttribute("style", "background-color: #8e8e8e")
+}
+
 function check_free_fields() {
     let inputs = document.querySelectorAll("[field='yes']");
     for (let i of inputs) {
@@ -107,11 +110,8 @@ function check_free_fields() {
 
 function check_peers_list() {
     let peers = document.getElementById("my_peers").children
-    for (let p of peers) {
-
-        console.log(p.style.display)
-
-        if (p.style.display != "none") {
+    for (let p of peers){
+        if (p.style.display != "none"){
             btn_status[1] = true;
             update_btn();
             return;
@@ -141,6 +141,11 @@ function save_self_review(is_draft) {
     check_peers_list();
     check_free_fields();
     if (btn_status[0] !== true && btn_status[1] !== true) return
+    if (!is_draft) {
+        disable_btn_send();
+        disable_btn_peers();
+    }
+    //disable_btn_peers();
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     data = {'is_draft': is_draft, 'grades': []}
