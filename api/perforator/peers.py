@@ -181,6 +181,32 @@ def get_where_user_id_is_peer(request, id):
         return {'error': True, 'message': 'Вы не авторизовались'}
 
 
+def get_where_user_id_is_peer_team(request, id):
+    """
+               Получить текущий список пиров любого пользователя по его id
+               request.data: не требуется
+               :return: Список пользователей в виде:
+               [ {'user_id': user.id,
+                  'profile_id': profile.id,
+                  'username': user.username,
+                  'photo': user.photo.url,
+                  'sbis': user.sbis},
+                 { ... }
+               ]
+           """
+    if request.user.is_authenticated:
+        result = []
+        profile = Profile.objects.filter(user=request.user)[0]
+        profiles = profile.team.all()
+        for p in profiles:
+            obj = {'user_id': p.user.id, 'profile_id': p.id,
+                   'username': p.user.first_name, 'photo': p.photo.url, 'approve': p.approve}
+            result.append(obj)
+        return result
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+
+
 def get_user_peers(request, id):
     if request.user.is_authenticated:
         result = []

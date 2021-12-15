@@ -106,10 +106,10 @@ function replace_send_btn(){
     galochka.setAttribute("src", "/static/img/check.svg")
     container_galochka.setAttribute("class", "check_img")
 
-    document.querySelector(".send").style.display = "none";
-    document.querySelector(".save").style.display = "none";
-    //document.querySelector(".send").remove();
-    //document.querySelector(".save").remove();
+    //document.querySelector(".send").style.display = "none";
+    //document.querySelector(".save").style.display = "none";
+    document.querySelector(".send").remove();
+    document.querySelector(".save").remove();
     document.getElementById("draft").remove();
     container_galochka.appendChild(galochka)
     container.appendChild(container_galochka)
