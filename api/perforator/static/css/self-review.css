@@ -309,3 +309,15 @@ input[type=submit]:active, .send:active {
     visibility: hidden;
     transition: all 0.35s ease-in-out;
 }
+
+.check_img{
+    text-align: center;
+}
+
+.check_img img{
+    width: 150px;
+    height: 150px;
+}
+.wrapper-submit h4{
+    text-align: center;
+}
