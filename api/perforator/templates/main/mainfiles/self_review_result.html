@@ -1,0 +1,176 @@
+{% extends "main/index.html" %}
+{% load static %}
+{% block title %}
+    Self Review -
+{% endblock %}
+{% block mainContent %}
+    <div class="self-review">
+        <div class="form">
+            <div class="container">
+                <h2>Итоговая обратная связь</h2>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td class="table-heading">менеджер</td>
+                        <td class="table-heading">пиры</td>
+                        <td class="table-heading">средняя</td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Средняя оценка</td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.54</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><div class="table-title">Оценки по каждому критерию</div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Соблюдение сроков</td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Пути достижения целей</td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number good">2.45</div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Умение работать в команде</td>
+                        <td class="numbers-in-table"><div class="grade-number good">2.00</div></td>
+                        <td class="numbers-in-table"><div class="grade-number bad">1.6</div></td>
+                        <td class="numbers-in-table"><div class="grade-number good">2.45</div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Приверженность к хорошим техническим практикам</td>
+                        <td class="numbers-in-table"><div class="grade-number good">2.00</div></td>
+                        <td class="numbers-in-table"><div class="grade-number bad">1.87</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Уровень владения технологиями</td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Адаптивность</td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                        <td class="numbers-in-table"><div class="grade-number good">2.3</div></td>
+                        <td class="numbers-in-table"><div class="grade-number great">3.8</div></td>
+                    </tr>
+                </table>
+                <p class="final-grades">
+                    Нормированная оценка сотрудника:<span class="grade-number great">3.02</span>
+                </p>
+                <p class="final-grades">
+                    Средняя оценка по компании:<span class="grade-number good">2.93</span>
+                </p>
+            </div>
+            <h2></h2><br>
+            <div class="container">
+                <h2>Отзыв от менеджера</h2>
+
+                <!--<div class="profile-pic">
+                    <img class="photo" src="{% static 'img/pic.png' %}"/>
+                </div>
+                <div class="peer-info">
+                    Илья Коновалов
+                </div>-->
+                <div>
+                    <img class="photo" src="{% static 'img/pic.png' %}"/>
+                </div>
+                <div class="peer-info">
+                    <span>Илья Коновалов</span>
+                </div>
+
+                <div  class="self-review-manager">
+                    <p>
+                        <i class="icon-circle fas fa-circle"></i>
+                        <span>Соблюдение сроков</span>
+                    </p>
+                </div>
+                <div  class="self-review-manager gray-border commas">
+                    <p>Ты молодец, только пореже пей кофе и ноги на стол не складывай! А разработчик из тебя прекрасный, гордимся тобой!</p>
+                </div>
+                <div  class="self-review-manager">
+                    <p>
+                        <i class="icon-circle fas fa-circle"></i>
+                        <span>Пути достижения целей</span>
+                    </p>
+                    <span class="description">идет ли человек по головам или находит пути решения договариваясь с коллегами</span>
+                </div>
+                <div  class="self-review-manager gray-border commas">
+                    <p>Ты молодец, только пореже пей кофе и ноги на стол не складывай! А разработчик из тебя прекрасный, гордимся тобой!</p>
+                </div>
+                <div  class="self-review-manager">
+                    <p>
+                        <i class="icon-circle fas fa-circle"></i>
+                        <span>Умение работать в команде</span>
+                    </p>
+                    <span class="description">насколько активно человек вовлечен в командную работу</span>
+                </div>
+                <div  class="self-review-manager gray-border">
+                    <p>Ты молодец, только пореже пей кофе и ноги на стол не складывай! А разработчик из тебя прекрасный, гордимся тобой!</p>
+                </div>
+                <div  class="self-review-manager">
+                    <p>
+                        <i class="icon-circle fas fa-circle"></i>
+                        <span>Приверженность к хорошим тех.практикам</span>
+                    </p>
+                    <span class="description">насколько человек придерживается покрытия кода авто тестами, проектирует хорошую архитектуру, использует хорошие паттерны</span>
+                </div>
+                <div  class="self-review-manager gray-border">
+                    <p>Ты молодец, только пореже пей кофе и ноги на стол не складывай! А разработчик из тебя прекрасный, гордимся тобой!</p>
+                </div>
+                <div  class="self-review-manager">
+                    <p>
+                        <i class="icon-circle fas fa-circle"></i>
+                        <span>Уровень владения технологиями</span>
+                    </p>
+                    <span class="description">насколько хорошо человек владеет технологиями разработки, используемым стеком и т.д.</span>
+                </div>
+                <div  class="self-review-manager gray-border">
+                    <p>Ты молодец, только пореже пей кофе и ноги на стол не складывай! А разработчик из тебя прекрасный, гордимся тобой!</p>
+                </div>
+                <div  class="self-review-manager">
+                    <p>
+                        <i class="icon-circle fas fa-circle"></i>
+                        <span>Адаптивность</span>
+                    </p>
+                    <span class="description">насколько быстро человек адаптируется к новым условиям работы, вливается в новый коллектив</span>
+                </div>
+                <div  class="self-review-manager gray-border">
+                    <p>Ты молодец, только пореже пей кофе и ноги на стол не складывай! А разработчик из тебя прекрасный, гордимся тобой!</p>
+                </div>
+                <br>
+            </div>
+        </div>
+        <!------->
+        <div class="form">
+            <div class="container">
+                <h2 class="title-r">Self Review</h2>
+                 <button onclick="myFunction()" class="peer dropbtn">
+                    <a href="#" class="chevron">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </button>
+                <div id="myDropdown" class="dropdown-content">
+                    <div class="dropdown-container">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "main/mainfiles/addons/peers.html" %}
+    <script>
+        function myFunction() {
+            document.getElementById('myDropdown').classList.toggle('show')
+        };
+    </script>
+
+    <link rel="stylesheet" href="{% static 'css/self-review-result.css' %}">
+{% endblock %}

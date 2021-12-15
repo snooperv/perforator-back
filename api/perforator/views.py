@@ -43,6 +43,31 @@ class I_Rate(LoginRequiredMixin, View):
                 return HttpResponseRedirect(reverse('irate'))
 
 
+class SelfReviewResult(LoginRequiredMixin, View):
+    model = SelfReview
+
+    @staticmethod
+    def get(request):
+        form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
+        return render(request, 'main/mainfiles/self_review_result.html', {'form': form})
+
+    @staticmethod
+    def post(request):
+        if request.method == 'POST':
+            form = UpdateProfile(request.POST)
+            if form.is_valid():
+                user = User.objects.get(username=request.user.username)
+                user.username = form.cleaned_data['phone']
+                user.first_name = form.cleaned_data['name']
+                user.profile.phone = form.cleaned_data['phone']
+                user.profile.sbis = form.cleaned_data['sbis']
+                user.save()
+                return HttpResponseRedirect(reverse('result'))
+
+    def get_queryset(self):
+        return SelfReview.objects.filter(self_review=self.request.user)
+
+
 class OneToOne(LoginRequiredMixin, View):
     model = Grade
 
