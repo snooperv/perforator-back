@@ -23,7 +23,7 @@ td {
     align-items: center;
     flex-direction: column;
     height: 100%;
-    width: 80%;
+    width: 90%;
     font-size: 20px;
     color: rgb(167, 167, 167);
     font-weight: 600;
@@ -75,7 +75,7 @@ td {
 
 table {
     display: grid;
-    width: 850px;
+    width: 95%;
     height: 575px;
     margin: 15px;
     background: #ECECF2;
@@ -158,10 +158,6 @@ table {
     border-radius: 19px;
 }
 
-.title-r {
-    font-size: 36px !important;
-}
-
 .peer-info {
     vertical-align: middle;
 }
@@ -173,9 +169,11 @@ table {
 }
 
 .dropbtn {
-    background-color: #ececf2;
+    background-color: white;
     color: white;
-    padding: 16px;
+    margin-right: auto;
+    left: 15px;
+    float: right;
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -189,6 +187,7 @@ table {
     margin-right: 25px;
     font-size: 1.5em;
     color: #331969;
+    pointer-events: none;
 }
 
 .dropdown-content {
@@ -210,4 +209,10 @@ table {
 .photo {
     border: 2px solid #222222;
     border-radius: 50%;
+}
+.show {
+    display: block !important;
+}
+.drop {
+    display: none;
 }

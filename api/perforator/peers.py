@@ -303,15 +303,25 @@ def get_user_rating(request, id):
         for r in rates:
             rate = {'who': r.peer_id_id,
                     'is_manager': False,
+                    'manager_name': '',
+                    'manager_photo': '',
                     'r_deadline': r.rates_deadlines,
                     'r_approaches': r.rates_approaches,
                     'r_teamwork': r.rates_teamwork,
                     'r_practices': r.rates_practices,
                     'r_experience': r.rates_experience,
-                    'r_adaptation': r.rates_adaptation
+                    'r_adaptation': r.rates_adaptation,
+                    'deadline': r.deadlines,
+                    'approaches': r.approaches,
+                    'teamwork': r.teamwork,
+                    'practices': r.practices,
+                    'experience': r.experience,
+                    'adaptation': r.adaptation,
                     }
             if r.peer_id_id == manager.id:
                 rate['is_manager'] = True
+                rate['manager_name'] = manager.first_name
+                rate['manager_photo'] = manager.profile.photo.url
             obj['rates'].append(rate)
         result.append(obj)
         return result
