@@ -137,6 +137,13 @@ class SelfReviewByUserView(LoginRequiredMixin, View):
         return SelfReview.objects.filter(self_review=self.request.user)
 
 
+class Employee(LoginRequiredMixin, View):
+
+    @staticmethod
+    def get(request):
+        return render(request, 'main/mainfiles/addons/employee.html')
+
+
 def registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST, request.FILES)
