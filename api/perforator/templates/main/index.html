@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="{% static 'css/mainStyles.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="header">
-        {% include "main/headAndSidebar/header.html" %}
-    </div>
     <div class="menu">
         {% include "main/headAndSidebar/sidebar.html" %}
     </div>
     <script src="{% static 'js/button_manager.js' %}"></script>
+    <div class="header">
+        {% include "main/headAndSidebar/header.html" %}
+    </div>
     <div class="main">
         <div class="content">
             {% block mainContent %}{% endblock %}
