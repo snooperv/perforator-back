@@ -185,16 +185,4 @@
         <script src="{% static 'js/pages_manager.js' %}"></script>
     </div>
     <script src="{% static 'js/buttons_peers.js' %}"></script>
-    <script>
-    fetch(window.location.origin + "/perforator/team")
-        .then(response => response.json())
-        .then(json => {
-            let link = document.getElementById('i_manager_button')
-            if (json.length >= 1){
-                link.style.display = "block";
-            }
-            console.log(json.length)
-            console.log(link.href)
-        })
-    </script>
 {% endblock %}
