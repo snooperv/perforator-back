@@ -66,7 +66,10 @@ function self_review_main() {
                     container.appendChild(input);
                 }
             }
-            if (!is_draft) disable_btn_peers()
+            if (!is_draft) {
+                //disable_btn_peers();
+                replace_send_btn();
+            }
         })
 
 }
@@ -77,22 +80,50 @@ function get_self_review() {
 
 function disable_btn_send() {
     let btn = document.querySelector(".send")
-    btn.setAttribute("disabled", "disabled")
-    btn.setAttribute("style", "background-color: #8e8e8e")
+    try {
+        btn.setAttribute("disabled", "disabled")
+        btn.setAttribute("style", "background-color: #8e8e8e")
+    }
+    catch (error){
+
+    }
 }
 
 function enable_btn_send() {
     let btn = document.querySelector(".send")
-    btn.removeAttribute("disabled")
-    btn.setAttribute("style", "background-color: #A5A4F5")
+    try {
+        btn.removeAttribute("disabled")
+        btn.setAttribute("style", "background-color: #A5A4F5")
+    }
+    catch (error){
+
+    }
 }
 
 function disable_btn_peers(){
-    let btn = document.querySelector(".add-peer")
+    document.querySelector(".add-peer").remove()
     let btn_close = document.querySelectorAll("[id='close']");
     for (let b of btn_close) b.style.display = "none";
-    btn.setAttribute("disabled", "disabled")
-    btn.setAttribute("style", "background-color: #8e8e8e")
+    //btn.setAttribute("disabled", "disabled")
+    //btn.setAttribute("style", "background-color: #8e8e8e")
+}
+function replace_send_btn(){
+    let galochka = document.createElement("img")
+    let container_galochka = document.createElement("p")
+    let text = document.createElement("h4");
+    text.innerHTML = "Форма отправлена!";
+    let container = document.querySelector(".wrapper-submit")
+    galochka.setAttribute("src", "/static/img/check.svg")
+    container_galochka.setAttribute("class", "check_img")
+
+    //document.querySelector(".send").style.display = "none";
+    //document.querySelector(".save").style.display = "none";
+    document.querySelector(".send").remove();
+    document.querySelector(".save").remove();
+    document.getElementById("draft").remove();
+    container_galochka.appendChild(galochka)
+    container.appendChild(container_galochka)
+    container.appendChild(text)
 }
 
 function check_free_fields() {
@@ -144,8 +175,8 @@ function save_self_review(is_draft) {
     if (!is_draft) {
         disable_btn_send();
         disable_btn_peers();
+        replace_send_btn()
     }
-    //disable_btn_peers();
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     data = {'is_draft': is_draft, 'grades': []}
@@ -158,11 +189,8 @@ function save_self_review(is_draft) {
         })
         if (!is_draft) {
             gradeDiv.setAttribute("disabled", "disabled");
-            document.querySelector(".save").setAttribute("disabled", "disabled");
-            document.querySelector(".send").setAttribute("disabled", "disabled");
         }
     }
-    //console.log(data)
     fetch(window.location.origin + "/perforator/self-review/save/", {
         method: 'POST',
         headers: {
@@ -171,10 +199,6 @@ function save_self_review(is_draft) {
         },
         body: JSON.stringify(data)
     })
-    //document.getElementById('draft').setAttribute("style", "opacity: 1; visibility: visible;");
-    //$('#').removeClass('hidden_draft');
-    //console.log(document.getElementsByTagName('draft').class);
-    //setTimeout(show_draft, 5000);
     let elem = document.querySelector("#draft")
     console.log(elem.classList);
     console.log(elem.classList.contains("active_draft"));

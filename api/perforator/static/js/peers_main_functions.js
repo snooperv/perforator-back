@@ -12,7 +12,6 @@
 // Если у вас есть другой вариант реализации - можете его реализовать
 window.onload = function () {
     console.log('page loaded');
-    remove_button_imanager();
     //self_review_main();
 
     fetch(window.location.origin + "/perforator/manager")
