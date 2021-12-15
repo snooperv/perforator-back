@@ -80,14 +80,24 @@ function get_self_review() {
 
 function disable_btn_send() {
     let btn = document.querySelector(".send")
-    btn.setAttribute("disabled", "disabled")
-    btn.setAttribute("style", "background-color: #8e8e8e")
+    try {
+        btn.setAttribute("disabled", "disabled")
+        btn.setAttribute("style", "background-color: #8e8e8e")
+    }
+    catch (error){
+
+    }
 }
 
 function enable_btn_send() {
     let btn = document.querySelector(".send")
-    btn.removeAttribute("disabled")
-    btn.setAttribute("style", "background-color: #A5A4F5")
+    try {
+        btn.removeAttribute("disabled")
+        btn.setAttribute("style", "background-color: #A5A4F5")
+    }
+    catch (error){
+
+    }
 }
 
 function disable_btn_peers(){
