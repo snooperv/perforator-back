@@ -138,11 +138,16 @@ def generate_matched_profiles_and_forms(request, profile_from):
     """
     if request.user.is_authenticated:
         rated = get_where_user_id_is_peer(request, profile_from.user.id)
+        rated_team = get_where_user_id_is_peer_team(request, profile_from.user.id)
         if (len(rated) == 0):
             return {}
 
         answer = {}
         for r in rated:
+            p = Profile.objects.filter(id=r['profile_id']).first()
+            form = generate_review_form(request, profile_from, p)
+            answer[p] = form
+        for r in rated_team:
             p = Profile.objects.filter(id=r['profile_id']).first()
             form = generate_review_form(request, profile_from, p)
             answer[p] = form
