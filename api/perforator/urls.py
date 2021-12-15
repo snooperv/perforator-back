@@ -13,7 +13,8 @@ urlpatterns = [
     path('imanager/', views.I_Manager.as_view(), name='imanager'),
     path('registration/', views.registration, name='registration'),
     path('process_rate/', views.process_rate_form, name='process_rate'),
-    path('employee', views.Employee.as_view(), name='employee'),
+    path('imanager/employee/', views.Employee.as_view(), name='employee'),
+    path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
 
     path('peers/demo', raw_peers_views.peers_demo),
     path('peers/all/', raw_peers_views.get_all_peers),

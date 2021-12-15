@@ -1,0 +1,213 @@
+h2, h3, h4 {
+    color: #222222;
+    margin-top: 15px;
+    font-size: 24px;
+}
+
+p {
+    font-family: 'Gotham Pro light';
+    font-weight: 1000;
+    color: #222222;
+    margin: 0;
+}
+
+td {
+    color: #222222;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.self-review {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+    font-size: 20px;
+    color: rgb(167, 167, 167);
+    font-weight: 600;
+}
+
+.form {
+    margin-top: 40px;
+    padding-top: 10px;
+    width: 90%;
+    background: #FFFFFF;
+    text-align: left;
+    border-radius: 30px;
+}
+
+.container {
+    width: 90%;
+    display: inline-block;
+    margin: 0 30px;
+}
+
+.icon-circle {
+    font-size: 9px !important;
+    margin: 0;
+    color: #CAC9F7;
+    position: relative;
+    top: -3px;
+}
+
+.commas::before {
+    content: "A";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding-bottom: 20px;
+    font-size: 30px;
+    color: #EDBD31;
+    background-size: 25px auto;
+    transform: rotate(180deg);
+}
+
+.table-heading {
+    font-family: Gotham Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 11px;
+    text-align: center;
+}
+
+table {
+    display: grid;
+    width: 850px;
+    height: 575px;
+    margin: 15px;
+    background: #ECECF2;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 35px;
+    border-spacing: 10px;
+}
+
+.grade-number {
+    font-size: 20px;
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    border-radius: 25px;
+    width: 60px;
+    height: 32px;
+    line-height: 32px;
+    display: inline-block;
+    margin-left: 15px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-right: 10px;
+}
+
+.great {
+    background-color: #A5A4F5;
+}
+
+.good {
+    background-color: #EDBD31;
+}
+
+.bad {
+    background-color: #CD2525;
+}
+
+.numbers-in-table {
+    width: 81px;
+    height: 46px;
+    background: #FFFFFF;
+    border-radius: 17px;
+}
+
+.numbers-in-table:nth-child(3n+1) {
+    margin-right: 20px;
+}
+
+.text-in-table {
+    width: 457px;
+    height: 46px;
+    padding-left: 20px;
+    margin-left: 20px;
+
+    background: #FFFFFF;
+    border-radius: 17px;
+}
+
+.table-title {
+    margin: 10px;
+    font-size: 21px;
+}
+
+.final-grades {
+    font-family: Gotham Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 19px;
+    margin-left: 20px;
+}
+
+.self-review-manager {
+    padding: 20px;
+    margin-left: 60px;
+}
+
+.gray-border {
+    background: #ECECF2;
+    border-radius: 19px;
+}
+
+.title-r {
+    font-size: 36px !important;
+}
+
+.peer-info {
+    vertical-align: middle;
+}
+
+.description {
+    margin-top: -25px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.dropbtn {
+    background-color: #ececf2;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.chevron {
+    position: relative;
+    float: right;
+    margin-right: 25px;
+    font-size: 1.5em;
+    color: #331969;
+}
+
+.dropdown-content {
+    display: none;
+    padding-top: 50px;
+    background-color: #ececf2;
+    width: 95%;
+    border-radius: 15px;
+    transform: translateY(-50px);
+    position: relative;
+    z-index: 1;
+}
+
+.dropdown-container {
+    margin-left: 70px;
+    padding-bottom: 10px;
+}
+
+.photo {
+    border: 2px solid #222222;
+    border-radius: 50%;
+}

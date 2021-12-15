@@ -45,6 +45,7 @@ window.onload = function () {
             let team_list_not_approve = document.getElementById("team_not_approve");
             let team_list_approve = document.getElementById("team_approve");
             let team_without_sr = document.getElementById("team_without_self_review");
+            let team_list = document.querySelector(".rating")
 
             let script_list = document.getElementById("script");
             let el_approve_counter = document.getElementById("approve_users_count");
@@ -56,11 +57,16 @@ window.onload = function () {
             for (let p of json) {
                 const allDiv = document.createElement("div");
                 const scripts = document.createElement("script");
+                const employee = document.createElement("div");
+                const stats = document.createElement("script")
 
+                employee.setAttribute("id", `employee-${p['user_id']}`);
                 allDiv.setAttribute("id", `peer-${p['user_id']}`);
                 allDiv.classList.add("peers")
-                scripts.innerHTML = `function myFunction${p.user_id}() {
-                                        document.getElementById('myDropdown${p.user_id}').classList.toggle('show')};`
+                scripts.innerHTML = `
+                    function myFunction${p.user_id}() {
+                        document.getElementById('myDropdown${p.user_id}').classList.toggle('show')};`
+
                 allDiv.innerHTML = `
                     <button onclick="myFunction${p.user_id}()" id="remove_btn${p.user_id}" class="peer dropbtn">
                         <div class="peers-pic">
@@ -74,7 +80,30 @@ window.onload = function () {
                     <div id="myDropdown${p.user_id}" class="dropdown-content"></div>
                     `;
 
-                script_list.appendChild(scripts)
+                employee.innerHTML = `
+                    <div>
+                        <div class="items rating-name">
+                            <div class="peers-pic">
+                                <img class="" src="${p.photo}"/>
+                            </div>
+                            <a href="" class="name-link">${p.username}</a>
+                        </div>
+                        <a href="employee" onclick="stats${p.user_id}()">
+                            <div class="grade">
+                                <div class="grade-number great">3.8</div>
+                            </div>
+                        </a>
+                    </div>    
+                `
+                stats.innerHTML = `
+                    function stats${p.user_id}(){
+                        localStorage.setItem('user', ${p.user_id})
+                    } 
+                `
+
+                script_list.appendChild(scripts);
+                script_list.appendChild(stats);
+                team_list.appendChild(employee);
 
                 fetch(window.location.origin + "/perforator/self-review/is-draft/?id=" + p.user_id)
                     .then(response => response.json())

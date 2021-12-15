@@ -1,5 +1,5 @@
 import uuid
-from .models import User, Profile
+from .models import User, Profile, PeerReviews
 
 """
     Модуль для работы с пирами пользователей.
@@ -284,5 +284,36 @@ def approve_user(request, id):
         profile.approve = True
         profile.save()
         return {'message': 'ОК'}
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+
+
+def get_user_rating(request, id):
+    if request.user.is_authenticated:
+        result = []
+        user = User.objects.filter(id=id).first()
+        manager = User.objects.filter(id=request.user.id).first()
+
+        p = Profile.objects.filter(user=user.id)[0]
+        rates = PeerReviews.objects.filter(rated_person_id=id)
+        obj = {'user_id': p.user.id,
+               'username': p.user.first_name,
+               'photo': p.photo.url,
+               'rates': []}
+        for r in rates:
+            rate = {'who': r.peer_id_id,
+                    'is_manager': False,
+                    'r_deadline': r.rates_deadlines,
+                    'r_approaches': r.rates_approaches,
+                    'r_teamwork': r.rates_teamwork,
+                    'r_practices': r.rates_practices,
+                    'r_experience': r.rates_experience,
+                    'r_adaptation': r.rates_adaptation
+                    }
+            if r.peer_id_id == manager.id:
+                rate['is_manager'] = True
+            obj['rates'].append(rate)
+        result.append(obj)
+        return result
     else:
         return {'error': True, 'message': 'Вы не авторизовались'}
