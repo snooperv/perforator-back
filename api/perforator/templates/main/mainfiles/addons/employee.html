@@ -73,28 +73,106 @@
         <!------->
         <div class="form">
             <div class="container">
-                <h2 class="title-r">Self Review</h2>
-                 <button onclick="myFunction()" class="peer dropbtn">
-                    <a href="#" class="chevron">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </button>
+                <h2 class="title-r">
+                    Отзыв от менеджера
+                    <button onclick="myFunction()" class="peer dropbtn">
+                        <a href="" class="chevron">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
+                </h2>
 
+                <div id="myDropdown" class="drop">
+                    <div class="">
+                        <div class="peer-info">
+                            <span id="manager_name"></span>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Соблюдение сроков</span>
+                            </p>
+                        </div>
+                        <div class="self-review-manager gray-border commas">
+                            <p id="deadline"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Пути достижения целей</span>
+                            </p>
+                            <span class="description">идет ли человек по головам или находит пути решения договариваясь с коллегами</span>
+                        </div>
+                        <div class="self-review-manager gray-border commas">
+                            <p id="approaches"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Умение работать в команде</span>
+                            </p>
+                            <span class="description">насколько активно человек вовлечен в командную работу</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="teamwork"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Приверженность к хорошим тех.практикам</span>
+                            </p>
+                            <span class="description">насколько человек придерживается покрытия кода авто тестами, проектирует хорошую архитектуру, использует хорошие паттерны</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="practices"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Уровень владения технологиями</span>
+                            </p>
+                            <span class="description">насколько хорошо человек владеет технологиями разработки, используемым стеком и т.д.</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="experience"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Адаптивность</span>
+                            </p>
+                            <span class="description">насколько быстро человек адаптируется к новым условиям работы, вливается в новый коллектив</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="adaptation"></p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
 
-                <div id="myDropdown" class="dropdown-content">
-                    <div class="dropdown-container">
+            </div>
+        </div>
+        <!--self review-->
+        <div class="form">
+            <div class="container">
+                <h2 class="title-r">
+                    Результаты SelfReview
+                    <button onclick="toggle_sr()" class="peer dropbtn">
+                        <a href="" class="chevron">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
+                </h2>
 
+                <div id="sr" class="drop">
+                    <div class="">
+                        <!--Сюда self review-->
+                        <h2>Self review</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function myFunction() {
-            document.getElementById('myDropdown').classList.toggle('show')
-        };
-    </script>
 
 
 
@@ -104,15 +182,27 @@
             get_rates(localStorage['user'])
                 .then(response => response.json())
                 .then(json => {
+                    let u = json[0]
                     let final_rate = get_rates_array(json)
                     set_value(final_rate, "manager")
                     set_value(final_rate, "peers")
                     set_value(final_rate, "averages")
+                    set_manager_review(u)
 
-                    console.log(final_rate)
 
                 })
-            //localStorage.removeItem('user')
+        }
+        function set_manager_review(u){
+            for (let r of u.rates) {
+                if (!r['is_manager']) {
+                    continue
+                }
+                for (let i in r) {
+                    let el = document.getElementById(i);
+                    if (el == null) continue
+                    el.innerHTML += r[i];
+                }
+            }
         }
         function set_value(final_rate, name){
             for (let i in final_rate[name]) {
@@ -214,6 +304,12 @@
         }
         function get_team(){
             return fetch(window.location.origin + "/perforator/team");
+        }
+        function myFunction() {
+            document.getElementById('myDropdown').classList.toggle('show')
+        }
+        function toggle_sr() {
+            document.getElementById('sr').classList.toggle('show')
         }
     </script>
 {% endblock %}
