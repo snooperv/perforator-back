@@ -116,63 +116,20 @@
             <div class="block-container">
                 <h2 class="block-title">Рейтинг сотрудников</h2>
                 <p class="block-description">*кликните на сотрудника, чтобы посмотреть результаты его ревью</p>
-                <div class="inside-wrapper">
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
+                <div class="inside-wrapper rating" style="width: 95%">
+
+                    <div>
+                        <div class="items rating-name">
+                            <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
+                            <a href="" class="name-link">Коновалов Илья</a>
+                        </div>
+                        <div class="grade">
+                            <div class="grade-number great">3.8</div>
+                        </div>
                     </div>
-                    <div class="grade">
-                        <div class="grade-number great">3.8</div>
-                    </div>
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
-                    </div>
-                    <div class="grade">
-                        <div class="grade-number good">2.8</div>
-                    </div>
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
-                    </div>
-                    <div class="grade">
-                        <div class="grade-number bad">1.5</div>
-                    </div>
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
-                    </div>
-                    <div class="grade">
-                        <div class="grade-number great">3.8</div>
-                    </div>
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
-                    </div>
-                    <div class="grade">
-                        <div class="grade-number great">3.8</div>
-                    </div>
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
-                    </div>
-                    <div class="grade">
-                        <div class="grade-number great">3.8</div>
-                    </div>
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
-                    </div>
-                    <div class="grade">
-                        <div class="grade-number great">3.8</div>
-                    </div>
-                    <div class="items rating-name">
-                        <img src="{% static 'img/pic.png' %}" class="rating-peer-avatar"/>
-                        <a href="" class="name-link">Коновалов Илья</a>
-                    </div>
-                    <div class="grade">
-                        <div class="grade-number great">3.8</div>
-                    </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -185,16 +142,4 @@
         <script src="{% static 'js/pages_manager.js' %}"></script>
     </div>
     <script src="{% static 'js/buttons_peers.js' %}"></script>
-    <script>
-    fetch(window.location.origin + "/perforator/team")
-        .then(response => response.json())
-        .then(json => {
-            let link = document.getElementById('i_manager_button')
-            if (json.length >= 1){
-                link.style.display = "block";
-            }
-            console.log(json.length)
-            console.log(link.href)
-        })
-    </script>
 {% endblock %}

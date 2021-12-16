@@ -1,5 +1,5 @@
 import uuid
-from .models import User, Profile
+from .models import User, Profile, PeerReviews
 
 """
     Модуль для работы с пирами пользователей.
@@ -181,6 +181,32 @@ def get_where_user_id_is_peer(request, id):
         return {'error': True, 'message': 'Вы не авторизовались'}
 
 
+def get_where_user_id_is_peer_team(request, id):
+    """
+               Получить текущий список пиров любого пользователя по его id
+               request.data: не требуется
+               :return: Список пользователей в виде:
+               [ {'user_id': user.id,
+                  'profile_id': profile.id,
+                  'username': user.username,
+                  'photo': user.photo.url,
+                  'sbis': user.sbis},
+                 { ... }
+               ]
+           """
+    if request.user.is_authenticated:
+        result = []
+        profile = Profile.objects.filter(user=request.user)[0]
+        profiles = profile.team.all()
+        for p in profiles:
+            obj = {'user_id': p.user.id, 'profile_id': p.id,
+                   'username': p.user.first_name, 'photo': p.photo.url, 'approve': p.approve}
+            result.append(obj)
+        return result
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+
+
 def get_user_peers(request, id):
     if request.user.is_authenticated:
         result = []
@@ -258,5 +284,46 @@ def approve_user(request, id):
         profile.approve = True
         profile.save()
         return {'message': 'ОК'}
+    else:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+
+
+def get_user_rating(request, id):
+    if request.user.is_authenticated:
+        result = []
+        user = User.objects.filter(id=id).first()
+        manager = User.objects.filter(id=request.user.id).first()
+
+        p = Profile.objects.filter(user=user.id)[0]
+        rates = PeerReviews.objects.filter(rated_person_id=id)
+        obj = {'user_id': p.user.id,
+               'username': p.user.first_name,
+               'photo': p.photo.url,
+               'rates': []}
+        for r in rates:
+            rate = {'who': r.peer_id_id,
+                    'is_manager': False,
+                    'manager_name': '',
+                    'manager_photo': '',
+                    'r_deadline': r.rates_deadlines,
+                    'r_approaches': r.rates_approaches,
+                    'r_teamwork': r.rates_teamwork,
+                    'r_practices': r.rates_practices,
+                    'r_experience': r.rates_experience,
+                    'r_adaptation': r.rates_adaptation,
+                    'deadline': r.deadlines,
+                    'approaches': r.approaches,
+                    'teamwork': r.teamwork,
+                    'practices': r.practices,
+                    'experience': r.experience,
+                    'adaptation': r.adaptation,
+                    }
+            if r.peer_id_id == manager.id:
+                rate['is_manager'] = True
+                rate['manager_name'] = manager.first_name
+                rate['manager_photo'] = manager.profile.photo.url
+            obj['rates'].append(rate)
+        result.append(obj)
+        return result
     else:
         return {'error': True, 'message': 'Вы не авторизовались'}
