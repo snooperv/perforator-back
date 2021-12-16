@@ -67,6 +67,13 @@ class I_Rate(LoginRequiredMixin, View):
                 return HttpResponseRedirect(reverse('irate'))
 
 
+class SelfReviewResult(LoginRequiredMixin, View):
+
+    @staticmethod
+    def get(request):
+        return render(request, 'main/mainfiles/self_review_result.html')
+
+
 class OneToOne(LoginRequiredMixin, View):
     model = Grade
 

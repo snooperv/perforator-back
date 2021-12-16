@@ -8,6 +8,7 @@ from . import raw_hierarchy_views
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
+    path('result/', views.SelfReviewResult.as_view(), name='result'),
     path('irate/', views.I_Rate.as_view(), name='irate'),
     path('1to1/', views.OneToOne.as_view(), name='1to1'),
     path('imanager/', views.I_Manager.as_view(), name='imanager'),

@@ -24,7 +24,7 @@ td {
     flex-direction: column;
     height: 100%;
     width: 90%;
-    font-size: 20px;
+
     color: rgb(167, 167, 167);
     font-weight: 600;
 }
@@ -134,10 +134,49 @@ table {
     border-radius: 17px;
 }
 
+.text-in-self {
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 15px;
+    color: #27264D;
+}
+
+.text-under-head-self {
+    color: #686868;
+    font-weight: 200 !important;
+    font-size: 14px;
+    line-height: 15px;
+    font-style: normal;
+}
+
 .table-title {
     margin: 10px;
     font-size: 21px;
 }
+
+.title-self {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.title-head-self {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
 
 .final-grades {
     font-family: Gotham Pro;
@@ -151,6 +190,24 @@ table {
 .self-review-manager {
     padding: 20px;
     margin-left: 60px;
+}
+
+.self-review-manager-result {
+    padding: 20px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.self-review-manager-result:nth-last-child(1) {
+    margin-bottom: 30px;
+}
+
+.white-border {
+    background: #FFFFFF;
+    border-radius: 15px;
+    width: 90%;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 .gray-border {
