@@ -5,6 +5,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic, View
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .form import *
 from django.contrib.auth.models import User
@@ -21,9 +23,14 @@ def index(request):
                   context={'num_self': num_self})
 
 
+@api_view(['POST'])
 def process_one_to_one_form(request):
-    if request.method == 'POST':
-        pass
+    form = OneToOneForm(request.POST)
+    print(form)
+    if form.is_valid():
+        save_form(request, form)
+        return Response(data={'message': 'OK'}, status=200)
+    return Response(data={'error': 'Error occurred'}, status=200)
 
 
 def process_rate_form(request):

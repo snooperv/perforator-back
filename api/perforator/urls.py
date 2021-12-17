@@ -13,6 +13,7 @@ urlpatterns = [
     path('imanager/', views.I_Manager.as_view(), name='imanager'),
     path('registration/', views.registration, name='registration'),
     path('process_rate/', views.process_rate_form, name='process_rate'),
+    path('process_one_to_one/', views.process_one_to_one_form),
     path('imanager/employee/', views.Employee.as_view(), name='employee'),
     path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
 

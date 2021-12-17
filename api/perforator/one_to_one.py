@@ -53,14 +53,15 @@ def get_review_from_manager(request):
         if 'error' in manager:
             return {}
 
-        rev = get_review_to_profile(request, manager, cur_profile)
+        manager_profile = Profile.objects.filter(id=manager['profile_id']).first()
+        rev = get_review_to_profile(request, manager_profile, cur_profile)
         #del rev['created']
         return rev
     else:
         return {"error": 'Вы не авторизованы'}
 
 
-def get_review_to_profile(request, manager, employee):
+def get_review_to_profile(request, manager: Profile, employee):
     if request.user.is_authenticated:
         review = OneToOneReviews.objects.filter(manager=manager) \
             .filter(employee=employee).first()
@@ -71,6 +72,8 @@ def get_review_to_profile(request, manager, employee):
             answer['created'] = True
         else:
             answer['created'] = False
+            answer['manager'] = manager
+            answer['employee'] = employee
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
@@ -107,17 +110,17 @@ def save_form(request, form):
             common = form.cleaned_data['common']
             personal = form.cleaned_data['personal']
 
-            manager_id = int(d['manager_id'])
-            emp_id = int(d['employee_id'])
+            interviews_id = int(d['interviewed'])
+            is_manager = bool(d['is_manager'])
 
-            manager = Profile.objects.filter(id=manager_id).first()
-            employee = Profile.objects.filter(user=emp_id).first()
-            profile = Profile.objects.filter(user=request.user).first()
-
-            if profile.id == manager.id:
-                key = 'manager_notes'
-            else:
+            if is_manager:
                 key = 'employee_notes'
+                manager = Profile.objects.filter(id=interviews_id).first()
+                employee = Profile.objects.filter(user=request.user).first()
+            else:
+                key = 'manager_notes'
+                manager = Profile.objects.filter(user=request.user).first()
+                employee = Profile.objects.filter(id=interviews_id).first()
 
             review, created = OneToOneReviews.objects\
                 .update_or_create(manager=manager,

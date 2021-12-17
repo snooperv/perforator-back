@@ -38,41 +38,73 @@
 
                 {% for data in matches %}
 
+                    <button onclick="toggleOneToOneReview({{ forloop.counter }})" class="peer dropbtn">
 
+                        <img src=" {{ data.0.photo.url }} " class="peer-avatar"/>
+                        <span class="name"> {{ data.0.user.first_name }} </span>
+
+                        {% if data.2 %}
+
+                            <span class="position"> Мой руководитель</span>
+
+                        {% endif %}
+
+                        <a href="#" id="chev-{{ forloop.counter }}" class="chevron rotate">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
+                    <div id="myDropdown-{{ forloop.counter }}" class="dropdown-content">
+
+                        <form id="one-to-one-{{ forloop.counter }}" action="/perforator/process_one_to_one/" method="post">
+
+                            {% csrf_token %}
+                            {% load widget_tweaks %}
+
+                            <h3 class="dropdownTitle">Общие заметки</h3>
+
+                            {% render_field data.1.common id='generalNotes' name="generalNotes" class='ta big' style="margin-left: 35px;" %}
+
+                            <h3 class="dropdownTitle">
+                                <i class="icon-lock fas fa-lock"></i>
+                                Личные заметки
+                            </h3>
+
+                            {% render_field data.1.personal id='personalNotes' name="personalNotes" class='ta big' style="margin-left: 35px;" %}
+
+                            <input type="hidden" name="interviewed" value={{ data.0.id }}>
+                            <input type="hidden" name="is_manager" value={{ data.2 }}>
+
+                        </form>
+
+                    </div>
+
+                    <script type="text/javascript">
+                        var form = document.getElementById("one-to-one-{{ forloop.counter }}");
+                        var timerId;
+                        form.addEventListener('keyup', (e) => {
+                            clearTimeout(timerId);
+                            timerId = setTimeout(() => {
+                                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                                fetch(form.action, {
+                                    method: form.method,
+                                    headers: {
+
+                                        'X-CSRFToken': csrftoken
+                                    },
+                                    body: new FormData(form)
+                                })
+                                .then((response) => {
+                                    console.log(response.body);
+                                });
+
+
+                            }, 1000);
+                            console.log({{ forloop.counter }});
+                        });
+                    </script>
 
                 {% endfor %}
-
-                <button onclick="myFunction1()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                    <span class="name">Коновалов Илья</span>
-                    <span class="position"> Мой руководитель</span>
-                    <a href="#" id="chev1" class="chevron rotate">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </button>
-                <div id="myDropdown1" class="dropdown-content">
-                    <h3 class="dropdownTitle">Общие заметки</h3>
-                    <textarea
-                            name="generalNotes"
-                            id="generalNotes"
-                            rows="5"
-                            class="ta big"
-                            maxlength="512"
-                            style="margin-left: 35px;"
-                    ></textarea>
-                    <h3 class="dropdownTitle">
-                        <i class="icon-lock fas fa-lock"></i>
-                        Личные заметки
-                    </h3>
-                    <textarea
-                            name="personalNotes"
-                            id="personalNotes"
-                            rows="5"
-                            class="ta big"
-                            maxlength="512"
-                            style="margin-left: 35px;"
-                    ></textarea>
-                </div>
 
             </div>
 
@@ -119,5 +151,5 @@
 
     </div>
 
-    <script src="{% static 'js/pages_1on1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pages_1on1.js' %}"></script>
 {% endblock %}
