@@ -10,6 +10,15 @@
         </div>
     </div>
     <div class="rightWrapper">
+        <div class="timer">
+            <span class="untill">До завершения Self Review</span>
+            <span class="under" style="margin-left: 3px;">дней</span>
+            <span id="days" class="time">00</span> :
+            <span class="under">часов</span>
+            <span id="hours" class="time">00</span> :
+            <span class="under">минут</span>
+            <span id="minutes" class="time">00</span>
+        </div>
         <a href="#popup"><img
                 src="{% static 'img/settings.svg' %}"
                 alt="settings"
@@ -100,5 +109,22 @@
     </div>
     <a href="" class="close-popup"></a>
 </div>
+
+<script>
+        var countDownDate = new Date("Jan 10, 2022 23:00:00").getTime();
+        var x = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+        });
+</script>
 
 <script src="{% static 'js/toggle_visibility.js' %}"></script>
