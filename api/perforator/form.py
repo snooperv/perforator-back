@@ -58,3 +58,9 @@ class RateForm(forms.Form):
     rates_practices = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
     rates_experience = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
     rates_adaptation = forms.ChoiceField(choices=RATES, widget=forms.RadioSelect)
+
+
+class OneToOneForm(forms.Form):
+    common = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'maxlength': 2048}))
+    personal = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'maxlength': 2048}))
+

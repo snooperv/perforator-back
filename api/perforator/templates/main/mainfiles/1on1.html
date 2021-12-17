@@ -29,11 +29,19 @@
         </div>
 
         <div id="current">
+
             <div class="peers">
                 <div class="date">
                     <h2>Q2</h2>
                     <span class="period"> 01.01.2021 - 14.01.2021</span>
                 </div>
+
+                {% for data in matches %}
+
+
+
+                {% endfor %}
+
                 <button onclick="myFunction1()" class="peer dropbtn">
                     <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
                     <span class="name">Коновалов Илья</span>
@@ -65,7 +73,9 @@
                             style="margin-left: 35px;"
                     ></textarea>
                 </div>
+
             </div>
+
         </div>
         <div id="last-per" class="hide">
             <div class="peers">
