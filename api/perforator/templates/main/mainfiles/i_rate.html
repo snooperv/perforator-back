@@ -10,7 +10,6 @@
     <div class="me-estimate">
         <div class="instruction">
             <h2 class="main-title">Система баллов:</h2>
-
             <div class="number">1</div>
             <p>
                 <span>Значительно ниже моих ожиданий</span> <br/>
@@ -66,7 +65,7 @@
 
                             {% render_field review.deadlines id='deadlines' class='ta' %}
 
-                            <div class="ratingg">
+                            <div class="rating" style="position: relative; top: 10px;">
                                 {% for choice in review.rates_deadlines %}
                                     <!--
                                     <input name="{{ radio.name }}" type="radio" id="radio_{{ radio.index }}" value={{ radio.choice_value }}>
@@ -75,7 +74,9 @@
                                     {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
                                         <img src="{% static 'img/rating2.png' %}">
+                                        <span class="{{ choice.id_for_label }}"></span>
                                     </label>
+                                    <span id=""></span>
                                 {% endfor %}
                             </div>
 
@@ -90,10 +91,10 @@
 
                             {% render_field review.approaches id='goals' class='ta' %}
 
-                            <div class="ratingg">
+                            <div class="rating">
                                 {% for choice in review.rates_approaches %}
                                         {{ choice.tag }}
-                                    <label for="{{ choice.id_for_label }}">
+                                    <label for="{{ choice.id_for_label }}" class="{{ choice.id_for_label }}">
                                         <img src="{% static 'img/rating2.png' %}">
                                     </label>
                                 {% endfor %}
@@ -110,7 +111,7 @@
                             {% render_field review.teamwork id='teamwork' class='ta' %}
 
 
-                            <div class="ratingg">
+                            <div class="rating">
                                 {% for choice in review.rates_teamwork %}
                                     {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
@@ -132,7 +133,7 @@
                             {% render_field review.practices id='techPrac' class='ta' %}
 
 
-                            <div class="ratingg">
+                            <div class="rating">
                                 {% for choice in review.rates_practices %}
                                     {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
@@ -153,7 +154,7 @@
 
                             {% render_field review.experience id='techSkills' class='ta' %}
 
-                            <div class="ratingg">
+                            <div class="rating">
                                 {% for choice in review.rates_experience %}
                                     {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
@@ -173,7 +174,7 @@
 
                             {% render_field review.adaptation id='adaptive' class='ta' %}
 
-                            <div class="ratingg">
+                            <div class="rating">
                                 {% for choice in review.rates_adaptation %}
                                     {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">

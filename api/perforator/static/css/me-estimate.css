@@ -7,42 +7,42 @@ b {
 }
 
 
-.ratingg {
+.rating {
   display: flex;
   flex-direction: row-reverse;
   width: 200px;
   float: right;
-  margin-right: 135px;
+  margin-right: 170px;
   margin-top: -190px;
   position: relative;
 }
 
-.ratingg input {
+.rating input {
   display: none;
 }
 
-.ratingg label {
+.rating label {
   position: relative;
   cursor: pointer;
   transition: .5s;
   filter: grayscale(1);
-  transform: scale(0.85);
+  margin-right: 7px;
 }
 
 
-.ratingg input:hover + label,
-.ratingg input:checked + label
+.rating input:hover + label,
+.rating input:checked + label
 {
   filter: grayscale(0);
 }
 
-.ratingg input:not(:checked) ~ label:hover ,
-.ratingg input:not(:checked) ~ label:hover ~ label
+.rating input:not(:checked) ~ label:hover ,
+.rating input:not(:checked) ~ label:hover ~ label
 {
   filter: grayscale(0);
 }
 
-.ratingg input:checked ~ label {
+.rating input:checked ~ label {
   filter: grayscale(0);
 }
 
