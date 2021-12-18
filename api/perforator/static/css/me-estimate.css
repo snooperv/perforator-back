@@ -6,6 +6,66 @@ b {
   width: 10px;
 }
 
+
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 200px;
+  float: right;
+  margin-right: 170px;
+  margin-top: -190px;
+  position: relative;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  position: relative;
+  cursor: pointer;
+  transition: .5s;
+  filter: grayscale(1);
+  margin-right: 7px;
+}
+
+
+.rating input:hover + label,
+.rating input:checked + label
+{
+  filter: grayscale(0);
+}
+
+.rating input:not(:checked) ~ label:hover ,
+.rating input:not(:checked) ~ label:hover ~ label
+{
+  filter: grayscale(0);
+}
+
+.rating input:checked ~ label {
+  filter: grayscale(0);
+}
+
+
+.show {
+  display: block;
+}
+
+.underText {
+  position: absolute;
+  font-family: 'Gotham Pro light';
+  font-weight: 600;
+  font-size: 16px !important;
+  color: #5a5a5a !important;
+  top: 40px;
+  left: 0;
+  right: 5px;
+  width: 275px;
+  display: none;
+}
+
+
+
 .main-title {
   color: #000;
   text-align: left;
@@ -82,7 +142,7 @@ b {
 
 .peer {
   display: block;
-  width: 95%;
+  width: 90%;
   background-color: #ececf2;
   border-radius: 15px;
   height: 65px;
@@ -151,7 +211,7 @@ b {
   padding-top: 50px;
   padding-bottom: 10px;
   background-color: #ececf2;
-  width: 95%;
+  width: 90%;
   border-radius: 15px;
   transform: translateY(-50px);
   position: relative;
