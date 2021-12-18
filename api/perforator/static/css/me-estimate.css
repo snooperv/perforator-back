@@ -12,7 +12,7 @@ b {
   flex-direction: row-reverse;
   width: 200px;
   float: right;
-  margin-right: 170px;
+  margin-right: 120px;
   margin-top: -190px;
   position: relative;
 }
@@ -235,6 +235,7 @@ b {
   font-size: 16px;
   resize: none;
   margin-bottom: 30px;
+  margin-top: 15px;
   line-height: 1.5;
   position: relative;
 }

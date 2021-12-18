@@ -45,138 +45,7 @@
             <div class="peers">
 
                 {% for profile, review in matches.items %}
-                <div id="myDropdown-{{ profile.id }}" class="dropdown-content">
-                    <div class="dropdown-container">
 
-                        <form action="/perforator/process_rate/" method="post">
-                            {% csrf_token %}
-                            {% load widget_tweaks %}
-                            <h3 class="dropdownTitle">
-                                Соблюдение сроков
-                            </h3>
-
-                            {% render_field review.deadlines id='deadlines' class='ta' %}
-
-                            <div class="rating" style="position: relative; top: 10px;">
-                                {% for choice in review.rates_deadlines %}
-                                    <!--
-                                    <input name="{{ radio.name }}" type="radio" id="radio_{{ radio.index }}" value={{ radio.choice_value }}>
-                                    <label for="radio_{{ radio.index }}">{{ radio.choice_label }}</label>
-                                    -->
-                                    {{ choice.tag }}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <img src="{% static 'img/rating2.png' %}">
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Пути достижения целей
-                            </h3>
-
-                            <p class="description">
-                                Идет ли человек по головам или находит пути решения договариваясь
-                                с коллегами
-                            </p>
-
-                            {% render_field review.approaches id='goals' class='ta' %}
-
-                            <div class="rating">
-                                {% for choice in review.rates_approaches %}
-                                        {{ choice.tag }}
-                                    <label for="{{ choice.id_for_label }}" class="{{ choice.id_for_label }}">
-                                        <img src="{% static 'img/rating2.png' %}">
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Умение работать в команде
-                            </h3>
-
-                            <p class="description">
-                                Насколько активно человек вовлечен в командную работу
-                            </p>
-
-                            {% render_field review.teamwork id='teamwork' class='ta' %}
-
-
-                            <div class="rating">
-                                {% for choice in review.rates_teamwork %}
-                                    {{ choice.tag }}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <img src="{% static 'img/rating2.png' %}">
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Приверженность к хорошим
-                                теx.практикам
-                            </h3>
-
-                            <p class="description">
-                                Насколько человек придерживается покрытия кода авто тестами,
-                                проектирует хорошую архитектуру, использует хорошие паттерны.
-                            </p>
-
-                            {% render_field review.practices id='techPrac' class='ta' %}
-
-
-                            <div class="rating">
-                                {% for choice in review.rates_practices %}
-                                    {{ choice.tag }}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <img src="{% static 'img/rating2.png' %}">
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Уровень владения
-                                технологиями
-                            </h3>
-
-                            <p class="description">
-                                Насколько хорошо человек владеет технологиями разработки,
-                                используемым стеком и т.д.
-                            </p>
-
-                            {% render_field review.experience id='techSkills' class='ta' %}
-
-                            <div class="rating">
-                                {% for choice in review.rates_experience %}
-                                    {{ choice.tag }}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <img src="{% static 'img/rating2.png' %}">
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <h3 class="dropdownTitle">
-                                Адаптивность
-                            </h3>
-
-                            <p class="description">
-                                Насколько быстро человек адаптируется к новым условиям работы,
-                                вливается в новый коллектив
-                            </p>
-
-                            {% render_field review.adaptation id='adaptive' class='ta' %}
-
-                            <div class="rating">
-                                {% for choice in review.rates_adaptation %}
-                                    {{ choice.tag }}
-                                    <label for="{{ choice.id_for_label }}">
-                                        <img src="{% static 'img/rating2.png' %}">
-                                    </label>
-                                {% endfor %}
-                            </div>
-
-                            <input type="hidden" name="profile" value={{ profile.id }}>
-                            <input type="submit" value="Отправить отзыв" name="rate-{{ profile.id }}"/>
-
-                        </form>
                     <button onclick="toggleForm({{ profile.id }})" class="peer dropbtn">
                         <div class="peers-pic">
                             <img src="{{ profile.photo.url }}" class="avatar"/>
@@ -186,6 +55,142 @@
                             <i class="fas fa-chevron-right"></i>
                         </a>
                     </button>
+                    <div id="myDropdown-{{ profile.id }}" class="dropdown-content">
+                        <div class="dropdown-container">
+
+                            <form action="/perforator/process_rate/" method="post">
+                                {% csrf_token %}
+                                {% load widget_tweaks %}
+                                <h3 class="dropdownTitle">
+                                    Соблюдение сроков
+                                </h3>
+
+                                {% render_field review.deadlines id='deadlines' class='ta' %}
+
+                                <div class="rating" style="position: relative; top: 10px;">
+                                    {% for choice in review.rates_deadlines %}
+                                        <!--
+                                    <input name="{{ radio.name }}" type="radio" id="radio_{{ radio.index }}" value={{ radio.choice_value }}>
+                                    <label for="radio_{{ radio.index }}">{{ radio.choice_label }}</label>
+                                    -->
+                                        {{ choice.tag }}
+                                        <label for="{{ choice.id_for_label }}">
+                                            <img src="{% static 'img/rating2.png' %}">
+                                        </label>
+                                    {% endfor %}
+
+                                </div>
+
+                                <h3 class="dropdownTitle">
+                                    Пути достижения целей
+                                </h3>
+
+                                <p class="description">
+                                    Идет ли человек по головам или находит пути решения договариваясь
+                                    с коллегами
+                                </p>
+
+                                {% render_field review.approaches id='goals' class='ta' %}
+
+                                <div class="rating">
+                                    {% for choice in review.rates_approaches %}
+                                        {{ choice.tag }}
+                                        <label for="{{ choice.id_for_label }}" class="{{ choice.id_for_label }}">
+                                            <img src="{% static 'img/rating2.png' %}">
+                                        </label>
+                                    {% endfor %}
+                                </div>
+
+                                <h3 class="dropdownTitle">
+                                    Умение работать в команде
+                                </h3>
+
+                                <p class="description">
+                                    Насколько активно человек вовлечен в командную работу
+                                </p>
+
+                                {% render_field review.teamwork id='teamwork' class='ta' %}
+
+
+                                <div class="rating">
+                                    {% for choice in review.rates_teamwork %}
+                                        {{ choice.tag }}
+                                        <label for="{{ choice.id_for_label }}">
+                                            <img src="{% static 'img/rating2.png' %}">
+                                        </label>
+                                    {% endfor %}
+                                </div>
+
+                                <h3 class="dropdownTitle">
+                                    Приверженность к хорошим
+                                    теx.практикам
+                                </h3>
+
+                                <p class="description">
+                                    Насколько человек придерживается покрытия кода авто тестами,
+                                    проектирует хорошую архитектуру, использует хорошие паттерны.
+                                </p>
+
+                                {% render_field review.practices id='techPrac' class='ta' %}
+
+
+                                <div class="rating">
+                                    {% for choice in review.rates_practices %}
+                                        {{ choice.tag }}
+                                        <label for="{{ choice.id_for_label }}">
+                                            <img src="{% static 'img/rating2.png' %}">
+                                        </label>
+                                    {% endfor %}
+                                </div>
+
+                                <h3 class="dropdownTitle">
+                                    Уровень владения
+                                    технологиями
+                                </h3>
+
+                                <p class="description">
+                                    Насколько хорошо человек владеет технологиями разработки,
+                                    используемым стеком и т.д.
+                                </p>
+
+                                {% render_field review.experience id='techSkills' class='ta' %}
+
+                                <div class="rating">
+                                    {% for choice in review.rates_experience %}
+                                        {{ choice.tag }}
+                                        <label for="{{ choice.id_for_label }}">
+                                            <img src="{% static 'img/rating2.png' %}">
+                                        </label>
+                                    {% endfor %}
+                                </div>
+
+                                <h3 class="dropdownTitle">
+                                    Адаптивность
+                                </h3>
+
+                                <p class="description">
+                                    Насколько быстро человек адаптируется к новым условиям работы,
+                                    вливается в новый коллектив
+                                </p>
+
+                                {% render_field review.adaptation id='adaptive' class='ta' %}
+
+                                <div class="rating">
+                                    {% for choice in review.rates_adaptation %}
+                                        {{ choice.tag }}
+                                        <label for="{{ choice.id_for_label }}">
+                                            <img src="{% static 'img/rating2.png' %}">
+                                        </label>
+                                    {% endfor %}
+                                </div>
+
+                                <input type="hidden" name="profile" value={{ profile.id }}>
+                                <input type="submit" value="Отправить отзыв" name="rate-{{ profile.id }}"/>
+
+                            </form>
+
+                        </div>
+
                     </div>
 
                 {% endfor %}
