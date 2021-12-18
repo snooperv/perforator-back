@@ -26,7 +26,7 @@ b {
   cursor: pointer;
   transition: .5s;
   filter: grayscale(1);
-  margin: 0 5px;
+  transform: scale(0.85);
 }
 
 
@@ -45,6 +45,7 @@ b {
 .ratingg input:checked ~ label {
   filter: grayscale(0);
 }
+
 
 .show {
   display: block;
