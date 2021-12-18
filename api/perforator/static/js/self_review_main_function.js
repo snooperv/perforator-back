@@ -23,12 +23,12 @@ function self_review_main() {
                         if (!is_draft) {
                             allDiv.innerHTML += `
                                 <p class="question">${grade.grade_category_description}</p>
-                                <input type="text" class="input-text" category_id="${grade.grade_category_id}" field="yes" value="${grade.comment}" disabled>
+                                <textarea name="plans" id="plan" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}"disabled>${grade.comment}</textarea>
                             `;
                         } else {
                             allDiv.innerHTML += `
                                 <p class="question">${grade.grade_category_description}</p>          
-                                <input type="text" class="input-text" category_id="${grade.grade_category_id}" field="yes" value="${grade.comment}">
+                                <textarea name="plans" id="plan" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}">${grade.comment}</textarea>
                             `;
                         }
                     } else {
@@ -52,26 +52,28 @@ function self_review_main() {
                     p.setAttribute("class", "question")
                     p.innerHTML = `${grade.grade_category_description}`;
 
-                    let input = document.createElement("input");
-                    input.setAttribute("class", "input-text");
-                    input.setAttribute("type", "text");
-                    input.setAttribute("category_id", `${grade.grade_category_id}`);
+                    let input = document.createElement("textarea");
+                    input.setAttribute("name", "plans");
+                    input.setAttribute("id", "plan");
+                    input.setAttribute("rows", "5");
                     input.setAttribute("field", "yes");
+                    input.setAttribute("class", "ta");
+                    input.setAttribute("category_id", `${grade.grade_category_id}`);
                     if (!is_draft) {
                         input.setAttribute("disabled", "disabled");
                     }
-                    input.setAttribute("value", `${grade.comment}`);
+                    input.innerHTML = `${grade.comment}`;
 
                     container.appendChild(p);
                     container.appendChild(input);
                 }
             }
+
             if (!is_draft) {
                 //disable_btn_peers();
                 replace_send_btn();
             }
         })
-
 }
 
 function get_self_review() {
@@ -83,8 +85,7 @@ function disable_btn_send() {
     try {
         btn.setAttribute("disabled", "disabled")
         btn.setAttribute("style", "background-color: #8e8e8e")
-    }
-    catch (error){
+    } catch (error) {
 
     }
 }
@@ -94,20 +95,20 @@ function enable_btn_send() {
     try {
         btn.removeAttribute("disabled")
         btn.setAttribute("style", "background-color: #A5A4F5")
-    }
-    catch (error){
+    } catch (error) {
 
     }
 }
 
-function disable_btn_peers(){
+function disable_btn_peers() {
     document.querySelector(".add-peer").remove()
     let btn_close = document.querySelectorAll("[id='close']");
     for (let b of btn_close) b.style.display = "none";
     //btn.setAttribute("disabled", "disabled")
     //btn.setAttribute("style", "background-color: #8e8e8e")
 }
-function replace_send_btn(){
+
+function replace_send_btn() {
     let galochka = document.createElement("img")
     let container_galochka = document.createElement("p")
     let text = document.createElement("h4");
@@ -141,8 +142,8 @@ function check_free_fields() {
 
 function check_peers_list() {
     let peers = document.getElementById("my_peers").children
-    for (let p of peers){
-        if (p.style.display != "none"){
+    for (let p of peers) {
+        if (p.style.display != "none") {
             btn_status[1] = true;
             update_btn();
             return;

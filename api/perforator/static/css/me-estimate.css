@@ -92,7 +92,7 @@ b {
 
 .peer .name {
   float: left;
-  margin-left: 60px;
+  margin-left: 0;
   position: relative;
   top: -2px;
   color: #331969;
@@ -108,6 +108,18 @@ b {
   left: -15px;
   top: -5px;
   width: 75px;
+}
+
+.peers-pic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    float: left;
+    left: -25px;
+    top: -22px;
 }
 
 .chevron {

@@ -65,7 +65,7 @@
 }
 
 .peers {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     margin-left: 60px;
 }
 
@@ -407,7 +407,7 @@ input[type=submit]:active {
     left: -30px;
 }
 
-.peers-pic {
+.peers-pic-manager {
     width: 70px;
     height: 70px;
     border-radius: 50%;
@@ -416,5 +416,16 @@ input[type=submit]:active {
     display: inline-block;
     float: left;
     left: -25px;
-    top: -22px;
+    top: -19px;
+}
+
+.peers-pic-raiting {
+    width: 63px;
+    height: 63px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    float: left;
+    left: -30px;
 }
