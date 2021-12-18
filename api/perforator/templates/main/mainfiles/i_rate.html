@@ -10,6 +10,7 @@
     <div class="me-estimate">
         <div class="instruction">
             <h2 class="main-title">Система баллов:</h2>
+
             <div class="number">1</div>
             <p>
                 <span>Значительно ниже моих ожиданий</span> <br/>
@@ -65,15 +66,40 @@
 
                             {% render_field review.deadlines id='deadlines' class='ta' %}
 
-                            <div>
+{#                            <div class="ratingg" style="margin-top: -175px;">#}
+{#                                #}
+{#                                <input type="radio" name="deadlines" value="deadlines" class="testt" id="deadlines1">#}
+{#                                <label for="{{ choice.id_for_label }}">#}
+{#                                    <img src="{% static 'img/rating2.png' %}">#}
+{#                                </label>#}
+{#                                <input type="radio" name="deadlines" value="deadlines" class="testt" id="deadlines2">#}
+{#                               <label for="deadlines2">#}
+{#                                    <img src="{% static 'img/rating2.png' %}">#}
+{#                                </label>#}
+{#                                <input type="radio" name="deadlines" value="deadlines" class="testt" id="deadlines3">#}
+{#                                <label for="deadlines3">#}
+{#                                    <img src="{% static 'img/rating2.png' %}">#}
+{#                                </label>#}
+{#                                <input type="radio" name="deadlines" value="deadlines" class="testt" id="deadlines4">#}
+{#                                <label for="deadlines4">#}
+{#                                    <img src="{% static 'img/rating2.png' %}">#}
+{#                                </label>#}
+{#                                <span class="underText answ1">сильно выше моих ожиданий</span>#}
+{#                                <span class="underText answ2">немного выше моих ожиданий</span>#}
+{#                                <span class="underText answ3">немного ниже моих ожиданий</span>#}
+{#                                <span class="underText answ4">сильно выше моих ожиданий</span>#}
+{#                            </div>#}
+
+
+                            <div class="ratingg">
                                 {% for choice in review.rates_deadlines %}
                                     <!--
                                     <input name="{{ radio.name }}" type="radio" id="radio_{{ radio.index }}" value={{ radio.choice_value }}>
                                     <label for="radio_{{ radio.index }}">{{ radio.choice_label }}</label>
                                     -->
+                                    {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
+                                        <img src="{% static 'img/rating2.png' %}">
                                     </label>
                                 {% endfor %}
                             </div>
@@ -89,11 +115,31 @@
 
                             {% render_field review.approaches id='goals' class='ta' %}
 
-                            <div>
+{#                        <div class="ratingg">#}
+{#                            <input type="radio" name="approaches" value="approaches" class="testt" id="approaches1">#}
+{#                            <label for="approaches1">#}
+{#                                <img src="{% static 'img/rating2.png' %}">#}
+{#                            </label>#}
+{#                            <input type="radio" name="approaches" value="approaches" class="testt" id="approaches2">#}
+{#                           <label for="approaches2">#}
+{#                                <img src="{% static 'img/rating2.png' %}">#}
+{#                            </label>#}
+{#                            <input type="radio" name="approaches" value="approaches" class="testt" id="approaches3">#}
+{#                            <label for="approaches3">#}
+{#                                <img src="{% static 'img/rating2.png' %}">#}
+{#                            </label>#}
+{#                            <input type="radio" name="approaches" value="approaches" class="testt" id="approaches4">#}
+{#                            <label for="approaches4">#}
+{#                                <img src="{% static 'img/rating2.png' %}">#}
+{#                            </label>#}
+{#                        </div>#}
+
+                            <div class="ratingg">
                                 {% for choice in review.rates_approaches %}
+
+                                        {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
+                                        <img src="{% static 'img/rating2.png' %}">
                                     </label>
                                 {% endfor %}
                             </div>
@@ -108,11 +154,12 @@
 
                             {% render_field review.teamwork id='teamwork' class='ta' %}
 
-                            <div>
+
+                            <div class="ratingg">
                                 {% for choice in review.rates_teamwork %}
+                                    {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
+                                        <img src="{% static 'img/rating2.png' %}">
                                     </label>
                                 {% endfor %}
                             </div>
@@ -129,11 +176,12 @@
 
                             {% render_field review.practices id='techPrac' class='ta' %}
 
-                            <div>
+
+                            <div class="ratingg">
                                 {% for choice in review.rates_practices %}
+                                    {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
+                                        <img src="{% static 'img/rating2.png' %}">
                                     </label>
                                 {% endfor %}
                             </div>
@@ -150,11 +198,11 @@
 
                             {% render_field review.experience id='techSkills' class='ta' %}
 
-                            <div>
+                            <div class="ratingg">
                                 {% for choice in review.rates_experience %}
+                                    {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
+                                        <img src="{% static 'img/rating2.png' %}">
                                     </label>
                                 {% endfor %}
                             </div>
@@ -170,11 +218,11 @@
 
                             {% render_field review.adaptation id='adaptive' class='ta' %}
 
-                            <div>
+                            <div class="ratingg">
                                 {% for choice in review.rates_adaptation %}
+                                    {{ choice.tag }}
                                     <label for="{{ choice.id_for_label }}">
-                                        <span>{{ choice.tag }}</span>
-                                        {{ choice.choice_label }}
+                                        <img src="{% static 'img/rating2.png' %}">
                                     </label>
                                 {% endfor %}
                             </div>
