@@ -1,173 +1,175 @@
-
+.text_rate {
+    position: absolute;
+    margin-top: 50px;
+    margin-right: -88px;
+    width: 270px;
+}
 
 b {
-  background-color: #edbd31;
-  border-radius: 50%;
-  width: 10px;
+    background-color: #edbd31;
+    border-radius: 50%;
+    width: 10px;
 }
 
 
 .rating {
-  display: flex;
-  flex-direction: row-reverse;
-  width: 200px;
-  float: right;
-  margin-right: 120px;
-  margin-top: -190px;
-  position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 200px;
+    float: right;
+    margin-right: 120px;
+    margin-top: -190px;
+    position: relative;
 }
 
 .rating input {
-  display: none;
+    display: none;
 }
 
 .rating label {
-  position: relative;
-  cursor: pointer;
-  transition: .5s;
-  filter: grayscale(1);
-  margin-right: 7px;
+    position: relative;
+    cursor: pointer;
+    transition: .5s;
+    filter: grayscale(1);
+    margin-right: 7px;
 }
 
 
 .rating input:hover + label,
-.rating input:checked + label
-{
-  filter: grayscale(0);
+.rating input:checked + label {
+    filter: grayscale(0);
 }
 
-.rating input:not(:checked) ~ label:hover ,
-.rating input:not(:checked) ~ label:hover ~ label
-{
-  filter: grayscale(0);
+.rating input:not(:checked) ~ label:hover,
+.rating input:not(:checked) ~ label:hover ~ label {
+    filter: grayscale(0);
 }
 
 .rating input:checked ~ label {
-  filter: grayscale(0);
+    filter: grayscale(0);
 }
 
 
 .show {
-  display: block;
+    display: block;
 }
 
 .underText {
-  position: absolute;
-  font-family: 'Gotham Pro light';
-  font-weight: 600;
-  font-size: 16px !important;
-  color: #5a5a5a !important;
-  top: 40px;
-  left: 0;
-  right: 5px;
-  width: 275px;
-  display: none;
+    position: absolute;
+    font-family: 'Gotham Pro light';
+    font-weight: 600;
+    font-size: 16px !important;
+    color: #5a5a5a !important;
+    top: 40px;
+    left: 0;
+    right: 5px;
+    width: 275px;
+    display: none;
 }
-
 
 
 .main-title {
-  color: #000;
-  text-align: left;
-  padding: 25px 0 0 10px;
-  font-size: 26px;
-  letter-spacing: -0.5px;
-  margin-bottom: 0;
+    color: #000;
+    text-align: left;
+    padding: 25px 0 0 10px;
+    font-size: 26px;
+    letter-spacing: -0.5px;
+    margin-bottom: 0;
 }
 
 .me-estimate {
-  margin-left: 50px;
+    margin-left: 50px;
 }
 
 .number {
-  position: relative;
-  background-color: #edbd31;
-  font-size: 14px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  text-align: center;
-  top: 20px;
-  right: 10px;
-  display: table-cell;
-  vertical-align: middle;
+    position: relative;
+    background-color: #edbd31;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    top: 20px;
+    right: 10px;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .instruction {
-  width: 90%;
-  background: #ffffff;
-  border-radius: 30px;
-  margin-top: 20px;
-  padding: 0 25px 20px 25px;
-  text-align: left;
+    width: 90%;
+    background: #ffffff;
+    border-radius: 30px;
+    margin-top: 20px;
+    padding: 0 25px 20px 25px;
+    text-align: left;
 }
 
 .instruction p {
-  font-family: "Gotham Pro light";
-  font-weight: 1000;
-  font-size: 18px;
-  margin: 0 20px;
+    font-family: "Gotham Pro light";
+    font-weight: 1000;
+    font-size: 18px;
+    margin: 0 20px;
 }
 
 .instruction span {
-  font-weight: 1000;
-  color: #222;
-  position: relative;
+    font-weight: 1000;
+    color: #222;
+    position: relative;
 }
 
 .wait {
-  width: 90%;
-  background: #ffffff;
-  border-radius: 30px;
-  margin-top: 20px;
-  padding: 10px 25px 20px 30px;
+    width: 90%;
+    background: #ffffff;
+    border-radius: 30px;
+    margin-top: 20px;
+    padding: 10px 25px 20px 30px;
 }
 
 .peers {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .peers span {
-  font-size: 22px;
-  color: #222222;
+    font-size: 22px;
+    color: #222222;
 }
 
 .peers p {
-  font-weight: 1000;
-  text-align: left;
-  font-size: 14px;
-  margin-left: 30px;
-  color: #414141;
+    font-weight: 1000;
+    text-align: left;
+    font-size: 14px;
+    margin-left: 30px;
+    color: #414141;
 }
 
 .peer {
-  display: block;
-  width: 90%;
-  background-color: #ececf2;
-  border-radius: 15px;
-  height: 65px;
-  margin-top: 20px;
-  cursor: pointer;
+    display: block;
+    width: 90%;
+    background-color: #ececf2;
+    border-radius: 15px;
+    height: 65px;
+    margin-top: 20px;
+    cursor: pointer;
 }
 
 .peer .name {
-  float: left;
-  margin-left: 0;
-  position: relative;
-  top: -2px;
-  color: #331969;
-  font-family: "Gotham Pro";
-  font-size: 26px;
-  font-weight: 400;
-  letter-spacing: -1px;
+    float: left;
+    margin-left: 0;
+    position: relative;
+    top: -2px;
+    color: #331969;
+    font-family: "Gotham Pro";
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -1px;
 }
 
 .peer-avatar {
-  position: absolute;
-  float: left;
-  left: -15px;
-  top: -5px;
-  width: 75px;
+    position: absolute;
+    float: left;
+    left: -15px;
+    top: -5px;
+    width: 75px;
 }
 
 .peers-pic {
@@ -183,90 +185,90 @@ b {
 }
 
 .chevron {
-  position: relative;
-  float: right;
-  margin-right: 25px;
-  font-size: 1.5em;
-  color: #331969;
+    position: relative;
+    float: right;
+    margin-right: 25px;
+    font-size: 1.5em;
+    color: #331969;
 }
 
 .dropbtn {
-  background-color: #ececf2;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
+    background-color: #ececf2;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
 }
 
 .dropbtn:hover,
 .dropbtn:focus {
-  background-color: #ececf2;
+    background-color: #ececf2;
 }
 
 .dropdown-content {
-  display: none;
-  padding-top: 50px;
-  padding-bottom: 10px;
-  background-color: #ececf2;
-  width: 90%;
-  border-radius: 15px;
-  transform: translateY(-50px);
-  position: relative;
-  z-index: 1;
+    display: none;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    background-color: #ececf2;
+    width: 90%;
+    border-radius: 15px;
+    transform: translateY(-50px);
+    position: relative;
+    z-index: 1;
 }
 
 .dropdown-container {
-  margin-left: 150px;
+    margin-left: 150px;
 }
 
 .show {
-  display: block;
+    display: block;
 }
 
 .ta {
-  display: block;
-  border-radius: 15px;
-  border: 1px solid #8683f8;
-  width: 60%;
-  padding: 5px;
-  font-size: 16px;
-  resize: none;
-  margin-bottom: 30px;
-  margin-top: 15px;
-  line-height: 1.5;
-  position: relative;
+    display: block;
+    border-radius: 15px;
+    border: 1px solid #8683f8;
+    width: 60%;
+    padding: 5px;
+    font-size: 16px;
+    resize: none;
+    margin-bottom: 30px;
+    margin-top: 15px;
+    line-height: 1.5;
+    position: relative;
 }
 
 .dropdownTitle {
-  margin: 20px 0 5px 0;
-  color: #2b2b2b;
-  font-size: 28px;
-  font-weight: 400;
-  letter-spacing: -1px;
-  text-align: left;
+    margin: 20px 0 5px 0;
+    color: #2b2b2b;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    text-align: left;
 }
 
 .list-icon {
-  position: absolute;
-  left: 130px;
-  color: #cac9f7;
-  width: 10px;
+    position: absolute;
+    left: 130px;
+    color: #cac9f7;
+    width: 10px;
 }
 
 p.description {
-  position: relative;
-  font-family: "Gotham Pro light";
-  font-size: 18px;
-  width: 62%;
-  line-height: 1;
-  font-weight: 1000;
-  line-height: 18px;
-  letter-spacing: -0.04em;
-  margin: 0 0 10px 0;
-  color: #3c3c3c;
+    position: relative;
+    font-family: "Gotham Pro light";
+    font-size: 18px;
+    width: 62%;
+    line-height: 1;
+    font-weight: 1000;
+    line-height: 18px;
+    letter-spacing: -0.04em;
+    margin: 0 0 10px 0;
+    color: #3c3c3c;
 }
 
 input[type=submit] {
@@ -299,6 +301,23 @@ input[type=submit]:active {
     -o-transform: scale(0.95);
     -ms-transform: scale(0.95);
     transform: scale(0.95)
+}
+
+.char-count {
+    text-align: right;
+    font-size: 14px;
+    position: relative;
+    top: -55px;
+    right: 41%;
+}
+
+.chars, .max {
+    font-size: 14px !important;
+    position: relative;
+    display: inline-block;
+    font-family: 'Gotham Pro light';
+    font-weight: 400;
+    color: #979797;
 }
 
 /*.rating {*/

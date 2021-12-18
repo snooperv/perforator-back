@@ -28,7 +28,11 @@ function self_review_main() {
                         } else {
                             allDiv.innerHTML += `
                                 <p class="question">${grade.grade_category_description}</p>          
-                                <textarea name="plans" id="plan" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}">${grade.comment}</textarea>
+                                <textarea id="imp-zones" maxlength="512" name="plans" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}">${grade.comment}</textarea>
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
                             `;
                         }
                     } else {
@@ -38,7 +42,11 @@ function self_review_main() {
                             `;
                         } else {
                             allDiv.innerHTML += `
-                                <textarea name="plans" id="plan" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}">${grade.comment}</textarea>
+                                <textarea id="imp-zones" maxlength="512" name="plans" rows="5" field='yes' class="ta" category_id="${grade.grade_category_id}">${grade.comment}</textarea>
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
                             `;
                         }
                     }
@@ -52,20 +60,28 @@ function self_review_main() {
                     p.setAttribute("class", "question")
                     p.innerHTML = `${grade.grade_category_description}`;
 
+                    let counter = document.createElement("div");
+                    counter.setAttribute("class", "char-count");
+                    counter.innerHTML = `<span id="imp-zones-chars" class="chars">0</span>
+                                         <span id="plan-max" class="max">/ 512 символов</span>`;
+
                     let input = document.createElement("textarea");
+                    input.setAttribute("id", "imp-zones");
+                    input.setAttribute("maxlength", "512");
                     input.setAttribute("name", "plans");
-                    input.setAttribute("id", "plan");
                     input.setAttribute("rows", "5");
                     input.setAttribute("field", "yes");
                     input.setAttribute("class", "ta");
                     input.setAttribute("category_id", `${grade.grade_category_id}`);
                     if (!is_draft) {
                         input.setAttribute("disabled", "disabled");
+                        counter.innerHTML = ``;
                     }
                     input.innerHTML = `${grade.comment}`;
 
                     container.appendChild(p);
                     container.appendChild(input);
+                    container.appendChild(counter);
                 }
             }
 
@@ -73,6 +89,17 @@ function self_review_main() {
                 //disable_btn_peers();
                 replace_send_btn();
             }
+
+            $('#plan, #imp-zones').each(function () {
+                let characterCount = $(this).val().length,
+                    current = $(this).next().find('.chars')
+                $(this).keyup(function () {
+                    let characterCount = $(this).val().length,
+                        current = $(this).next().find('.chars')
+                    current.text(characterCount);
+                })
+                current.text(characterCount);
+            });
         })
 }
 

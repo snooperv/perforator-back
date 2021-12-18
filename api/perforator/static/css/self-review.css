@@ -310,14 +310,31 @@ input[type=submit]:active, .send:active {
     transition: all 0.35s ease-in-out;
 }
 
-.check_img{
+.check_img {
     text-align: center;
 }
 
-.check_img img{
+.check_img img {
     width: 150px;
     height: 150px;
 }
-.wrapper-submit h4{
+
+.wrapper-submit h4 {
     text-align: center;
+}
+
+.char-count {
+    text-align: right;
+    font-size: 14px;
+    position: relative;
+    top: -30px;
+    right: 10%;
+}
+
+.chars, .max {
+    position: relative;
+    display: inline-block;
+    font-family: 'Gotham Pro light';
+    font-weight: 400;
+    color: #979797;
 }

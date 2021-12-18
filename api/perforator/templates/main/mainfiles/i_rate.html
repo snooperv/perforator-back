@@ -58,7 +58,7 @@
                     <div id="myDropdown-{{ profile.id }}" class="dropdown-content">
                         <div class="dropdown-container">
 
-                            <form action="/perforator/process_rate/" method="post">
+                            <form action="/perforator/process_rate/" method="post" name="formRate">
                                 {% csrf_token %}
                                 {% load widget_tweaks %}
                                 <h3 class="dropdownTitle">
@@ -66,6 +66,10 @@
                                 </h3>
 
                                 {% render_field review.deadlines id='deadlines' class='ta' %}
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
 
                                 <div class="rating" style="position: relative; top: 10px;">
                                     {% for choice in review.rates_deadlines %}
@@ -77,9 +81,11 @@
                                         <label for="{{ choice.id_for_label }}">
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
-                                    {% endfor %}
 
+                                    {% endfor %}
+                                    <p id="text_rate1" class="text_rate"></p>
                                 </div>
+
 
                                 <h3 class="dropdownTitle">
                                     Пути достижения целей
@@ -91,6 +97,10 @@
                                 </p>
 
                                 {% render_field review.approaches id='goals' class='ta' %}
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
 
                                 <div class="rating">
                                     {% for choice in review.rates_approaches %}
@@ -99,6 +109,7 @@
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
+                                    <p id="text_rate2" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -110,6 +121,10 @@
                                 </p>
 
                                 {% render_field review.teamwork id='teamwork' class='ta' %}
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
 
 
                                 <div class="rating">
@@ -119,6 +134,7 @@
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
+                                    <p id="text_rate3" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -132,6 +148,10 @@
                                 </p>
 
                                 {% render_field review.practices id='techPrac' class='ta' %}
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
 
 
                                 <div class="rating">
@@ -141,6 +161,7 @@
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
+                                    <p id="text_rate4" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -154,6 +175,10 @@
                                 </p>
 
                                 {% render_field review.experience id='techSkills' class='ta' %}
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
 
                                 <div class="rating">
                                     {% for choice in review.rates_experience %}
@@ -162,6 +187,7 @@
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
+                                    <p id="text_rate5" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -174,6 +200,10 @@
                                 </p>
 
                                 {% render_field review.adaptation id='adaptive' class='ta' %}
+                                <div class="char-count">
+                                    <span id="imp-zones-chars" class="chars">0</span>
+                                    <span id="plan-max" class="max">/ 512 символов</span>
+                                </div>
 
                                 <div class="rating">
                                     {% for choice in review.rates_adaptation %}
@@ -182,6 +212,7 @@
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
+                                    <p id="text_rate6" class="text_rate"></p>
                                 </div>
 
                                 <input type="hidden" name="profile" value={{ profile.id }}>
@@ -199,5 +230,6 @@
         </div>
     </div>
 
+    <script src="{% static 'js/i_rate_perforatoriki.js' %}"></script>
     <script src="{% static 'js/dropdown_rate.js' %}"></script>
 {% endblock %}
