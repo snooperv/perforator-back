@@ -61,6 +61,6 @@ class RateForm(forms.Form):
 
 
 class OneToOneForm(forms.Form):
-    common = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'maxlength': 2048}))
-    personal = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'maxlength': 2048}))
+    common = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'maxlength': 2048}), required=False)
+    personal = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'maxlength': 2048}), required=False)
 

@@ -102,6 +102,33 @@ def generate_form_from_review(request, review):
         return {"error": 'Вы не авторизованы'}
 
 
+def save_json(request, json):
+    if request.user.is_authenticated:
+        common = json['common']
+        personal = json['personal']
+
+        interviews_id = int(json['interviewed'])
+        is_manager = bool(json['is_manager'])
+
+        if is_manager:
+            key = 'employee_notes'
+            manager = Profile.objects.filter(id=interviews_id).first()
+            employee = Profile.objects.filter(user=request.user).first()
+        else:
+            key = 'manager_notes'
+            manager = Profile.objects.filter(user=request.user).first()
+            employee = Profile.objects.filter(id=interviews_id).first()
+
+        review, created = OneToOneReviews.objects \
+            .update_or_create(manager=manager,
+                              employee=employee,
+                              defaults={key: personal, 'common_notes': common})
+
+        return {'message': 'OK'}
+    else:
+        return {"error": 'Вы не авторизованы'}
+
+
 def save_form(request, form):
     if request.user.is_authenticated:
         if form.is_valid():

@@ -25,12 +25,9 @@ def index(request):
 
 @api_view(['POST'])
 def process_one_to_one_form(request):
-    form = OneToOneForm(request.POST)
-    print(form)
-    if form.is_valid():
-        save_form(request, form)
-        return Response(data={'message': 'OK'}, status=200)
-    return Response(data={'error': 'Error occurred'}, status=200)
+    json = request.data
+    save_json(request, json)
+    return Response(data={'message': 'OK'}, status=200)
 
 
 def process_rate_form(request):

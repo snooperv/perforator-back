@@ -55,14 +55,14 @@
                     </button>
                     <div id="myDropdown-{{ forloop.counter }}" class="dropdown-content">
 
-                        <form id="one-to-one-{{ forloop.counter }}" action="/perforator/process_one_to_one/" method="post">
+                        <form action="/perforator/process_one_to_one/" id="one-to-one-{{ forloop.counter }}" method="post">
 
                             {% csrf_token %}
                             {% load widget_tweaks %}
 
                             <h3 class="dropdownTitle">Общие заметки</h3>
 
-                            {% render_field data.1.common id='generalNotes' name="generalNotes" class='ta big' style="margin-left: 35px;" %}
+                            {% render_field data.1.common id="generalNotes" name="generalNotes" class='ta big' style="margin-left: 35px;" %}
 
                             <h3 class="dropdownTitle">
                                 <i class="icon-lock fas fa-lock"></i>
@@ -79,29 +79,48 @@
                     </div>
 
                     <script type="text/javascript">
-                        var form = document.getElementById("one-to-one-{{ forloop.counter }}");
                         var timerId;
-                        form.addEventListener('keyup', (e) => {
+
+                        document.getElementById("one-to-one-{{ forloop.counter }}").addEventListener('keyup', (e) => {
                             clearTimeout(timerId);
                             timerId = setTimeout(() => {
                                 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-                                fetch(form.action, {
-                                    method: form.method,
-                                    headers: {
+                                const f = e.target;
+                                const parent_form = f.parentElement;
+                                const children = parent_form.children;
+                                const common = children[2].value;
+                                const personal = children[4].value;
+                                const inter = children[5].value;
+                                const is_man = children[6].value;
+                                console.log(common);
+                                console.log(personal);
+                                console.log(inter);
+                                console.log(is_man);
 
+                                fetch(parent_form.action, {
+                                method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json;charset=utf-8',
                                         'X-CSRFToken': csrftoken
                                     },
-                                    body: new FormData(form)
+                                    body: JSON.stringify({
+                                        "common": common,
+                                        "personal": personal,
+                                        "interviewed": inter,
+                                        "is_manager": is_man
+                                    })
                                 })
-                                .then((response) => {
-                                    console.log(response.body);
+                                .then(response => response.json())
+                                .then(response => {
+                                    console.log(response);
                                 });
-
 
                             }, 1000);
                             console.log({{ forloop.counter }});
                         });
+
+
                     </script>
 
                 {% endfor %}
