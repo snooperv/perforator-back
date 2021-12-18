@@ -99,7 +99,7 @@
     background-color: #ffffff;
     border-radius: 1.5em;
     padding: 20px 10px;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .peers-pic {
@@ -111,7 +111,7 @@
     display: inline-block;
     /*float: left;*/
     left: -15px;
-    top: -22px;
+    top: -25px;
 }
 
 .peer-info {

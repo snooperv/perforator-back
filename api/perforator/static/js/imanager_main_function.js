@@ -1,13 +1,16 @@
-function get_team(){
+function get_team() {
     return fetch(window.location.origin + "/perforator/team");
 }
-function get_user_peers(id){
-    return fetch(window.location.origin  + "/perforator/peers/uid?id=" + id)
+
+function get_user_peers(id) {
+    return fetch(window.location.origin + "/perforator/peers/uid?id=" + id)
 }
-function get_all_peers(){
+
+function get_all_peers() {
     return fetch(window.location.origin + "/perforator/peers/all/");
 }
-function is_draft(id){
+
+function is_draft(id) {
     let is_draft = false
     console.log(id)
 
@@ -21,13 +24,14 @@ function is_draft(id){
 
     //return is_draft;
 }
-function replace_list_peers(list){
+
+function replace_list_peers(list) {
     let window = document.getElementById("peers")
     window.replaceChild(dict_of_list_peers[list], document.getElementById("list_peers"))
     get_user_peers(list)
         .then(response => response.json())
         .then(json => {
-            for (let i of json){
+            for (let i of json) {
                 let id = i.user_id;
                 save_peers_in_modal_window(list, id);
             }
@@ -69,7 +73,7 @@ window.onload = function () {
 
                 allDiv.innerHTML = `
                     <button onclick="myFunction${p.user_id}()" id="remove_btn${p.user_id}" class="peer dropbtn">
-                        <div class="peers-pic">
+                        <div class="peers-pic-manager">
                             <img class="avatar" src="${p.photo}"/>
                         </div>
                         <span class="name" style="margin-left: 0">${p.username}</span>
@@ -83,10 +87,12 @@ window.onload = function () {
                 employee.innerHTML = `
                     <div>
                         <div class="items rating-name">
-                            <div class="peers-pic">
-                                <img class="" src="${p.photo}"/>
-                            </div>
-                            <a href="" class="name-link">${p.username}</a>
+                            <a href="employee" onclick="stats${p.user_id}()" class="name-link">
+                                <div class="peers-pic-raiting"">
+                                    <img class="avatar" src="${p.photo}"/>
+                                </div>
+                            </a>
+                            <a href="employee" onclick="stats${p.user_id}()" class="name-link">${p.username}</a>
                         </div>
                         <a href="employee" onclick="stats${p.user_id}()">
                             <div class="grade">
@@ -108,7 +114,7 @@ window.onload = function () {
                 fetch(window.location.origin + "/perforator/self-review/is-draft/?id=" + p.user_id)
                     .then(response => response.json())
                     .then(json => {
-                        if (json['is_draft']){
+                        if (json['is_draft']) {
                             let el_without_sr_counter = document.getElementById("without_sr_users_count");
                             let btn = document.getElementById(`remove_btn${p.user_id}`)
                             btn.removeAttribute("onclick");
@@ -125,12 +131,10 @@ window.onload = function () {
                 if (!p.approve) {
                     team_list_not_approve.appendChild(allDiv);
                     not_approve_counter++;
-                }
-                else {
+                } else {
                     team_list_approve.appendChild(allDiv);
                     approve_counter++;
                 }
-
 
 
                 let peers_list = document.createElement("div");
@@ -177,7 +181,7 @@ window.onload = function () {
                                     <div class="peers-pic">
                                         <img class="avatar" src="${u.photo}"/>
                                     </div>
-                                    <div style="margin-top: 0" class="peer-info">${u.username}</div>
+                                    <div class="peer-info">${u.username}</div>
                                     <button class="choose" onclick="select_peer_remote(${p.user_id}, ${u.user_id})">Выбрать</button>
                                 </div>`;
                             my.appendChild(myDiv);
@@ -204,7 +208,7 @@ window.onload = function () {
                         get_user_peers(p.user_id)
                             .then(response => response.json())
                             .then(json => {
-                                for (let i of json){
+                                for (let i of json) {
                                     let id = i.user_id;
                                     save_peers(p.user_id, id);
                                 }
@@ -276,8 +280,9 @@ function approve_user(id) {
 // вызывается при клике, вызывает remove_peer
 function delete_peers(uid, id) {
     document.getElementById(`my-peer${uid}${id}`).style.display = 'none';
-    //document.getElementById(`peer${uid}${id}`).style.display = 'block';
+    document.getElementById(`peer${uid}${id}`).style.display = 'block';
 }
+
 function delete_peers_in_modal_window(uid, id) {
     document.getElementById(`my-peer${uid}${id}`).style.display = 'block';
     document.getElementById(`peer${uid}${id}`).style.display = 'none';
@@ -290,6 +295,7 @@ function save_peers(uid, id) {
     document.getElementById(`my-peer${uid}${id}`).style.display = 'block';
     //document.getElementById(`peer${uid}${id}`).style.display = 'none';
 }
+
 function save_peers_in_modal_window(uid, id) {
     //console.log(`peer${uid}${id}`)
     //document.getElementById(`my-peer${uid}${id}`).style.display = 'block';

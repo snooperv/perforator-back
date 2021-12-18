@@ -45,14 +45,6 @@
             <div class="peers">
 
                 {% for profile, review in matches.items %}
-
-                <button onclick="toggleForm({{ profile.id }})" class="peer dropbtn">
-                    <img src="{{ profile.photo.url }}" class="peer-avatar"/>
-                    <span class="name"> {{ profile.user.first_name }} </span>
-                    <a href="#" class="chevron">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </button>
                 <div id="myDropdown-{{ profile.id }}" class="dropdown-content">
                     <div class="dropdown-container">
 
@@ -185,10 +177,16 @@
                             <input type="submit" value="Отправить отзыв" name="rate-{{ profile.id }}"/>
 
                         </form>
-
+                    <button onclick="toggleForm({{ profile.id }})" class="peer dropbtn">
+                        <div class="peers-pic">
+                            <img src="{{ profile.photo.url }}" class="avatar"/>
+                        </div>
+                        <span class="name"> {{ profile.user.first_name }} </span>
+                        <a href="#" class="chevron">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
                     </div>
-
-                </div>
 
                 {% endfor %}
 

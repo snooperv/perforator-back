@@ -10,6 +10,15 @@
         </div>
     </div>
     <div class="rightWrapper">
+        <div class="timer">
+            <span class="untill">До завершения Self Review</span>
+            <span class="under" style="margin-left: 3px;">дней</span>
+            <span id="days" class="time">00</span> :
+            <span class="under">часов</span>
+            <span id="hours" class="time">00</span> :
+            <span class="under">минут</span>
+            <span id="minutes" class="time">00</span>
+        </div>
         <a href="#popup"><img
                 src="{% static 'img/settings.svg' %}"
                 alt="settings"
@@ -101,4 +110,6 @@
     <a href="" class="close-popup"></a>
 </div>
 
+
+<script src="{% static 'js/header_timer.js' %}"></script>
 <script src="{% static 'js/toggle_visibility.js' %}"></script>
