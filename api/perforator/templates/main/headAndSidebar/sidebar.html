@@ -1,0 +1,75 @@
+{% load static %}
+
+<div class="sidebar">
+    <div class="profile-div">
+        <div class="profile-pic">
+            <img class="photo-sidebar" src="{{ user.profile.photo.url }}"/>
+        </div>
+        <div class="profile-name">
+            <h2>
+                {% if user.is_authenticated %}
+                    {{ user.first_name }}
+                {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                {% endif %}
+            </h2>
+        </div>
+    </div>
+
+    <div class="menu-items">
+        <div class="perfomance link-container" style="font-size: 22px">
+            <img
+                    src="{% static 'img/perfomance-review-icon.svg' %}"
+                    width="20"
+                    height="20"
+                    alt="perfomance review icon"/>
+            Perfomance Review
+        </div>
+    </div>
+    <div class="menu-items" id="menuItems">
+        <nav class="side-btn small">
+            <a href="{% url 'index' %}">
+                <div class="link-container">self review</div>
+            </a>
+        </nav>
+        <nav class="side-btn small">
+            <a href="{% url 'irate' %}">
+                <div class="link-container">
+                    я оцениваю
+                    <div class="amount-bg"></div>
+                    <span class="amount">10 из 15</span>
+                </div>
+            </a>
+        </nav>
+        <nav class="side-btn small" id="i_manager_button" style="display: none">
+            <a href="{% url 'imanager' %} ">
+                <div class="link-container">
+                    я менеджер
+                    <!-- Нужно будет поправить, сделал набросок -->
+                    <div class="amount-bg second"></div>
+                    <span class="amount">1 из 8</span>
+                    <!-- -------------------------------------- -->
+                </div>
+            </a>
+        </nav>
+        <nav class="side-btn small">
+            <a href="{% url '1to1' %}">
+                <div class="link-container">1-on-1</div>
+            </a>
+        </nav>
+        <router-link
+                to="/last-periods"
+                active-class="active"
+                tag="button"
+                exact
+                class="side-btn"
+        >
+            <div class="link-container">
+                <img src="{% static 'img/history.svg' %}" width="20" height="20"/>
+                Прошлые периоды оценки
+            </div>
+        </router-link>
+    </div>
+</div>
+
+<script src="{% static 'js/navigation.js' %}"></script>
