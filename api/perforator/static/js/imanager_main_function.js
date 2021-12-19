@@ -170,7 +170,6 @@ window.onload = function () {
                             peers_list.appendChild(peer);
 
                             if (u.user_id == '1' || p.user_id == u.user_id) {
-                                console.log(u.user_id == '1', p.user_id, u.user_id)
                                 continue
                             }
                             const myDiv = document.createElement("div");
@@ -291,7 +290,6 @@ function delete_peers_in_modal_window(uid, id) {
 // выбираем пира, скрываем и показываем нужный элемент
 // вызывается при клике, вызывает select_peer
 function save_peers(uid, id) {
-    console.log(`my-peer${uid}${id}`)
     document.getElementById(`my-peer${uid}${id}`).style.display = 'block';
     //document.getElementById(`peer${uid}${id}`).style.display = 'none';
 }

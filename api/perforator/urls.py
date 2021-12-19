@@ -28,6 +28,7 @@ urlpatterns = [
 
 
     path('self-review/', raw_reviews_views.get_self_review),
+    path('self-review/id', raw_reviews_views.get_self_review_by_id),
     path('self-review/main', raw_reviews_views.self_review),
     path('self-review/save/', raw_reviews_views.edit_self_review),
     path('review/form/', raw_reviews_views.get_empty_review_form),
