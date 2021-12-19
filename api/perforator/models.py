@@ -67,6 +67,14 @@ class PeerReviews(models.Model):
     rates_adaptation = models.IntegerField(choices=Rates.choices)
 
 
+class OneToOneReviews(models.Model):
+    manager = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='manager_reviews')
+    employee = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='employee_reviews')
+    common_notes = models.CharField(max_length=2048)
+    manager_notes = models.CharField(max_length=2048)
+    employee_notes = models.CharField(max_length=2048)
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

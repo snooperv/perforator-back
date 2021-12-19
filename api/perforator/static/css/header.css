@@ -178,7 +178,8 @@ p {
     display: inline-block;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-size: 16px;
-    color: #A5A4F5;
+    /*color: #A5A4F5;*/
+    color: #cb2525;
 }
 
 .under {
