@@ -45,7 +45,7 @@ class RateForm(forms.Form):
     """
         Форма оценки пользователя в разделе 'Я оцениваю'
     """
-    RATES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]
+    RATES = [('1', '4'), ('2', '3'), ('3', '2'), ('4', '1')]
     deadlines = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
     approaches = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
     teamwork = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'maxlength': 512}))
