@@ -24,6 +24,11 @@ def get_self_review(request):
     return Response(data=reviews.get_self_review(request), status=200)
 
 
+@api_view(['GET'])
+def get_self_review_by_id(request):
+    return Response(data=reviews.get_self_review_by_id(request, request.GET['id']), status=200)
+
+
 @api_view(['POST'])
 def edit_self_review(request):
     return Response(data=reviews.edit_self_review(request), status=200)

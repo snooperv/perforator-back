@@ -13,7 +13,7 @@
 
         <div class="form">
             <div class="container">
-                <h2>Итоговая обратная связь</h2>
+                <h2 class="title">Итоговая обратная связь</h2>
                 <table>
                     <tr>
                         <td></td>
@@ -73,7 +73,7 @@
         <!------->
         <div class="form">
             <div class="container">
-                <h2 class="title-r">
+                <h2 class="title">
                     Отзыв от менеджера
                     <button onclick="myFunction()" class="peer dropbtn">
                         <a href="" class="chevron">
@@ -155,7 +155,7 @@
         <!--self review-->
         <div class="form">
             <div class="container">
-                <h2 class="title-r">
+                <h2 class="title">
                     Результаты SelfReview
                     <button onclick="toggle_sr()" class="peer dropbtn">
                         <a href="" class="chevron">
@@ -163,15 +163,16 @@
                         </a>
                     </button>
                 </h2>
-
                 <div id="sr" class="drop">
                     <div class="">
-                        <!--Сюда self review-->
-                        <h2>Self review</h2>
+                        <form id="self-review">
+                            <!--Сюда self review-->
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 
@@ -187,9 +188,76 @@
                     set_value(final_rate, "manager")
                     set_value(final_rate, "peers")
                     set_value(final_rate, "averages")
-                    set_manager_review(u)
+                    set_manager_review(u);
+                })
+            set_self_review();
+        }
 
+        function set_self_review(){
+            get_self_review(localStorage['user'])
+                .then(response => response.json())
+                .then(json => {
+                    let selfReview = document.getElementById("self-review");
+                    let flag = '';
+                    let el_id = 0;
+                    for (let grade of json['grades']) {
+                        const allDiv = document.createElement("div");
+                        allDiv.setAttribute("id", `id${grade.id}`)
+                        allDiv.setAttribute("class", `self-review-manager-result gray-border`)
+                        if (flag != grade.grade_category_name) {
+                            allDiv.innerHTML =
+                                `
+                                <h4 id="theme${grade.id}" class="grade_category_name">${grade.grade_category_name}</h4>
+                                <p class="description">${grade.grade_category_preview_description}</p>
+                            `
+                            if (grade.grade_category_description != null) {
+                                    allDiv.innerHTML += `
+                                        <p class="question">${grade.grade_category_description}</p>
+                                        <div class="white-border">
+                                            <div class="text-in-self">
+                                                <span class="description">${grade.comment}</span>
+                                            </div>
+                                        </div>
+                                    `;
+                            } else {
+                                allDiv.innerHTML += `
+                                    <div class="white-border">
+                                        <div class="text-in-self">
+                                            <span class="description">${grade.comment}</span>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                            flag = grade.grade_category_name;
+                            el_id = grade.id;
+                            selfReview.appendChild(allDiv);
+                        } else {
+                            let container = document.getElementById(`id${el_id}`)
+                            let p = document.createElement("p");
+                            p.setAttribute("class", "question")
+                            p.innerHTML = `${grade.grade_category_description}`;
 
+                            let input = document.createElement("div");
+                            input.setAttribute("class", "white-border");
+                            input.innerHTML = `
+                                <div class="text-in-self">
+                                    <span class="description">${grade.comment}</span>
+                                </div>
+                            `;
+                            container.appendChild(p);
+                            container.appendChild(input);
+                        }
+                    }
+                    $('#plan, #imp-zones').each(function () {
+                        let characterCount = $(this).val().length,
+                            current = $(this).next().find('.chars')
+                        $(this).keyup(function () {
+                            let characterCount = $(this).val().length,
+                                current = $(this).next().find('.chars')
+                            current.text(characterCount);
+                        })
+                        current.text(characterCount);
+                    });
                 })
         }
         function set_manager_review(u){
@@ -304,6 +372,9 @@
         }
         function get_team(){
             return fetch(window.location.origin + "/perforator/team");
+        }
+        function get_self_review(id) {
+            return fetch(window.location.origin + "/perforator/self-review/id?id=" + id);
         }
         function myFunction() {
             document.getElementById('myDropdown').classList.toggle('show')

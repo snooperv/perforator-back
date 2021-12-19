@@ -44,7 +44,6 @@ def get_self_review(request):
     if not request.user.is_authenticated:
         return {'error': True, 'message': 'Вы не авторизовались'}
     profile = Profile.objects.filter(user=request.user).first()
-    #print(profile)
     review = Review.objects.filter(
         appraising_person=profile.id,
         evaluated_person=profile.id).first()
@@ -176,3 +175,41 @@ def save_review(request):
         review.is_not_enough_data = True
     review.save()
     return {'message': 'ОК'}
+
+
+def get_self_review_by_id(request, id):
+    """
+    TESTED
+        Возвращает селф-ревью
+        request.GET: параметры не нужны
+        :return: Один из следующих словраей:
+        { 'id': review.id, 'is_draft': review.is_draft,
+        'grades':   [
+            { 'id': grade.id, 'grade_category_id': grade.grade_category.id,
+            'grade_category_name': grade.grade_category.name, 'grade_category_description': grade.grade_category.description,
+            'comment': grade.comment (только коммент. У сэлф-ревью оценка всегда NULL),
+            } {...}, {...}
+        ] },
+        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+    """
+    if not request.user.is_authenticated:
+        return {'error': True, 'message': 'Вы не авторизовались'}
+    user = User.objects.filter(id=id).first()
+    profile = Profile.objects.filter(user=user)[0]
+    review = Review.objects.filter(
+        appraising_person=profile.id,
+        evaluated_person=profile.id).first()
+    if not review:
+        performance_review = PerformanceReview.objects.get(id=1)
+        review = Review.objects.create(appraising_person=profile,
+                                       evaluated_person=profile,
+                                       performance_review=performance_review,
+                                       is_draft=True)
+        for grade_category in performance_review.self_review_categories.all():
+            Grade.objects.create(
+                review=review,
+                grade_category=grade_category,
+                grade=None,
+                comment=''
+            )
+    return __format_review_data(review)
