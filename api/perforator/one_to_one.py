@@ -50,6 +50,7 @@ def get_review_from_manager(request):
         cur_profile = Profile.objects.filter(user=request.user)[0]
 
         manager = get_manager(request)
+        #print(manager)
         if 'error' in manager:
             return {}
 
@@ -65,6 +66,7 @@ def get_review_to_profile(request, manager: Profile, employee):
     if request.user.is_authenticated:
         review = OneToOneReviews.objects.filter(manager=manager) \
             .filter(employee=employee).first()
+        print(manager, employee)
 
         answer = {}
         if review is not None:
@@ -97,7 +99,9 @@ def generate_form_from_review(request, review):
             text = review['manager_notes']
         else:
             text = review['employee_notes']
-        return OneToOneForm(initial={'common': review['common_notes'], 'personal': text})
+        answer = OneToOneForm(initial={'common': review['common_notes'], 'personal': text})
+        print(answer)
+        return answer
     else:
         return {"error": 'Вы не авторизованы'}
 
@@ -108,7 +112,7 @@ def save_json(request, json):
         personal = json['personal']
 
         interviews_id = int(json['interviewed'])
-        is_manager = bool(json['is_manager'])
+        is_manager = json['is_manager'] == 'True'
 
         if is_manager:
             key = 'employee_notes'
