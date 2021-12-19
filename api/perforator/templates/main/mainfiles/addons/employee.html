@@ -1,0 +1,179 @@
+{% extends "main/index.html" %}
+{% load static %}
+{% block title %}
+    One to one -
+{% endblock %}
+{% block mainstyles %}
+    <link rel="stylesheet" href="{% static 'css/self-review-result.css' %}">
+{% endblock %}
+{% block mainContent %}
+    <div class="self-review">
+
+    <div class="form" id="head"></div>
+
+        <div class="form">
+            <div class="container">
+                <h2 class="title">Итоговая обратная связь</h2>
+                <table>
+                    <tr>
+                        <td></td>
+                        <td class="table-heading">менеджер</td>
+                        <td class="table-heading">пиры</td>
+                        <td class="table-heading">средняя</td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Средняя оценка</td>
+                        <td class="numbers-in-table"><div class="grade-number" id="average_avg_manager"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="average_avg_peers"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="average_avg_averages"></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><div class="table-title">Оценки по каждому критерию</div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Соблюдение сроков</td>
+                        <td class="numbers-in-table"><div class="grade-number" id="time_avg_manager"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="time_avg_peers"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="time_avg_averages"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Пути достижения целей</td>
+                        <td class="numbers-in-table"><div class="grade-number" id="target_avg_manager"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="target_avg_peers"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="target_avg_averages"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Умение работать в команде</td>
+                        <td class="numbers-in-table"><div class="grade-number" id="teamwork_avg_manager"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="teamwork_avg_peers"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="teamwork_avg_averages"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Приверженность к хорошим техническим практикам</td>
+                        <td class="numbers-in-table"><div class="grade-number" id="practices_avg_manager"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="practices_avg_peers"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="practices_avg_averages"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Уровень владения технологиями</td>
+                        <td class="numbers-in-table"><div class="grade-number" id="technologies_avg_manager"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="technologies_avg_peers"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="technologies_avg_averages"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="text-in-table">Адаптивность</td>
+                        <td class="numbers-in-table"><div class="grade-number" id="adaptive_avg_manager"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="adaptive_avg_peers"></div></td>
+                        <td class="numbers-in-table"><div class="grade-number" id="adaptive_avg_averages"></div></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <!------->
+        <div class="form">
+            <div class="container">
+                <h2 class="title">
+                    Отзыв от менеджера
+                    <button onclick="myFunction()" class="peer dropbtn">
+                        <a href="" class="chevron">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
+                </h2>
+
+                <div id="myDropdown" class="drop">
+                    <div class="">
+                        <div class="peer-info">
+                            <span id="manager_name"></span>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Соблюдение сроков</span>
+                            </p>
+                        </div>
+                        <div class="self-review-manager gray-border commas">
+                            <p id="deadline"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Пути достижения целей</span>
+                            </p>
+                            <span class="description">идет ли человек по головам или находит пути решения договариваясь с коллегами</span>
+                        </div>
+                        <div class="self-review-manager gray-border commas">
+                            <p id="approaches"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Умение работать в команде</span>
+                            </p>
+                            <span class="description">насколько активно человек вовлечен в командную работу</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="teamwork"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Приверженность к хорошим тех.практикам</span>
+                            </p>
+                            <span class="description">насколько человек придерживается покрытия кода авто тестами, проектирует хорошую архитектуру, использует хорошие паттерны</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="practices"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Уровень владения технологиями</span>
+                            </p>
+                            <span class="description">насколько хорошо человек владеет технологиями разработки, используемым стеком и т.д.</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="experience"></p>
+                        </div>
+                        <div class="self-review-manager">
+                            <p>
+                                <i class="icon-circle fas fa-circle"></i>
+                                <span>Адаптивность</span>
+                            </p>
+                            <span class="description">насколько быстро человек адаптируется к новым условиям работы, вливается в новый коллектив</span>
+                        </div>
+                        <div class="self-review-manager gray-border">
+                            <p id="adaptation"></p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--self review-->
+        <div class="form">
+            <div class="container">
+                <h2 class="title">
+                    Результаты SelfReview
+                    <button onclick="toggle_sr()" class="peer dropbtn">
+                        <a href="" class="chevron">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
+                </h2>
+                <div id="sr" class="drop">
+                    <div class="">
+                        <form id="self-review">
+                            <!--Сюда self review-->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{% static 'js/employee_main_fuction.js' %}"></script>
+{% endblock %}
