@@ -75,7 +75,7 @@
                                     {% for choice in review.rates_deadlines %}
                                         <input type="radio"
                                                name="rates_deadlines"
-                                               value="{{ forloop.counter }}"
+                                               value="{{ forloop.revcounter }}"
                                                class="radio-{{ forloop.parentloop.counter }}-1"
                                                id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-1">
                                         <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-1">
@@ -105,7 +105,7 @@
                                     {% for choice in review.rates_approaches %}
                                         <input type="radio"
                                                name="rates_approaches"
-                                               value="{{ forloop.counter }}"
+                                               value="{{ forloop.revcounter }}"
                                                class="radio-{{ forloop.parentloop.counter }}-2"
                                                id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-2">
                                         <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-2">
@@ -134,7 +134,7 @@
                                     {% for choice in review.rates_teamwork %}
                                         <input type="radio"
                                                name="rates_teamwork"
-                                               value="{{ forloop.counter }}"
+                                               value="{{ forloop.revcounter }}"
                                                class="radio-{{ forloop.parentloop.counter }}-3"
                                                id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-3">
                                         <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-3">
@@ -165,7 +165,7 @@
                                     {% for choice in review.rates_practices %}
                                         <input type="radio"
                                                name="rates_practices"
-                                               value="{{ forloop.counter }}"
+                                               value="{{ forloop.revcounter }}"
                                                class="radio-{{ forloop.parentloop.counter }}-4"
                                                id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-4">
                                         <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-4">
@@ -195,7 +195,7 @@
                                     {% for choice in review.rates_experience %}
                                         <input type="radio"
                                                name="rates_experience"
-                                               value="{{ forloop.counter }}"
+                                               value="{{ forloop.revcounter }}"
                                                class="radio-{{ forloop.parentloop.counter }}-5"
                                                id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-5">
                                         <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-5">
@@ -224,7 +224,7 @@
                                     {% for choice in review.rates_adaptation %}
                                         <input type="radio"
                                                name="rates_adaptation"
-                                               value="{{ forloop.counter }}"
+                                               value="{{ forloop.revcounter }}"
                                                class="radio-{{ forloop.parentloop.counter }}-6"
                                                id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-6">
                                         <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-6">
