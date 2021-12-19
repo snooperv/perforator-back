@@ -142,13 +142,17 @@ def generate_matched_profiles_and_forms(request, profile_from):
             return {}
         answer = {}
         for r in rated:
-            p = Profile.objects.filter(id=r['profile_id']).first()
-            form = generate_review_form(request, profile_from, p)
-            answer[p] = form
+            review = PeerReviews.objects.filter(rated_person_id=r['profile_id']).filter(peer_id=profile_from).first()
+            if review is None:
+                p = Profile.objects.filter(id=r['profile_id']).first()
+                form = generate_review_form(request, profile_from, p)
+                answer[p] = form
         for r in rated_team:
-            p = Profile.objects.filter(id=r['profile_id']).first()
-            form = generate_review_form(request, profile_from, p)
-            answer[p] = form
+            review = PeerReviews.objects.filter(rated_person_id=r['profile_id']).filter(peer_id=profile_from).first()
+            if review is None:
+                p = Profile.objects.filter(id=r['profile_id']).first()
+                form = generate_review_form(request, profile_from, p)
+                answer[p] = form
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
