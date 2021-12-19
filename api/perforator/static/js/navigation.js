@@ -16,7 +16,7 @@ try {
     var nav = document.getElementById('menuItems').getElementsByTagName('nav');
     var url = document.location.href;
     for (var i = 0; i < el.length; i++) {
-        if (url === el[i].href || url === el[i].href + '#popup') {
+        if (url === el[i].href || url === el[i].href + '#popup' || url === el[i].href + '#') {
             nav[i].className += ' active';
         }
     }

@@ -40,22 +40,28 @@
 
                     <button onclick="toggleOneToOneReview({{ forloop.counter }})" class="peer dropbtn">
 
-                        <img src=" {{ data.0.photo.url }} " class="peer-avatar"/>
+                        <div class="peers-pic">
+                            <img src="{{ data.0.photo.url }}" class="avatar"/>
+                        </div>
                         <span class="name"> {{ data.0.user.first_name }} </span>
 
                         {% if data.2 %}
-
                             <span class="position"> Мой руководитель</span>
-
+                            <a href="#" id="chev-{{ forloop.counter }}" class="chevron rotate">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        {% else %}
+                            <a href="#" id="chev-{{ forloop.counter }}" class="chevron rotate" style="margin-right: 15px">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
                         {% endif %}
 
-                        <a href="#" id="chev-{{ forloop.counter }}" class="chevron rotate">
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
+
                     </button>
                     <div id="myDropdown-{{ forloop.counter }}" class="dropdown-content">
 
-                        <form action="/perforator/process_one_to_one/" id="one-to-one-{{ forloop.counter }}" method="post">
+                        <form action="/perforator/process_one_to_one/" id="one-to-one-{{ forloop.counter }}"
+                              method="post">
 
                             {% csrf_token %}
                             {% load widget_tweaks %}
@@ -99,7 +105,7 @@
                                 console.log(is_man);
 
                                 fetch(parent_form.action, {
-                                method: 'POST',
+                                    method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json;charset=utf-8',
                                         'X-CSRFToken': csrftoken
@@ -111,16 +117,14 @@
                                         "is_manager": is_man
                                     })
                                 })
-                                .then(response => response.json())
-                                .then(response => {
-                                    console.log(response);
-                                });
+                                    .then(response => response.json())
+                                    .then(response => {
+                                        console.log(response);
+                                    });
 
                             }, 1000);
                             console.log({{ forloop.counter }});
                         });
-
-
                     </script>
 
                 {% endfor %}
@@ -135,7 +139,9 @@
                     <span class="period"> 01.01.2020 - 14.01.2020</span>
                 </div>
                 <button onclick="myFunction2()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
+                    <div class="peers-pic">
+                        <img src="{% static 'img/pic.png' %}" class="avatar"/>
+                    </div>
                     <span class="name">Коновалов Илья</span>
                     <span class="position"> Мой руководитель</span>
                     <a href="#" id="chev2" class="chevron rotate">
