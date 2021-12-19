@@ -29,43 +29,104 @@
         </div>
 
         <div id="current">
+
             <div class="peers">
                 <div class="date">
                     <h2>Q2</h2>
                     <span class="period"> 01.01.2021 - 14.01.2021</span>
                 </div>
-                <button onclick="myFunction1()" class="peer dropbtn">
-                    <img src="{% static 'img/pic.png' %}" class="peer-avatar"/>
-                    <span class="name">Коновалов Илья</span>
-                    <span class="position"> Мой руководитель</span>
-                    <a href="#" id="chev1" class="chevron rotate">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </button>
-                <div id="myDropdown1" class="dropdown-content">
-                    <h3 class="dropdownTitle">Общие заметки</h3>
-                    <textarea
-                            name="generalNotes"
-                            id="generalNotes"
-                            rows="5"
-                            class="ta big"
-                            maxlength="512"
-                            style="margin-left: 35px;"
-                    ></textarea>
-                    <h3 class="dropdownTitle">
-                        <i class="icon-lock fas fa-lock"></i>
-                        Личные заметки
-                    </h3>
-                    <textarea
-                            name="personalNotes"
-                            id="personalNotes"
-                            rows="5"
-                            class="ta big"
-                            maxlength="512"
-                            style="margin-left: 35px;"
-                    ></textarea>
-                </div>
+
+                {% for data in matches %}
+
+                    <button onclick="toggleOneToOneReview({{ forloop.counter }})" class="peer dropbtn">
+
+                        <img src=" {{ data.0.photo.url }} " class="peer-avatar"/>
+                        <span class="name"> {{ data.0.user.first_name }} </span>
+
+                        {% if data.2 %}
+
+                            <span class="position"> Мой руководитель</span>
+
+                        {% endif %}
+
+                        <a href="#" id="chev-{{ forloop.counter }}" class="chevron rotate">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </button>
+                    <div id="myDropdown-{{ forloop.counter }}" class="dropdown-content">
+
+                        <form action="/perforator/process_one_to_one/" id="one-to-one-{{ forloop.counter }}" method="post">
+
+                            {% csrf_token %}
+                            {% load widget_tweaks %}
+
+                            <h3 class="dropdownTitle">Общие заметки</h3>
+
+                            {% render_field data.1.common id="generalNotes" name="generalNotes" class='ta big' style="margin-left: 35px;" %}
+
+                            <h3 class="dropdownTitle">
+                                <i class="icon-lock fas fa-lock"></i>
+                                Личные заметки
+                            </h3>
+
+                            {% render_field data.1.personal id='personalNotes' name="personalNotes" class='ta big' style="margin-left: 35px;" %}
+
+                            <input type="hidden" name="interviewed" value={{ data.0.id }}>
+                            <input type="hidden" name="is_manager" value={{ data.2 }}>
+
+                        </form>
+
+                    </div>
+
+                    <script type="text/javascript">
+                        var timerId;
+
+                        document.getElementById("one-to-one-{{ forloop.counter }}").addEventListener('keyup', (e) => {
+                            clearTimeout(timerId);
+                            timerId = setTimeout(() => {
+                                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                                const f = e.target;
+                                const parent_form = f.parentElement;
+                                const children = parent_form.children;
+                                const common = children[2].value;
+                                const personal = children[4].value;
+                                const inter = children[5].value;
+                                const is_man = children[6].value;
+                                console.log(common);
+                                console.log(personal);
+                                console.log(inter);
+                                console.log(is_man);
+
+                                fetch(parent_form.action, {
+                                method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json;charset=utf-8',
+                                        'X-CSRFToken': csrftoken
+                                    },
+                                    body: JSON.stringify({
+                                        "common": common,
+                                        "personal": personal,
+                                        "interviewed": inter,
+                                        "is_manager": is_man
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(response => {
+                                    console.log(response);
+                                });
+
+                            }, 1000);
+                            console.log({{ forloop.counter }});
+                        });
+
+
+                    </script>
+
+                {% endfor %}
+
             </div>
+
         </div>
         <div id="last-per" class="hide">
             <div class="peers">
@@ -109,5 +170,5 @@
 
     </div>
 
-    <script src="{% static 'js/pages_1on1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pages_1on1.js' %}"></script>
 {% endblock %}

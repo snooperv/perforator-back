@@ -87,22 +87,21 @@ def save_review_form(request, profile_from, profile_rated, form):
     if request.user.is_authenticated:
         if form.is_valid():
             td = transform_form(form)
-            print(td)
 
-            try:
-                obj = PeerReviews.objects.get(peer_id=profile_from, rated_person=profile_rated)
-                for key, value in td.items():
-                    setattr(obj, key, value)
-                obj.save()
-            except PeerReviews.DoesNotExist:
-                new_values = {'peer_id': profile_from, 'rated_person': profile_rated}
-                new_values.update(td)
-                obj = PeerReviews(**new_values)
-                obj.save()
+            # try:
+            #     obj = PeerReviews.objects.get(peer_id=profile_from, rated_person=profile_rated)
+            #     for key, value in td.items():
+            #         setattr(obj, key, value)
+            #     obj.save()
+            # except PeerReviews.DoesNotExist:
+            #     new_values = {'peer_id': profile_from, 'rated_person': profile_rated}
+            #     new_values.update(td)
+            #     obj = PeerReviews(**new_values)
+            #     obj.save()
 
-            # review, created = PeerReviews.objects.update_or_create(peer_id=profile_from,
-            #                       rated_person=profile_rated,
-            #                       defaults=td)
+            review, created = PeerReviews.objects.update_or_create(peer_id=profile_from,
+                                  rated_person=profile_rated,
+                                  defaults=td)
 
             return {'message': 'OK'}
         else:

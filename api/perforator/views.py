@@ -5,12 +5,15 @@ from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic, View
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .form import *
 from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .ratings import *
+from .one_to_one import *
 
 
 def index(request):
@@ -20,18 +23,23 @@ def index(request):
                   context={'num_self': num_self})
 
 
+@api_view(['POST'])
+def process_one_to_one_form(request):
+    json = request.data
+    save_json(request, json)
+    return Response(data={'message': 'OK'}, status=200)
+
+
 def process_rate_form(request):
     if request.method == 'POST':
         form = RateForm(request.POST)
         if form.is_valid():
             d = request.POST.dict()
-            print(d)
             profile_id = int(d['profile'])
             rated = Profile.objects.filter(id=profile_id).first()
             cur = Profile.objects.filter(user=request.user).first()
 
             td = transform_form(form)
-            print(td)
 
             save_review_form(request, cur, rated, form)
 
@@ -48,7 +56,6 @@ class I_Rate(LoginRequiredMixin, View):
 
         p = Profile.objects.filter(user=request.user).first()
         matches = generate_matched_profiles_and_forms(request, p)
-        print(matches)
 
         return render(request, 'main/mainfiles/i_rate.html', {'form': form, 'review': review_form, 'matches': matches})
 
@@ -73,7 +80,10 @@ class OneToOne(LoginRequiredMixin, View):
     @staticmethod
     def get(request):
         form = UpdateProfile(initial={'name': "", 'phone': "", 'sbis': ""})
-        return render(request, 'main/mainfiles/1on1.html', {'form': form})
+
+        matches = generate_matched_forms(request)
+
+        return render(request, 'main/mainfiles/1on1.html', {'form': form, 'matches': matches})
 
     @staticmethod
     def post(request):
@@ -160,7 +170,8 @@ def registration(request):
             login(request, auto_login)
             return HttpResponseRedirect(reverse('index'))
         else:
-            print(form)
+            # print(form)
+            pass
     else:
         form = RegistrationForm(initial={'name': "", 'phone': "", 'sbis': "", 'password': ""})
     return render(request, 'registration/registration.html', {'form': form})

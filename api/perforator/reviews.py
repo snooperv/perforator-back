@@ -44,7 +44,7 @@ def get_self_review(request):
     if not request.user.is_authenticated:
         return {'error': True, 'message': 'Вы не авторизовались'}
     profile = Profile.objects.filter(user=request.user).first()
-    print(profile)
+    #print(profile)
     review = Review.objects.filter(
         appraising_person=profile.id,
         evaluated_person=profile.id).first()
