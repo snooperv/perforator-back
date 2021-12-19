@@ -73,17 +73,16 @@
 
                                 <div class="rating" style="position: relative; top: 10px;">
                                     {% for choice in review.rates_deadlines %}
-                                        <!--
-                                    <input name="{{ radio.name }}" type="radio" id="radio_{{ radio.index }}" value={{ radio.choice_value }}>
-                                    <label for="radio_{{ radio.index }}">{{ radio.choice_label }}</label>
-                                    -->
-                                        {{ choice.tag }}
-                                        <label for="{{ choice.id_for_label }}">
+                                        <input type="radio"
+                                               name="rates_deadlines"
+                                               value="{{ forloop.counter }}"
+                                               class="radio-{{ forloop.parentloop.counter }}-1"
+                                               id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-1">
+                                        <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-1">
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
-
                                     {% endfor %}
-                                    <p id="text_rate1" class="text_rate"></p>
+                                    <p id="text-rate-{{ forloop.counter }}-1" class="text_rate"></p>
                                 </div>
 
 
@@ -104,12 +103,16 @@
 
                                 <div class="rating">
                                     {% for choice in review.rates_approaches %}
-                                        {{ choice.tag }}
-                                        <label for="{{ choice.id_for_label }}" class="{{ choice.id_for_label }}">
+                                        <input type="radio"
+                                               name="rates_approaches"
+                                               value="{{ forloop.counter }}"
+                                               class="radio-{{ forloop.parentloop.counter }}-2"
+                                               id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-2">
+                                        <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-2">
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
-                                    <p id="text_rate2" class="text_rate"></p>
+                                    <p id="text-rate-{{ forloop.counter }}-2" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -129,12 +132,16 @@
 
                                 <div class="rating">
                                     {% for choice in review.rates_teamwork %}
-                                        {{ choice.tag }}
-                                        <label for="{{ choice.id_for_label }}">
+                                        <input type="radio"
+                                               name="rates_teamwork"
+                                               value="{{ forloop.counter }}"
+                                               class="radio-{{ forloop.parentloop.counter }}-3"
+                                               id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-3">
+                                        <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-3">
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
-                                    <p id="text_rate3" class="text_rate"></p>
+                                    <p id="text-rate-{{ forloop.counter }}-3" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -156,12 +163,16 @@
 
                                 <div class="rating">
                                     {% for choice in review.rates_practices %}
-                                        {{ choice.tag }}
-                                        <label for="{{ choice.id_for_label }}">
+                                        <input type="radio"
+                                               name="rates_practices"
+                                               value="{{ forloop.counter }}"
+                                               class="radio-{{ forloop.parentloop.counter }}-4"
+                                               id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-4">
+                                        <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-4">
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
-                                    <p id="text_rate4" class="text_rate"></p>
+                                    <p id="text-rate-{{ forloop.counter }}-4" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -182,12 +193,16 @@
 
                                 <div class="rating">
                                     {% for choice in review.rates_experience %}
-                                        {{ choice.tag }}
-                                        <label for="{{ choice.id_for_label }}">
+                                        <input type="radio"
+                                               name="rates_experience"
+                                               value="{{ forloop.counter }}"
+                                               class="radio-{{ forloop.parentloop.counter }}-5"
+                                               id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-5">
+                                        <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-5">
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
-                                    <p id="text_rate5" class="text_rate"></p>
+                                    <p id="text-rate-{{ forloop.counter }}-5" class="text_rate"></p>
                                 </div>
 
                                 <h3 class="dropdownTitle">
@@ -207,12 +222,16 @@
 
                                 <div class="rating">
                                     {% for choice in review.rates_adaptation %}
-                                        {{ choice.tag }}
-                                        <label for="{{ choice.id_for_label }}">
+                                        <input type="radio"
+                                               name="rates_adaptation"
+                                               value="{{ forloop.counter }}"
+                                               class="radio-{{ forloop.parentloop.counter }}-6"
+                                               id="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-6">
+                                        <label for="radio-{{ forloop.parentloop.counter }}-{{ forloop.counter }}-6">
                                             <img src="{% static 'img/rating2.png' %}">
                                         </label>
                                     {% endfor %}
-                                    <p id="text_rate6" class="text_rate"></p>
+                                    <p id="text-rate-{{ forloop.counter }}-6" class="text_rate"></p>
                                 </div>
 
                                 <input type="hidden" name="profile" value={{ profile.id }}>
