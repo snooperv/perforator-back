@@ -66,7 +66,7 @@ def get_review_to_profile(request, manager: Profile, employee):
     if request.user.is_authenticated:
         review = OneToOneReviews.objects.filter(manager=manager) \
             .filter(employee=employee).first()
-        print(manager, employee)
+        #print(manager, employee)
 
         answer = {}
         if review is not None:
@@ -100,7 +100,7 @@ def generate_form_from_review(request, review):
         else:
             text = review['employee_notes']
         answer = OneToOneForm(initial={'common': review['common_notes'], 'personal': text})
-        print(answer)
+        #print(answer)
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
