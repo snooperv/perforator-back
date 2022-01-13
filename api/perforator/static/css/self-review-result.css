@@ -24,7 +24,7 @@ td {
     flex-direction: column;
     height: 100%;
     width: 90%;
-    font-size: 20px;
+
     color: rgb(167, 167, 167);
     font-weight: 600;
 }
@@ -50,18 +50,6 @@ td {
     color: #CAC9F7;
     position: relative;
     top: -3px;
-}
-
-.commas::before {
-    content: "A";
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    padding-bottom: 20px;
-    font-size: 30px;
-    color: #EDBD31;
-    background-size: 25px auto;
-    transform: rotate(180deg);
 }
 
 .table-heading {
@@ -125,7 +113,7 @@ table {
 }
 
 .text-in-table {
-    width: 457px;
+    width: 100%;
     height: 46px;
     padding-left: 20px;
     margin-left: 20px;
@@ -134,10 +122,49 @@ table {
     border-radius: 17px;
 }
 
+.text-in-self {
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 15px;
+    color: #27264D;
+}
+
+.text-under-head-self {
+    color: #686868;
+    font-weight: 200 !important;
+    font-size: 14px;
+    line-height: 15px;
+    font-style: normal;
+}
+
 .table-title {
     margin: 10px;
     font-size: 21px;
 }
+
+.title-self {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.title-head-self {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
 
 .final-grades {
     font-family: Gotham Pro;
@@ -153,8 +180,26 @@ table {
     margin-left: 60px;
 }
 
+.self-review-manager-result {
+    padding: 20px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.self-review-manager-result:nth-last-child(1) {
+    margin-bottom: 30px;
+}
+
+.white-border {
+    background: #FFFFFF;
+    border-radius: 15px;
+    width: 90%;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
 .gray-border {
-    background: #ECECF2;
+    background: #F4F4FA;
     border-radius: 19px;
 }
 
@@ -215,4 +260,103 @@ table {
 }
 .drop {
     display: none;
+}
+
+.commas::before {
+    content: ",,";
+    position: absolute;
+    margin: -29px;
+    margin-top: -27px;
+    padding: 7px;
+    padding-top: 0;
+    padding-bottom: 16px;
+    line-height: 13px;
+    font-size: 30px;
+    background: white;
+    border-radius: 50%;
+    transform: rotate(180deg);
+    color: #EDBD31;
+}
+
+.commas-orange::before {
+    content: ",,";
+    position: absolute;
+    margin: -8px;
+    padding: 7px;
+    padding-top: 0;
+    padding-bottom: 17px;
+    line-height: 13px;
+    font-size: 30px;
+    background: #EDBD31;
+    border-radius: 50%;
+    transform: rotate(180deg);
+    color: white;
+}
+/*---------*/
+
+.peers-pic-manager {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    float: left;
+    left: -20px;
+    top: -10px;
+}
+
+.name {
+    float: left;
+    margin-left: 0px;
+    position: relative;
+    top: 10px;
+    color: #331969;
+    font-family: "Gotham Pro";
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -1px;
+}
+
+.btn-peersSr {
+    background: #F4F4FA;
+    padding: 10px;
+    width: 100%;
+    height: 70px;
+    border-radius: 17px;
+    left: 0 !important;
+    margin-bottom: 20px;
+}
+
+.fa-peers {
+    position: relative;
+    top: 11px;
+}
+
+.span-sr {
+    font-size: 22px !important;
+}
+
+.estimation-peers {
+    margin-left: 80px;
+    width: 60%;
+    margin-top: -5px;
+}
+
+.estimation-peers-head {
+    width: 60%;
+}
+
+.img-estimation {
+    position: absolute;
+    left: 1150px;
+}
+
+.img-white-estimation {
+    width: 40px;
+    height: auto;
+}
+
+.margin-bottom {
+    margin-bottom: 20px;
 }

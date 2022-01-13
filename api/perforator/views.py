@@ -111,6 +111,13 @@ class I_Manager(LoginRequiredMixin, View):
                 return HttpResponseRedirect(reverse('imanager'))
 
 
+class SelfReviewResult(LoginRequiredMixin, View):
+
+    @staticmethod
+    def get(request):
+        return render(request, 'main/mainfiles/self_review_result.html')
+
+
 class SelfReviewByUserView(LoginRequiredMixin, View):
     model = SelfReview
 
