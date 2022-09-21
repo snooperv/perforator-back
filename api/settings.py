@@ -58,6 +58,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'api.urls'
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(years=1),
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
