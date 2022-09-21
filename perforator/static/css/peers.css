@@ -1,0 +1,178 @@
+.selection h3 {
+    margin-top: 10px;
+    margin-left: 0;
+    font-weight: 1000;
+    font-size: 26px;
+}
+
+.selection {
+    height: 364px;
+    width: 30%;
+    position: fixed;
+    padding: 5px 50px 15px 30px;
+    border-radius: 2em;
+    top: 40%;
+    left: 50%;
+    color: #000;
+    transform: translate(-50%, -50%);
+    background-color: #F1F1F1;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 10;
+    box-shadow: 0px 10.991px 19.7838px rgba(0, 0, 0, 0.25);
+}
+
+#list_peers {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 107%;
+    height: 250px;
+}
+
+#list_peers::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F1F1F1;
+    border-radius: 10px;
+}
+
+#list_peers::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #a6a6ef;
+}
+
+#list_peers::-webkit-scrollbar-track {
+    width: 0;
+}
+
+.selection:target {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.selection .close {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    font-size: 2em;
+    margin-top: 10px;
+    margin-right: 10px;
+    color: #f00;
+    cursor: pointer;
+}
+
+.close-peers {
+    background-color: rgba(0, 0, 0, .7);
+    cursor: default;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9;
+}
+
+.peers-text {
+    background-color: #ffffff;
+    color: #0d0d0d;
+    padding: 15px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 25px;
+    border: 1px solid #A5A4F5;
+    border-radius: 20px;
+}
+
+.peers-text:focus {
+    outline: none;
+    border-color: rgb(124, 124, 241);
+}
+
+.one-peer {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 1.5em;
+    padding: 20px 10px;
+    margin-top: 20px;
+}
+
+.peers-pic {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    /*float: left;*/
+    left: -15px;
+    top: -25px;
+}
+
+.peer-info {
+    font-size: 25px;
+    color: #6564b7;
+    margin-left: 75px;
+    margin-top: -82px;
+}
+
+.choose {
+    font-family: 'Gotham Pro light', serif;
+    font-weight: 1000;
+    letter-spacing: 1px;
+    background-color: #a6a6ef;
+    border: none;
+    color: white;
+    padding: 7px 25px;
+    text-decoration: none;
+    float: right;
+    margin-top: -30px;
+    font-size: 18px;
+    cursor: pointer;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.choose:hover {
+    background-color: rgb(120, 120, 241);
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.choose:active {
+    -moz-transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+/* Отображение пиров на странице */
+
+.peer-sel {
+    width: 90%;
+    background-color: #ECECF2;
+    border-radius: 1em;
+    padding: 20px 10px;
+    margin: 20px auto auto;
+    align-content: center;
+}
+
+.peer-sel .close {
+    margin-top: -32px;
+    width: 35px;
+    float: right;
+    font-size: 1.7em;
+    color: #f00;
+    cursor: pointer
+}
