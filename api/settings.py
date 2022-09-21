@@ -60,7 +60,7 @@ ROOT_URLCONF = 'api.urls'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(years=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=365),
 }
 
 TEMPLATES = [
