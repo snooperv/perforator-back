@@ -140,7 +140,8 @@ def search_peers(request):
 
         for u in users:
             p = Profile.objects.get(user=u)
-            result.append({'user_id': u.id, 'profile_id': p.id, 'username': u.first_name})
+            result.append({'user_id': u.id, 'profile_id': p.id,
+                          'username': u.first_name})
 
         return result
     else:
