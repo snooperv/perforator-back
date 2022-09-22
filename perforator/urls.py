@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.decorators.csrf import csrf_exempt
 
 from . import views
 from . import raw_peers_views
@@ -11,7 +12,7 @@ urlpatterns = [
     path('irate/', views.I_Rate.as_view(), name='irate'),
     path('1to1/', views.OneToOne.as_view(), name='1to1'),
     path('imanager/', views.I_Manager.as_view(), name='imanager'),
-    path('registration/', views.registration, name='registration'),
+    path('registration/', csrf_exempt(views.registration), name='registration'),
     path('process_rate/', views.process_rate_form, name='process_rate'),
     path('process_one_to_one/', views.process_one_to_one_form),
     path('imanager/employee/', views.Employee.as_view(), name='employee'),
