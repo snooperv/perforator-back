@@ -7,6 +7,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
+from django.views.decorators.csrf import csrf_exempt
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -43,7 +44,7 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/perforator/', permanent=True)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/login/registration',
-         RedirectView.as_view(url='/perforator/registration/'))
+         csrf_exempt(RedirectView.as_view(url='/perforator/registration/')))
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
