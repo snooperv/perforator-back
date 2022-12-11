@@ -140,3 +140,10 @@ class AverageGrade(models.Model):
     grade_category = models.ForeignKey(GradeCategory, on_delete=models.PROTECT)
     raw_grade = models.FloatField()
     normalized_grade = models.FloatField()
+
+
+class Tokens(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    token_f = models.CharField(max_length=256)
+    token_b = models.CharField(max_length=256)
+

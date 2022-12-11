@@ -145,9 +145,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'perforator/media')
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = ["http://localhost:8080", 'http://127.0.0.1:8080']
-
+"""
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
+"""

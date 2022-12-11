@@ -6,6 +6,7 @@ from . import views
 from . import raw_peers_views
 from . import raw_reviews_views
 from . import raw_hierarchy_views
+from . import token_views
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
@@ -42,4 +43,6 @@ urlpatterns = [
     path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),
 
     path('peers/approve', raw_peers_views.approve_user),
+
+    path('api/login', token_views.login_token)
 ]
