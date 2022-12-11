@@ -6,7 +6,7 @@ from . import views
 from . import raw_peers_views
 from . import raw_reviews_views
 from . import raw_hierarchy_views
-from . import token_views
+from . import general_views
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
@@ -44,5 +44,6 @@ urlpatterns = [
 
     path('peers/approve', raw_peers_views.approve_user),
 
-    path('api/login', token_views.login_token)
+    path('api/login', general_views.login_token),
+    path('api/myprofile', general_views.my_profile)
 ]
