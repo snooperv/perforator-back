@@ -1,5 +1,6 @@
-from uuid import uuid4
 import os
+import django.utils.timezone
+from uuid import uuid4
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.signals import post_save
@@ -143,7 +144,8 @@ class AverageGrade(models.Model):
 
 
 class Tokens(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     token_f = models.CharField(max_length=256)
     token_b = models.CharField(max_length=256)
+    time_f = models.DateTimeField(null=True, default=None)
 
