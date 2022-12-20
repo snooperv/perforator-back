@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from . import general
@@ -11,4 +12,17 @@ def my_profile(request):
 
 @api_view(['POST'])
 def login_token(request):
-    return Response(data=general.login(request), status=200)
+    response_data = general.login(request)
+    if response_data['status'] == 'ok':
+        token_b = response_data['token_b']
+        response_data['token_b'] = ''
+        response = Response(data=response_data, status=200)
+        response.set_cookie(key='token_b', value=token_b, max_age=604800, httponly=True)
+    else:
+        response = Response(data=response_data, status=200)
+    return response
+
+
+@api_view(['POST'])
+def refresh_token(request):
+    return Response(data=general.refresh_token(request), status=200)

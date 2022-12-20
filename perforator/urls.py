@@ -45,5 +45,6 @@ urlpatterns = [
     path('peers/approve', raw_peers_views.approve_user),
 
     path('api/login', general_views.login_token),
+    path('api/refresh-token', general_views.refresh_token),
     path('api/myprofile', general_views.my_profile)
 ]

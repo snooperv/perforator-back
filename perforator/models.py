@@ -148,4 +148,5 @@ class Tokens(models.Model):
     token_f = models.CharField(max_length=256)
     token_b = models.CharField(max_length=256)
     time_f = models.DateTimeField(null=True, default=None)
+    time_b = models.DateTimeField(null=True, default=None)
 
