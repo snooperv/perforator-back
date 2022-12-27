@@ -1,5 +1,7 @@
-from .models import User, Profile
 import base64
+from .models import User, Profile, Tokens
+from .token import tokenCheck
+
 
 
 def __format_profile_to_data(p):
@@ -33,14 +35,16 @@ def get_manager(request):
             'photo': base64.b64encode(p.photo.read()), 'sbis': p.sbis },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if request.user.is_authenticated:
-        profile = Profile.objects.filter(user=request.user)[0]
+    if tokenCheck(request.data['token']):
+        token = Tokens.objects.filter(token_f=request.data['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
         if profile.manager:
             return __format_profile_to_data(profile.manager)
         else:
             return {'error': True, 'message': 'Менеджер отсутствует'}
     else:
-        return {'error': True, 'message': 'Вы не авторизовались'}
+        return {'message': 'Вы не авторизовались'}
 
 
 # Метод на изменение менеджера (пока не нужен)
@@ -65,8 +69,10 @@ def get_team(request):
             'photo': base64.b64encode(p.photo.read()), 'sbis': p.sbis }, {...}, {...}]
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if request.user.is_authenticated:
-        profile = Profile.objects.filter(user=request.user)[0]
+    if tokenCheck(request.data['token']):
+        token = Tokens.objects.filter(token_f=request.data['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
         team = profile.team.all()
         result = []
         for t in team:
@@ -92,6 +98,7 @@ def get_full_tree():
     current_profile = Profile.objects.first()
     while current_profile.manager:
         current_profile = current_profile.manager
+
     def recursive_hierarchy_check(profile):
         result = []
         result.append(__format_profile_to_data_without_photo(profile))

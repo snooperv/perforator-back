@@ -1,5 +1,7 @@
-from .models import Profile, User, Review, GradeCategory, Grade, PerformanceReview
 from django.conf import settings
+from .token import tokenCheck
+from .models import Profile, User, Review, GradeCategory, Grade, PerformanceReview, Tokens
+
 
 """
     Модуль для работы с ревью и селф-ревью.
@@ -41,25 +43,28 @@ def get_self_review(request):
         ] },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if not request.user.is_authenticated:
-        return {'error': True, 'message': 'Вы не авторизовались'}
-    profile = Profile.objects.filter(user=request.user).first()
-    review = Review.objects.filter(
-        appraising_person=profile.id,
-        evaluated_person=profile.id).first()
-    if not review:
-        performance_review = PerformanceReview.objects.get(id=1)
-        review = Review.objects.create(appraising_person=profile,
-                                       evaluated_person=profile,
-                                       performance_review=performance_review,
-                                       is_draft=True)
-        for grade_category in performance_review.self_review_categories.all():
-            Grade.objects.create(
-                review=review,
-                grade_category=grade_category,
-                grade=None,
-                comment=''
-            )
+    if tokenCheck(request.data['token']):
+        token = Tokens.objects.filter(token_f=request.data['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
+        review = Review.objects.filter(
+            appraising_person=profile.id,
+            evaluated_person=profile.id).first()
+        if not review:
+            performance_review = PerformanceReview.objects.get(id=1)
+            review = Review.objects.create(appraising_person=profile,
+                                           evaluated_person=profile,
+                                           performance_review=performance_review,
+                                           is_draft=True)
+            for grade_category in performance_review.self_review_categories.all():
+                Grade.objects.create(
+                    review=review,
+                    grade_category=grade_category,
+                    grade=None,
+                    comment=''
+                )
+    else:
+        return {'message': 'Вы не авторизовались'}
     return __format_review_data(review)
 
 
@@ -80,34 +85,37 @@ def edit_self_review(request):
         { message: "ОК" },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if not request.user.is_authenticated:
-        return {'error': True, 'message': 'Вы не авторизовались'}
-    profile = Profile.objects.filter(user=request.user)[0]
-    review = Review.objects.get(
-        appraising_person=profile.id,
-        evaluated_person=profile.id)
-    for grade in request.data['grades']:
-        Grade.objects.filter(review=review, grade_category_id=grade['grade_category_id']) \
-            .update(grade=None, comment=grade['comment'])
-    if not request.data['is_draft']:
-        review.is_draft = False
-    review.save()
+    if tokenCheck(request.data['token']):
+        token = Tokens.objects.filter(token_f=request.data['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
+        review = Review.objects.get(
+            appraising_person=profile.id,
+            evaluated_person=profile.id)
+        for grade in request.data['grades']:
+            Grade.objects.filter(review=review, grade_category_id=grade['grade_category_id']) \
+                .update(grade=None, comment=grade['comment'])
+        if not request.data['is_draft']:
+            review.is_draft = False
+        review.save()
+    else:
+        return {'message': 'Вы не авторизовались'}
     return {'message': 'ОК'}
 
 
 def is_draft(request, id):
-    if not request.user.is_authenticated:
-        return {'error': True, 'message': 'Вы не авторизовались'}
-    user = User.objects.filter(id=id).first()
-    profile = Profile.objects.filter(user=user)[0]
-    review = Review.objects.get(
-        appraising_person=profile.id,
-        evaluated_person=profile.id)
-    result = {
-        'is_draft': review.is_draft,
-    }
+    if tokenCheck(request.data['token']):
+        user = User.objects.filter(id=id).first()
+        profile = Profile.objects.filter(user=user)[0]
+        review = Review.objects.get(
+            appraising_person=profile.id,
+            evaluated_person=profile.id)
+        result = {
+            'is_draft': review.is_draft,
+        }
+    else:
+        return {'message': 'Вы не авторизовались'}
     return result
-
 
 
 def get_empty_review_form(request):
@@ -157,23 +165,26 @@ def save_review(request):
         { message: "ОК" },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if not request.user.is_authenticated:
-        return {'error': True, 'message': 'Вы не авторизовались'}
-    profile = Profile.objects.filter(user=request.user)[0]
-    review = Review.objects.create(appraising_person=profile,
-                                   evaluated_person_id=int(request.data['evaluated_person_id']),
-                                   performance_review_id=1,
-                                   is_draft=False)
-    if not request.data['is_not_enough_data']:
-        for grade in request.data['grades']:
-            Grade.objects.create(review=review,
-                                 grade_category_id=grade['grade_category_id'],
-                                 grade=grade['grade'],
-                                 comment=grade['comment']
-                                 )
+    if tokenCheck(request.data['token']):
+        token = Tokens.objects.filter(token_f=request.data['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
+        review = Review.objects.create(appraising_person=profile,
+                                       evaluated_person_id=int(request.data['evaluated_person_id']),
+                                       performance_review_id=1,
+                                       is_draft=False)
+        if not request.data['is_not_enough_data']:
+            for grade in request.data['grades']:
+                Grade.objects.create(review=review,
+                                     grade_category_id=grade['grade_category_id'],
+                                     grade=grade['grade'],
+                                     comment=grade['comment']
+                                     )
+        else:
+            review.is_not_enough_data = True
+        review.save()
     else:
-        review.is_not_enough_data = True
-    review.save()
+        return {'message': 'Вы не авторизовались'}
     return {'message': 'ОК'}
 
 
@@ -192,24 +203,26 @@ def get_self_review_by_id(request, id):
         ] },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if not request.user.is_authenticated:
-        return {'error': True, 'message': 'Вы не авторизовались'}
-    user = User.objects.filter(id=id).first()
-    profile = Profile.objects.filter(user=user)[0]
-    review = Review.objects.filter(
-        appraising_person=profile.id,
-        evaluated_person=profile.id).first()
-    if not review:
-        performance_review = PerformanceReview.objects.get(id=1)
-        review = Review.objects.create(appraising_person=profile,
-                                       evaluated_person=profile,
-                                       performance_review=performance_review,
-                                       is_draft=True)
-        for grade_category in performance_review.self_review_categories.all():
-            Grade.objects.create(
-                review=review,
-                grade_category=grade_category,
-                grade=None,
-                comment=''
-            )
+    if tokenCheck(request.data['token']):
+        token = Tokens.objects.filter(token_f=request.data['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
+        review = Review.objects.filter(
+            appraising_person=profile.id,
+            evaluated_person=profile.id).first()
+        if not review:
+            performance_review = PerformanceReview.objects.get(id=1)
+            review = Review.objects.create(appraising_person=profile,
+                                           evaluated_person=profile,
+                                           performance_review=performance_review,
+                                           is_draft=True)
+            for grade_category in performance_review.self_review_categories.all():
+                Grade.objects.create(
+                    review=review,
+                    grade_category=grade_category,
+                    grade=None,
+                    comment=''
+                )
+    else:
+        return {'message': 'Вы не авторизовались'}
     return __format_review_data(review)

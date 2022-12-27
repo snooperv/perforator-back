@@ -1,5 +1,6 @@
 import uuid
-from .models import User, Profile, PeerReviews
+from .token import tokenCheck
+from .models import User, Profile, PeerReviews, Tokens
 
 """
     Модуль для работы с пирами пользователей.
@@ -279,7 +280,7 @@ def approve_user(request, id):
     """
         Проверяет, является ли пользователь утверждённым или нет (по id указанного пользователя)
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.data['token']):
         user = User.objects.filter(id=id).first()
         profile = Profile.objects.filter(user=user)[0]
         profile.approve = True
