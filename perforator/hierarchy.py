@@ -35,8 +35,8 @@ def get_manager(request):
             'photo': base64.b64encode(p.photo.read()), 'sbis': p.sbis },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if tokenCheck(request.data['token']):
-        token = Tokens.objects.filter(token_f=request.data['token']).first()
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         if profile.manager:
@@ -69,8 +69,8 @@ def get_team(request):
             'photo': base64.b64encode(p.photo.read()), 'sbis': p.sbis }, {...}, {...}]
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if tokenCheck(request.data['token']):
-        token = Tokens.objects.filter(token_f=request.data['token']).first()
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         team = profile.team.all()

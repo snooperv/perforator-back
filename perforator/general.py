@@ -1,5 +1,6 @@
-import os
 import pytz
+import hashlib
+import random
 from datetime import datetime, timedelta
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User, Profile, Tokens
@@ -14,8 +15,8 @@ def login(request):
     if user_data:
         if check_password(user['password'], user_data.password):
             request_time = (datetime.now()).replace(tzinfo=utc)
-            get_token_f = str(os.urandom(5))
-            get_token_b = str(os.urandom(5))
+            get_token_f = get_token_f = hashlib.sha256(("token" + str(random.randint(0, 100000))).encode('utf-8')).hexdigest()
+            get_token_b = hashlib.sha256(user['id'].encode('utf-8')).hexdigest()
             token_time_f = (request_time + timedelta(minutes=5)).replace(tzinfo=utc)
             token_time_b = (request_time + timedelta(days=7)).replace(tzinfo=utc)
 
@@ -69,7 +70,7 @@ def refresh_token(request):
             result['status'] = 'Истек период авторизации. Войдите повторно.'
         else:
             token_time_f = (request_time + timedelta(minutes=5)).replace(tzinfo=utc)
-            get_token_f = str(os.urandom(5))
+            get_token_f = hashlib.sha256(("token" + str(random.randint(0, 100000))).encode('utf-8')).hexdigest()
 
             token.time_f = token_time_f
             token.token_f = get_token_f
@@ -89,9 +90,8 @@ def my_profile(request):
     :return:
     """
     result = {'status': 'not ok'}
-
-    if tokenCheck(request.data['token']):
-        token = Tokens.objects.filter(token_f=request.data['token']).first()
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
 

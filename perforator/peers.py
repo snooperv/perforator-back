@@ -29,8 +29,10 @@ def get_all_peers(request):
           { ... }
         ]
     """
-    if request.user.is_authenticated:
-        users = User.objects.exclude(username=request.user.username)
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        users = User.objects.exclude(username=user.username)
         result = []
         for u in users:
             profiles = Profile.objects.filter(user=u)
@@ -59,9 +61,10 @@ def get_all_current_user_peers(request):
           { ... }
         ]
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         result = []
-        user = request.user
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
         profile = Profile.objects.filter(user=user)[0]
         peers = profile.peers.all()
         for p in peers:
@@ -81,14 +84,16 @@ def delete_peers(request):
         { message: "ОК" },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         profile_ids = request.data
         for p in profile_ids:
             profile_list = Profile.objects.filter(id=p)
             if len(profile_list) == 0:
                 return {'error': True, f'message': f'Профиль с таким id не найден: {p}'}
             peer = profile_list[0]
-            profile_user = Profile.objects.filter(user=request.user)[0]
+            token = Tokens.objects.filter(token_f=request.headers['token']).first()
+            user = token.user
+            profile_user = Profile.objects.filter(user=user)[0]
             if peer in profile_user.peers.all():
                 profile_user.peers.remove(peer)
                 profile_user.save()
@@ -105,14 +110,16 @@ def save_peers(request):
         { message: "ОК" }
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         profile_ids = request.data
         for p in profile_ids:
             profile_list = Profile.objects.filter(id=p)
             if len(profile_list) == 0:
                 return {'error': True, f'message': f'Профиль с таким id не найден: {p}'}
             peer = profile_list[0]
-            profile_user = Profile.objects.filter(user=request.user)[0]
+            token = Tokens.objects.filter(token_f=request.headers['token']).first()
+            user = token.user
+            profile_user = Profile.objects.filter(user=user)[0]
             if peer in profile_user.peers.all():
                 continue
             profile_user.peers.add(peer)
@@ -170,7 +177,7 @@ def get_where_user_id_is_peer(request, id):
                  { ... }
                ]
            """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         result = []
         user = User.objects.filter(id=id).first()
         profiles = Profile.objects.filter(peers__user_id=user.id)
@@ -210,7 +217,7 @@ def get_where_user_id_is_peer_team(request, id):
 
 
 def get_user_peers(request, id):
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         result = []
         user = User.objects.filter(id=id).first()
         profile = Profile.objects.filter(user=user)[0]
@@ -232,7 +239,7 @@ def delete_user_peers(request, id):
         { message: "ОК" },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         profile_ids = request.data
         user = User.objects.filter(id=id).first()
         profile_user = Profile.objects.filter(user=user)[0]
@@ -257,7 +264,7 @@ def save_user_peers(request, id):
         { message: "ОК" }
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         profile_ids = request.data
         user = User.objects.filter(id=id).first()
         profile_user = Profile.objects.filter(user=user)[0]
@@ -280,7 +287,7 @@ def approve_user(request, id):
     """
         Проверяет, является ли пользователь утверждённым или нет (по id указанного пользователя)
     """
-    if tokenCheck(request.data['token']):
+    if tokenCheck(request.headers['token']):
         user = User.objects.filter(id=id).first()
         profile = Profile.objects.filter(user=user)[0]
         profile.approve = True
@@ -291,10 +298,11 @@ def approve_user(request, id):
 
 
 def get_user_rating(request, id):
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         result = []
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = User.objects.filter(id=id).first()
-        manager = User.objects.filter(id=request.user.id).first()
+        manager = token.user
 
         p = Profile.objects.filter(user=user.id)[0]
         rates = PeerReviews.objects.filter(rated_person_id=id)

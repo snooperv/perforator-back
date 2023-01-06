@@ -14,13 +14,13 @@ urlpatterns = [
     path('1to1/', views.OneToOne.as_view(), name='1to1'),
     path('imanager/', views.I_Manager.as_view(), name='imanager'),
     path('registration/', csrf_exempt(views.registration), name='registration'),
-    path('process_rate/', csrf_exempt(views.process_rate_form), name='process_rate'),
-    path('process_one_to_one/', views.process_one_to_one_form),
-    path('imanager/employee/', views.Employee.as_view(), name='employee'),
-    path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
+    path('process_rate/', csrf_exempt(views.process_rate_form), name='process_rate'), #Сказали, что работает
+    path('process_one_to_one/', views.process_one_to_one_form), # Я хз что это
+    path('imanager/employee/', views.Employee.as_view(), name='employee'), #не трогал
+    path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id), # Хуй знает, работает или нет, надо проверять
 
-    path('peers/demo', raw_peers_views.peers_demo),
-    path('peers/all/', raw_peers_views.get_all_peers),
+    #path('peers/demo', raw_peers_views.peers_demo),
+    path('peers/all/', raw_peers_views.get_all_peers), #Какая то хуйня - переделать!
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
     path('peers/delete/', raw_peers_views.delete_peers),
     path('peers/save/', raw_peers_views.save_peers),
@@ -36,7 +36,7 @@ urlpatterns = [
     path('self-review/save/', raw_reviews_views.edit_self_review),
     path('review/form/', raw_reviews_views.get_empty_review_form),
     path('review/save/', raw_reviews_views.save_review),
-    path('self-review/is-draft/', raw_reviews_views.get_is_draft_status), #!
+    path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
 
     path('manager', raw_hierarchy_views.get_profile_manager),
     path('team', raw_hierarchy_views.get_profile_team),

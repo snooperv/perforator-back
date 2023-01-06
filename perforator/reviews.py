@@ -43,8 +43,8 @@ def get_self_review(request):
         ] },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if tokenCheck(request.data['token']):
-        token = Tokens.objects.filter(token_f=request.data['token']).first()
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.filter(
@@ -85,8 +85,8 @@ def edit_self_review(request):
         { message: "ОК" },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if tokenCheck(request.data['token']):
-        token = Tokens.objects.filter(token_f=request.data['token']).first()
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.get(
@@ -104,7 +104,7 @@ def edit_self_review(request):
 
 
 def is_draft(request, id):
-    if tokenCheck(request.data['token']):
+    if tokenCheck(request.headers['token']):
         user = User.objects.filter(id=id).first()
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.get(
@@ -165,8 +165,8 @@ def save_review(request):
         { message: "ОК" },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if tokenCheck(request.data['token']):
-        token = Tokens.objects.filter(token_f=request.data['token']).first()
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.create(appraising_person=profile,
@@ -203,8 +203,8 @@ def get_self_review_by_id(request, id):
         ] },
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
-    if tokenCheck(request.data['token']):
-        token = Tokens.objects.filter(token_f=request.data['token']).first()
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.filter(
