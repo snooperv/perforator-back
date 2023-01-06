@@ -46,5 +46,6 @@ urlpatterns = [
 
     path('api/login', general_views.login_token),
     path('api/refresh-token', general_views.refresh_token),
-    path('api/myprofile', general_views.my_profile)
+    path('api/myprofile', general_views.my_profile),
+    path('rate_list/', general_views.get_irate_list)
 ]

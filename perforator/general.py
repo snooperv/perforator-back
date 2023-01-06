@@ -3,8 +3,9 @@ import hashlib
 import random
 from datetime import datetime, timedelta
 from django.contrib.auth.hashers import make_password, check_password
-from .models import User, Profile, Tokens
+from .models import User, Profile, Tokens, PeerReviews
 from .token import tokenCheck
+from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team, generate_review_form
 
 
 def login(request):
@@ -15,7 +16,7 @@ def login(request):
     if user_data:
         if check_password(user['password'], user_data.password):
             request_time = (datetime.now()).replace(tzinfo=utc)
-            get_token_f = get_token_f = hashlib.sha256(("token" + str(random.randint(0, 100000))).encode('utf-8')).hexdigest()
+            get_token_f = hashlib.sha256(("token" + str(random.randint(0, 100000))).encode('utf-8')).hexdigest()
             get_token_b = hashlib.sha256(user['id'].encode('utf-8')).hexdigest()
             token_time_f = (request_time + timedelta(minutes=5)).replace(tzinfo=utc)
             token_time_b = (request_time + timedelta(days=7)).replace(tzinfo=utc)
@@ -104,3 +105,46 @@ def my_profile(request):
     else:
         result['status'] = 'You are not login'
     return result
+
+
+def irate_list(request):
+    """
+        :return: словарь след. вида:
+        { profile.id: rate_form, ... }
+        или словарь с ошибкой
+    """
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
+        rated = get_where_user_id_is_peer(request, profile.user.id)
+        rated_team = get_where_user_id_is_peer_team(request, profile.user.id)
+        if (len(rated) == 0 and len(rated_team) == 0):
+            return {}
+        answer = {'rated': []}
+
+        for r in rated:
+            pid = int(r['profile_id'])
+            review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
+            if review is None:
+                p = Profile.objects.filter(id=pid).first()
+                answer['rated'].append({
+                    'id': p.user.id,
+                    'name': p.user.first_name,
+                    'phone': p.user.username,
+                    'sbis': p.sbis,
+                })
+        for r in rated_team:
+            pid = int(r['profile_id'])
+            review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
+            if review is None:
+                p = Profile.objects.filter(id=pid).first()
+                answer['rated'].append({
+                    'id': p.user.id,
+                    'name': p.user.first_name,
+                    'phone': p.user.username,
+                    'sbis': p.sbis,
+                })
+        return answer
+    else:
+        return {"error": 'Вы не авторизованы'}

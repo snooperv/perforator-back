@@ -203,9 +203,11 @@ def get_where_user_id_is_peer_team(request, id):
                  { ... }
                ]
            """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         result = []
-        profile = Profile.objects.filter(user=request.user)[0]
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
         profiles = profile.team.all()
         for p in profiles:
             obj = {'user_id': p.user.id, 'profile_id': p.id,

@@ -26,3 +26,8 @@ def login_token(request):
 @api_view(['POST'])
 def refresh_token(request):
     return Response(data=general.refresh_token(request), status=200)
+
+
+@api_view(['GET'])
+def get_irate_list(request):
+    return Response(data=general.irate_list(request), status=200)

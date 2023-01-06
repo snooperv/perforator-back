@@ -144,6 +144,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'perforator/media')
 
 CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    "token",
+]
 CORS_ALLOWED_ORIGINS = ["http://localhost:8080", 'http://127.0.0.1:8080']
 """
 REST_FRAMEWORK = {

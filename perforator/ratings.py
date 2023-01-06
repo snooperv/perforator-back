@@ -32,7 +32,7 @@ def get_review_to_profile(request, profile_from, profile_rated):
         :return: словарь с данными (ключи называются также,
         как и в моделе PeerReviews) или ошибкой
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         review = PeerReviews.objects.filter(rated_person=profile_rated) \
             .filter(peer_id=profile_from).first()
         answer = {}
@@ -59,7 +59,7 @@ def generate_review_form(request, profile_from, profile_rated):
         :return: форму из таблицы PeerReviews, новая пустая форма или
         словарь с ошибкой
     """
-    if request.user.is_authenticated:
+    if tokenCheck(request.headers['token']):
         review = get_review_to_profile(request, profile_from, profile_rated)
 
         if review['created'] == False:
