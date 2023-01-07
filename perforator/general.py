@@ -3,7 +3,7 @@ import hashlib
 import random
 from datetime import datetime, timedelta
 from django.contrib.auth.hashers import make_password, check_password
-from .models import User, Profile, Tokens, PeerReviews
+from .models import User, Profile, Tokens, PeerReviews, OneToOneReviews
 from .token import tokenCheck
 from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team, generate_review_form
 

@@ -7,6 +7,7 @@ from . import raw_peers_views
 from . import raw_reviews_views
 from . import raw_hierarchy_views
 from . import general_views
+from . import one_to_one_views
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
@@ -47,5 +48,9 @@ urlpatterns = [
     path('api/login', general_views.login_token),
     path('api/refresh-token', general_views.refresh_token),
     path('api/myprofile', general_views.my_profile),
-    path('rate_list/', general_views.get_irate_list)
+    path('rate_list', general_views.get_irate_list),
+
+    path('1to1/get_common_notes/', one_to_one_views.get_common_notes),
+    path('1to1/update_common_notes/', one_to_one_views.update_common_notes),
+    path('1to1/get_private_notes/', one_to_one_views.get_private_notes),
 ]
