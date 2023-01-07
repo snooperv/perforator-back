@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from datetime import timedelta
 import os
 from pathlib import Path
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,12 +144,13 @@ PERFORMANCE_REVIEW_ID = 1
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'perforator/media')
 
+""" CORS_ORIGIN_ALLOW_ALL = True """
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_HEADERS = [
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8080', 'http://localhost:8080']
+CORS_ALLOW_HEADERS = list(default_headers) + [
     "token",
 ]
-CORS_ALLOWED_ORIGINS = ["http://localhost:8080", 'http://127.0.0.1:8080']
 """
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
