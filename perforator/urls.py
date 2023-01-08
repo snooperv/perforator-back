@@ -19,7 +19,7 @@ urlpatterns = [
     path('process_rate/', general_views.save_process_rate), #Переписано
     path('process_one_to_one/', views.process_one_to_one_form), # Я хз что это
     path('imanager/employee/', views.Employee.as_view(), name='employee'), #не трогал
-    path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id), # Хуй знает, работает или нет, надо проверять
+    path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
 
     #path('peers/demo', raw_peers_views.peers_demo),
     path('peers/all/', raw_peers_views.get_all_peers), #Какая то хуйня - переделать!

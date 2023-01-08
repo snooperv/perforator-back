@@ -47,8 +47,8 @@ class Profile(models.Model):
 
 class PeerReviews(models.Model):
     """
-    peer_id - тот, кого оценивают
-    rated_person - тот, кто оценивает
+    peer_id - тот, кто оценивают
+    rated_person - тот, кого оценивает
     """
     class Rates(models.IntegerChoices):
         LOWER = 1

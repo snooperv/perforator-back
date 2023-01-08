@@ -329,6 +329,7 @@ def get_user_rating(request, id):
                     'practices': r.practices,
                     'experience': r.experience,
                     'adaptation': r.adaptation,
+                    'rate_date': r.rates_date
                     }
             if r.peer_id_id == manager.id:
                 rate['is_manager'] = True

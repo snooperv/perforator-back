@@ -63,8 +63,8 @@ def refresh_token(request):
     if len(tokens) == 0:
         result['status'] = 'Отсутствуют сведения об авторизации'
     else:
-        utc = pytz.UTC
         token = tokens.first()
+        utc = pytz.UTC
         request_time = (datetime.now()).replace(tzinfo=utc)
 
         if token.time_b < request_time:
@@ -153,8 +153,8 @@ def irate_list(request):
 
 def processRate(request):
     """
-        peer_id - тот, кого оценивают
-        rated_person - тот, кто оценивает
+        peer_id - тот, кто оценивают
+        rated_person - тот, кого оценивает
 
         :return: словарь след. вида:
         { profile.id: rate_form, ... }
@@ -163,14 +163,31 @@ def processRate(request):
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         data = request.data
+        utc = pytz.UTC
+        request_time = (datetime.now()).replace(tzinfo=utc)
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
-        rated_person = Profile.objects.filter(user=user)[0]
-        peer_id = Profile.objects.filter(id=data['profile'])[0]
+        rated_person = Profile.objects.filter(id=data['profile'])[0]
+        peer_id = Profile.objects.filter(user=user)[0]
         peer_review = PeerReviews(
             peer_id=peer_id,
             rated_person=rated_person,
             deadlines=data['deadlines'],
+            rates_deadlines=data['rates_deadlines'],
+            approaches=data['approaches'],
+            rates_approaches=data['rates_approaches'],
+            teamwork=data['teamwork'],
+            rates_teamwork=data['rates_teamwork'],
+            practices=data['practices'],
+            rates_practices=data['rates_practices'],
+            experience=data['experience'],
+            rates_experience=data['rates_experience'],
+            adaptation=data['adaptation'],
+            rates_adaptation=data['rates_adaptation'],
+            rates_date=request_time
         )
+        peer_review.save()
+        result['status'] = 'ok'
     else:
-        return result
+        result['status'] = 'You are not login'
+    return result
