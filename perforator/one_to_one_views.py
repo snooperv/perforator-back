@@ -16,3 +16,8 @@ def update_common_notes(request):
 @api_view(['GET'])
 def get_private_notes(request):
     return Response(data=one_to_one.getPrivateNotes(request), status=200)
+
+
+@api_view(['POST'])
+def update_private_notes(request):
+    return Response(data=one_to_one.updatePrivateNotes(request), status=200)

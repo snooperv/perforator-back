@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 
@@ -8,6 +7,7 @@ from . import raw_reviews_views
 from . import raw_hierarchy_views
 from . import general_views
 from . import one_to_one_views
+
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
@@ -53,4 +53,5 @@ urlpatterns = [
     path('1to1/get_common_notes/', one_to_one_views.get_common_notes),
     path('1to1/update_common_notes/', one_to_one_views.update_common_notes),
     path('1to1/get_private_notes/', one_to_one_views.get_private_notes),
+    path('1to1/update_private_notes/', one_to_one_views.update_private_notes),
 ]

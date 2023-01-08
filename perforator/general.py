@@ -97,6 +97,7 @@ def my_profile(request):
         profile = Profile.objects.filter(user=user)[0]
 
         result = {
+            'id': profile.id,
             'name': user.first_name,
             'phone': user.username,
             'sbis': profile.sbis,

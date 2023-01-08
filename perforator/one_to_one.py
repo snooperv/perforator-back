@@ -1,4 +1,4 @@
-from .models import User, Profile, Tokens, PeerReviews, OneToOneReviews
+from .models import User, Profile, OneToOneReviews
 from .token import tokenCheck
 
 
@@ -8,9 +8,9 @@ def getCommonNotes(request):
         data = request.data
         result['notes'] = {}
         if data['is_manager']:
-            manager = Profile.objects.filter(phone=data['manager_id']).first()
+            manager = Profile.objects.filter(id=data['manager_id']).first()
             for e_id in data['employee_ids']:
-                employee = Profile.objects.filter(phone=e_id).first()
+                employee = Profile.objects.filter(id=e_id).first()
                 review = OneToOneReviews.objects.filter(manager=manager) \
                     .filter(employee=employee).first()
                 if review:
@@ -18,8 +18,8 @@ def getCommonNotes(request):
                 else:
                     result['notes'][e_id] = ''
         else:
-            manager = Profile.objects.filter(phone=data['manager_id']).first()
-            employee = Profile.objects.filter(phone=data['employee_ids'][0]).first()
+            manager = Profile.objects.filter(id=data['manager_id']).first()
+            employee = Profile.objects.filter(id=data['employee_ids'][0]).first()
             review = OneToOneReviews.objects.filter(manager=manager) \
                 .filter(employee=employee).first()
             if review:
@@ -38,8 +38,8 @@ def updateCommonNotes(request):
     if tokenCheck(request.headers['token']):
         data = request.data
 
-        manager = Profile.objects.filter(phone=data['manager_id']).first()
-        employee = Profile.objects.filter(phone=data['employee_id']).first()
+        manager = Profile.objects.filter(id=data['manager_id']).first()
+        employee = Profile.objects.filter(id=data['employee_id']).first()
         review = OneToOneReviews.objects.filter(manager=manager) \
             .filter(employee=employee).first()
 
@@ -66,8 +66,8 @@ def getPrivateNotes(request):
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         data = request.data
-        manager = Profile.objects.filter(phone=data['manager_id']).first()
-        employee = Profile.objects.filter(phone=data['manager_id']).first()
+        manager = Profile.objects.filter(id=data['manager_id']).first()
+        employee = Profile.objects.filter(id=data['employee_id']).first()
         review = OneToOneReviews.objects.filter(manager=manager) \
             .filter(employee=employee).first()
         if data['is_manager']:
@@ -82,6 +82,47 @@ def getPrivateNotes(request):
                 result['notes'] = ''
         result['status'] = 'ok'
         return result
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def updatePrivateNotes(request):
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+
+        manager = Profile.objects.filter(id=data['manager_id']).first()
+        employee = Profile.objects.filter(id=data['employee_id']).first()
+        review = OneToOneReviews.objects.filter(manager=manager) \
+            .filter(employee=employee).first()
+
+        if review:
+            if data['is_manager']:
+                review.manager_notes = data['note']
+            else:
+                review.employee_notes = data['note']
+            review.save()
+            result['status'] = 'ok'
+        else:
+            if data['is_manager']:
+                new_note = OneToOneReviews(
+                    manager=manager,
+                    employee=employee,
+                    common_notes='',
+                    manager_notes=data['note'],
+                    employee_notes=''
+                )
+                new_note.save()
+            else:
+                OneToOneReviews(
+                    manager=manager,
+                    employee=employee,
+                    common_notes='',
+                    manager_notes='',
+                    employee_notes=data['note']
+                ).save()
+            result['status'] = 'ok'
     else:
         result['status'] = 'You are not login'
     return result

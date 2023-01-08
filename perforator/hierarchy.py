@@ -3,11 +3,11 @@ from .models import User, Profile, Tokens
 from .token import tokenCheck
 
 
-
 def __format_profile_to_data(p):
     return {
         'user_id': p.user.id,
         'profile_id': p.id,
+        'phone': p.phone,
         'username': p.user.first_name,
         'photo': p.photo.url,
         'sbis': p.sbis,
@@ -79,7 +79,7 @@ def get_team(request):
             result.append(__format_profile_to_data(t))
         return result
     else:
-        return {'error': True, 'message': 'Вы не авторизовались'}
+        return {'message': 'Вы не авторизовались'}
 
 
 def get_full_tree():
