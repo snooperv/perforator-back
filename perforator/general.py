@@ -149,3 +149,28 @@ def irate_list(request):
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
+
+
+def processRate(request):
+    """
+        peer_id - тот, кого оценивают
+        rated_person - тот, кто оценивает
+
+        :return: словарь след. вида:
+        { profile.id: rate_form, ... }
+        или словарь с ошибкой
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        rated_person = Profile.objects.filter(user=user)[0]
+        peer_id = Profile.objects.filter(id=data['profile'])[0]
+        peer_review = PeerReviews(
+            peer_id=peer_id,
+            rated_person=rated_person,
+            deadlines=data['deadlines'],
+        )
+    else:
+        return result

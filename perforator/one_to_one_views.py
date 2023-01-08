@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from . import one_to_one
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def get_common_notes(request):
     return Response(data=one_to_one.getCommonNotes(request), status=200)
 
@@ -13,7 +13,7 @@ def update_common_notes(request):
     return Response(data=one_to_one.updateCommonNotes(request), status=200)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def get_private_notes(request):
     return Response(data=one_to_one.getPrivateNotes(request), status=200)
 

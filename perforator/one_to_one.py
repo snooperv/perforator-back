@@ -6,26 +6,14 @@ def getCommonNotes(request):
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         data = request.data
-        result['notes'] = {}
-        if data['is_manager']:
-            manager = Profile.objects.filter(id=data['manager_id']).first()
-            for e_id in data['employee_ids']:
-                employee = Profile.objects.filter(id=e_id).first()
-                review = OneToOneReviews.objects.filter(manager=manager) \
-                    .filter(employee=employee).first()
-                if review:
-                    result['notes'][e_id] = review.common_notes
-                else:
-                    result['notes'][e_id] = ''
+        manager = Profile.objects.filter(id=data['manager_id']).first()
+        employee = Profile.objects.filter(id=data['employee_id']).first()
+        review = OneToOneReviews.objects.filter(manager=manager) \
+            .filter(employee=employee).first()
+        if review:
+            result['notes'] = review.common_notes
         else:
-            manager = Profile.objects.filter(id=data['manager_id']).first()
-            employee = Profile.objects.filter(id=data['employee_ids'][0]).first()
-            review = OneToOneReviews.objects.filter(manager=manager) \
-                .filter(employee=employee).first()
-            if review:
-                result['notes'][data['employee_ids'][0]] = review.common_notes
-            else:
-                result['notes'][data['employee_ids'][0]] = ''
+            result['notes'] = ''
         result['status'] = 'ok'
         return result
     else:

@@ -15,7 +15,8 @@ urlpatterns = [
     path('1to1/', views.OneToOne.as_view(), name='1to1'),
     path('imanager/', views.I_Manager.as_view(), name='imanager'),
     path('registration/', csrf_exempt(views.registration), name='registration'),
-    path('process_rate/', csrf_exempt(views.process_rate_form), name='process_rate'), #Сказали, что работает
+    #path('process_rate/', csrf_exempt(views.process_rate_form), name='process_rate'), #Сказали, что работает
+    path('process_rate/', general_views.save_process_rate), #Переписано
     path('process_one_to_one/', views.process_one_to_one_form), # Я хз что это
     path('imanager/employee/', views.Employee.as_view(), name='employee'), #не трогал
     path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id), # Хуй знает, работает или нет, надо проверять

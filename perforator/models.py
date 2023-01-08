@@ -46,6 +46,10 @@ class Profile(models.Model):
 
 
 class PeerReviews(models.Model):
+    """
+    peer_id - тот, кого оценивают
+    rated_person - тот, кто оценивает
+    """
     class Rates(models.IntegerChoices):
         LOWER = 1
         LOW = 2
@@ -66,6 +70,7 @@ class PeerReviews(models.Model):
     rates_practices = models.IntegerField(choices=Rates.choices)
     rates_experience = models.IntegerField(choices=Rates.choices)
     rates_adaptation = models.IntegerField(choices=Rates.choices)
+    rates_date = models.DateTimeField(null=True, default=None)
 
 
 class OneToOneReviews(models.Model):

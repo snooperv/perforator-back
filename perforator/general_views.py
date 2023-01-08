@@ -29,3 +29,8 @@ def refresh_token(request):
 @api_view(['GET'])
 def get_irate_list(request):
     return Response(data=general.irate_list(request), status=200)
+
+
+@api_view(['POST'])
+def save_process_rate(request):
+    return Response(data=general.processRate(request), status=200)
