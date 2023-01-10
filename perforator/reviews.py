@@ -204,25 +204,11 @@ def get_self_review_by_id(request, id):
         При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
     """
     if tokenCheck(request.headers['token']):
-        token = Tokens.objects.filter(token_f=request.headers['token']).first()
-        user = token.user
-        profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.filter(
-            appraising_person=profile.id,
-            evaluated_person=profile.id).first()
+            appraising_person=id,
+            evaluated_person=id).first()
         if not review:
-            performance_review = PerformanceReview.objects.get(id=1)
-            review = Review.objects.create(appraising_person=profile,
-                                           evaluated_person=profile,
-                                           performance_review=performance_review,
-                                           is_draft=True)
-            for grade_category in performance_review.self_review_categories.all():
-                Grade.objects.create(
-                    review=review,
-                    grade_category=grade_category,
-                    grade=None,
-                    comment=''
-                )
+            return {'status': 'Self-review не найдено'}
     else:
-        return {'message': 'Вы не авторизовались'}
+        return {'status': 'Вы не авторизовались'}
     return __format_review_data(review)
