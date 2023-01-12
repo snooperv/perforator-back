@@ -40,6 +40,11 @@ def get_empty_review_form(request):
 
 
 @api_view(['POST'])
+def get_review(request):
+    return Response(data=reviews.get_review(request), status=200)
+
+
+@api_view(['POST'])
 def save_review(request):
     return Response(data=reviews.save_review(request), status=200)
 

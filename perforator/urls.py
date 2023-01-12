@@ -38,6 +38,7 @@ urlpatterns = [
     path('self-review/save/', raw_reviews_views.edit_self_review),
     path('review/form/', raw_reviews_views.get_empty_review_form),
     path('review/save/', raw_reviews_views.save_review),
+    path('review/get/', raw_reviews_views.get_review),
     path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
 
     path('manager', raw_hierarchy_views.get_profile_manager),

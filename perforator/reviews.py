@@ -1,6 +1,7 @@
 from django.conf import settings
 from .token import tokenCheck
-from .models import Profile, User, Review, GradeCategory, Grade, PerformanceReview, Tokens
+from .models import Profile, User, Review, GradeCategory, Grade, PerformanceReview, Tokens, PeerReviews
+from .ratings import peer_review_to_dict
 
 
 """
@@ -212,3 +213,28 @@ def get_self_review_by_id(request, id):
     else:
         return {'status': 'Вы не авторизовались'}
     return __format_review_data(review)
+
+
+def get_review(request):
+    """
+        Возвращает ревью
+        :return: Один из следующих словраей:
+        { 'id': review.id, 'is_draft': review.is_draft,
+        'grades':   [
+            { 'id': grade.id, 'grade_category_id': grade.grade_category.id,
+            'grade_category_name': grade.grade_category.name, 'grade_category_description': grade.grade_category.description,
+            'comment': grade.comment (только коммент. У сэлф-ревью оценка всегда NULL),
+            } {...}, {...}
+        ] },
+        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+    """
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        review = PeerReviews.objects.filter(
+            peer_id=data['appraising_person'],
+            rated_person=data['evaluated_person']).first()
+        if not review:
+            return {'status': 'Self-review не найдено'}
+    else:
+        return {'status': 'Вы не авторизовались'}
+    return peer_review_to_dict(review)
