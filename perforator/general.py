@@ -101,6 +101,7 @@ def my_profile(request):
             'name': user.first_name,
             'phone': user.username,
             'sbis': profile.sbis,
+            'photo': profile.photo.url,
             'status': 'ok'
         }
     else:
@@ -134,6 +135,7 @@ def irate_list(request):
                     'name': p.user.first_name,
                     'phone': p.user.username,
                     'sbis': p.sbis,
+                    'photo': p.photo.url
                 })
         for r in rated_team:
             pid = int(r['profile_id'])
@@ -145,6 +147,7 @@ def irate_list(request):
                     'name': p.user.first_name,
                     'phone': p.user.username,
                     'sbis': p.sbis,
+                    'photo': p.photo.url
                 })
         return answer
     else:
