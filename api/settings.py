@@ -27,7 +27,7 @@ SECRET_KEY = '1vovwwud&n+%raioz9(#)fmy7s#6z4#r9hf2x*ox6x%iq)v-2$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -144,10 +144,9 @@ PERFORMANCE_REVIEW_ID = 1
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'perforator/media')
 
-""" CORS_ORIGIN_ALLOW_ALL = True """
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8080', 'http://localhost:8080']
+""" CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8080', 'http://localhost:8080'] """
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "token",
 ]

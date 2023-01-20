@@ -15,7 +15,7 @@ def login_token(request):
         token_b = response_data['token_b']
         response_data['token_b'] = ''
         response = Response(data=response_data, status=200)
-        response.set_cookie(key='token_b', value=token_b, max_age=604800, httponly=True)
+        response.set_cookie(key='token_b', value=token_b, max_age=604800, secure=True, httponly=True, samesite="None")
     else:
         response = Response(data=response_data, status=200)
     return response
