@@ -42,8 +42,8 @@ urlpatterns = [
     path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
 
     path('manager', raw_hierarchy_views.get_profile_manager),
-    path('manager/become', raw_hierarchy_views.become_manager),
-    path('manager/status', raw_hierarchy_views.become_manager),
+    path('manager/become', raw_hierarchy_views.post_become_manager),
+    path('manager/status', raw_hierarchy_views.manager_status),
     path('all_users', raw_hierarchy_views.all_users),
     path('team', raw_hierarchy_views.get_profile_team),
     #path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),

@@ -11,18 +11,18 @@ def get_profile_manager(request):
 
 
 @api_view(['POST'])
-def become_manager(request):
-    return Response(data=get_manager(request), status=200)
+def post_become_manager(request):
+    return Response(data=become_manager(request), status=200)
 
 
 @api_view(['POST'])
 def manager_status(request):
-    return Response(data=get_manager(request), status=200)
+    return Response(data=get_manager_status(request), status=200)
 
 
 @api_view(['POST'])
 def team_update(request):
-    return Response(data=get_manager(request), status=200)
+    return Response(data=update_team(request), status=200)
 
 
 @api_view(['POST'])
