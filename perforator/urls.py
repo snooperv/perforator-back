@@ -42,8 +42,11 @@ urlpatterns = [
     path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
 
     path('manager', raw_hierarchy_views.get_profile_manager),
+    path('manager/become', raw_hierarchy_views.become_manager),
+    path('manager/status', raw_hierarchy_views.become_manager),
+    path('all_users', raw_hierarchy_views.all_users),
     path('team', raw_hierarchy_views.get_profile_team),
-    path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),
+    #path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),
 
     path('peers/approve', raw_peers_views.approve_user),
 
@@ -56,4 +59,7 @@ urlpatterns = [
     path('1to1/update_common_notes/', one_to_one_views.update_common_notes),
     path('1to1/get_private_notes/', one_to_one_views.get_private_notes),
     path('1to1/update_private_notes/', one_to_one_views.update_private_notes),
+
+    path('team/update', raw_hierarchy_views.team_update),
+    path('team/delete_user', raw_hierarchy_views.team_delete_user),
 ]

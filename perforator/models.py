@@ -23,11 +23,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
-    manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
-    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True, null=True,
+    #manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
+    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True,
                                    related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
     approve = models.BooleanField(default=False)
+    is_manager = models.BooleanField(default=False)
+    team_id = models.IntegerField(default=0, null=True)
 
     def save(self, *args, **kwargs):
         if not self.id and not self.photo:
@@ -154,4 +156,8 @@ class Tokens(models.Model):
     token_b = models.CharField(max_length=256)
     time_f = models.DateTimeField(null=True, default=None)
     time_b = models.DateTimeField(null=True, default=None)
+
+
+class Team(models.Model):
+    manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
 

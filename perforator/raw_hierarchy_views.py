@@ -10,6 +10,26 @@ def get_profile_manager(request):
     return Response(data=get_manager(request), status=200)
 
 
+@api_view(['POST'])
+def become_manager(request):
+    return Response(data=get_manager(request), status=200)
+
+
+@api_view(['POST'])
+def manager_status(request):
+    return Response(data=get_manager(request), status=200)
+
+
+@api_view(['POST'])
+def team_update(request):
+    return Response(data=get_manager(request), status=200)
+
+
+@api_view(['POST'])
+def team_delete_user(request):
+    return Response(data=delete_user_from_team(request), status=200)
+
+
 @api_view(['GET'])
 def get_profile_team(request):
     return Response(data=get_team(request), status=200)
@@ -18,3 +38,8 @@ def get_profile_team(request):
 @api_view(['GET'])
 def get_full_hierarchy_tree(request):
     return Response(data=get_full_tree(), status=200)
+
+
+@api_view(['GET'])
+def all_users(request):
+    return Response(data=get_all_users, status=200)
