@@ -157,10 +157,12 @@ def get_team(request):
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
-        profile = Profile.objects.filter(user=user)[0]
-        team = Team.objects.filter(id=profile.team_id)
+        profile = Profile.objects.filter(user=user).first()
+        team = Team.objects.filter(manager=profile).first()
+
+        teams = Profile.objects.filter(team_id=team.id)
         result = []
-        for t in team:
+        for t in teams:
             result.append(__format_profile_to_data(t))
         return result
     else:
@@ -206,6 +208,7 @@ def get_all_users(request):
         for u in users:
             result['users'].append(__format_profile_to_data(u))
         result['status'] = 'ok'
+        print(result['users'])
     else:
         result['status'] = 'You are not login'
-    return result
+    return {'s': "ok"}

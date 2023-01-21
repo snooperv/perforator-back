@@ -102,7 +102,8 @@ def my_profile(request):
             'phone': user.username,
             'sbis': profile.sbis,
             'photo': profile.photo.url,
-            'status': 'ok'
+            'status': 'ok',
+            'team_id': profile.team_id
         }
     else:
         result['status'] = 'You are not login'
