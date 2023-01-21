@@ -18,7 +18,7 @@ def login(request):
             request_time = (datetime.now()).replace(tzinfo=utc)
             get_token_f = hashlib.sha256(("token" + str(random.randint(0, 100000))).encode('utf-8')).hexdigest()
             get_token_b = hashlib.sha256(user['id'].encode('utf-8')).hexdigest()
-            token_time_f = (request_time + timedelta(minutes=5)).replace(tzinfo=utc)
+            token_time_f = (request_time + timedelta(minutes=60)).replace(tzinfo=utc)
             token_time_b = (request_time + timedelta(days=7)).replace(tzinfo=utc)
 
             tokens = Tokens.objects.filter(user=user_data)
