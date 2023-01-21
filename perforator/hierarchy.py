@@ -59,7 +59,7 @@ def get_manager_status(request):
         profile = Profile.objects.filter(id=profile_id).first()
 
         if profile:
-            result['is_manager'] = profile.is_manager
+            result['is_manager'] = str(profile.is_manager)
             result['status'] = 'ok'
         else:
             result['status'] = 'Профиль не найден'
