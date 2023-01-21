@@ -62,4 +62,6 @@ urlpatterns = [
 
     path('team/update', raw_hierarchy_views.team_update),
     path('team/delete_user', raw_hierarchy_views.team_delete_user),
+
+    path('performance_review/begin', general_views.begin_performance_review),
 ]

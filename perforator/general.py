@@ -2,10 +2,10 @@ import pytz
 import hashlib
 import random
 from datetime import datetime, timedelta
-from django.contrib.auth.hashers import make_password, check_password
-from .models import User, Profile, Tokens, PeerReviews, OneToOneReviews
+from django.contrib.auth.hashers import check_password
+from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team
 from .token import tokenCheck
-from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team, generate_review_form
+from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team
 
 
 def login(request):
@@ -192,6 +192,34 @@ def processRate(request):
         )
         peer_review.save()
         result['status'] = 'ok'
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def begin_perforator(request):
+    """
+     :param request:
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user).first()
+        team = Team.objects.filter(manager=profile).first()
+        if profile.is_manager:
+            perforator = PerformanceProcess(
+                manager=profile,
+                team=team,
+                is_active=True,
+                status=0,
+                deadline=(datetime.now()).replace(tzinfo=pytz.UTC)
+            )
+            perforator.save()
+            result['status'] = 'ok'
+        else:
+            result['status'] = 'Вы не менеджер'
     else:
         result['status'] = 'You are not login'
     return result

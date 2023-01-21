@@ -160,4 +160,17 @@ class Tokens(models.Model):
 
 class Team(models.Model):
     manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    test = models.BooleanField(default=False)
 
+
+class PerformanceProcess(models.Model):
+    """
+    status: 0 - Performance review окончено; 1 - этап self-review
+            2 - этап утверждения пиров; 3 - этап оценивания друг друга
+            4 - этап one to one
+    """
+    manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=False)
+    status = models.IntegerField(default=0)
+    deadline = models.DateTimeField(auto_now=False)

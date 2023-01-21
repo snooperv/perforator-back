@@ -34,3 +34,8 @@ def get_irate_list(request):
 @api_view(['POST'])
 def save_process_rate(request):
     return Response(data=general.processRate(request), status=200)
+
+
+@api_view(['POST'])
+def begin_performance_review(request):
+    return Response(data=general.begin_perforator(request), status=200)
