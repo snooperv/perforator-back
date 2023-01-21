@@ -68,8 +68,13 @@ def get_all_current_user_peers(request):
         profile = Profile.objects.filter(user=user)[0]
         peers = profile.peers.all()
         for p in peers:
-            obj = {'user_id': p.user.id, 'profile_id': p.id,
-                   'username': p.user.first_name, 'photo': p.photo.url, 'sbis': p.sbis, 'approve': p.approve}
+            obj = {'user_id': p.user.id,
+                   'profile_id': p.id,
+                   'username': p.user.first_name,
+                   'photo': p.photo.url,
+                   'sbis': p.sbis,
+                   'approve': p.approve,
+                   'photo': p.photo.url}
             result.append(obj)
         return result
     else:
@@ -91,7 +96,8 @@ def delete_peers(request):
             if len(profile_list) == 0:
                 return {'error': True, f'message': f'Профиль с таким id не найден: {p}'}
             peer = profile_list[0]
-            token = Tokens.objects.filter(token_f=request.headers['token']).first()
+            token = Tokens.objects.filter(
+                token_f=request.headers['token']).first()
             user = token.user
             profile_user = Profile.objects.filter(user=user)[0]
             if peer in profile_user.peers.all():
@@ -117,7 +123,8 @@ def save_peers(request):
             if len(profile_list) == 0:
                 return {'error': True, f'message': f'Профиль с таким id не найден: {p}'}
             peer = profile_list[0]
-            token = Tokens.objects.filter(token_f=request.headers['token']).first()
+            token = Tokens.objects.filter(
+                token_f=request.headers['token']).first()
             user = token.user
             profile_user = Profile.objects.filter(user=user)[0]
             if peer in profile_user.peers.all():

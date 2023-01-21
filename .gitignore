@@ -4,3 +4,5 @@ __pycache__/
 db.sqlite3
 perforator/media/photos
 venv/
+cert.pem
+key.pem
