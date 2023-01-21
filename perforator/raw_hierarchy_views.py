@@ -42,4 +42,4 @@ def get_full_hierarchy_tree(request):
 
 @api_view(['GET'])
 def all_users(request):
-    return Response(data=get_all_users, status=200)
+    return Response(data=get_all_users(request), status=200)

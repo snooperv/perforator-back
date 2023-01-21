@@ -158,9 +158,18 @@ def get_team(request):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user).first()
-        team = Team.objects.filter(manager=profile).first()
 
-        teams = Profile.objects.filter(team_id=team.id)
+        if profile.is_manager:
+            team = Team.objects.filter(manager=profile).first()
+            team_id = team.id
+        else:
+            team_id = profile.team_id
+
+        teams = Profile.objects.filter(team_id=team_id)
+
+        if not profile.is_manager:
+            teams = teams[1:]
+
         result = []
         for t in teams:
             result.append(__format_profile_to_data(t))
@@ -208,7 +217,6 @@ def get_all_users(request):
         for u in users:
             result['users'].append(__format_profile_to_data(u))
         result['status'] = 'ok'
-        print(result['users'])
     else:
         result['status'] = 'You are not login'
-    return {'s': "ok"}
+    return result
