@@ -168,7 +168,7 @@ def get_team(request):
         teams = Profile.objects.filter(team_id=team_id)
 
         if not profile.is_manager:
-            teams = teams[1:]
+            teams = [e for e in teams if e.id != profile.id]
 
         result = []
         for t in teams:
