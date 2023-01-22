@@ -7,6 +7,7 @@ from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team
 from .token import tokenCheck
 from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team
 
+minutes_delta = 60
 
 def login(request):
     utc = pytz.UTC
@@ -18,7 +19,7 @@ def login(request):
             request_time = (datetime.now()).replace(tzinfo=utc)
             get_token_f = hashlib.sha256(("token" + str(random.randint(0, 100000))).encode('utf-8')).hexdigest()
             get_token_b = hashlib.sha256(user['id'].encode('utf-8')).hexdigest()
-            token_time_f = (request_time + timedelta(minutes=60)).replace(tzinfo=utc)
+            token_time_f = (request_time + timedelta(minutes=minutes_delta)).replace(tzinfo=utc)
             token_time_b = (request_time + timedelta(days=7)).replace(tzinfo=utc)
 
             tokens = Tokens.objects.filter(user=user_data)
@@ -32,7 +33,7 @@ def login(request):
                                    )
                 new_token.save()
                 result['token_f'] = get_token_f
-                result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=60)
+                result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=minutes_delta)
                 result['token_b'] = get_token_b
                 result['status'] = 'ok'
                 return result
@@ -45,7 +46,7 @@ def login(request):
                 token.save()
 
                 result['token_f'] = get_token_f
-                result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=60)
+                result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=minutes_delta)
                 result['token_b'] = get_token_b
                 result['status'] = 'ok'
         else:
@@ -70,7 +71,7 @@ def refresh_token(request):
         if token.time_b < request_time:
             result['status'] = 'Истек период авторизации. Войдите повторно.'
         else:
-            token_time_f = (request_time + timedelta(minutes=5)).replace(tzinfo=utc)
+            token_time_f = (request_time + timedelta(minutes=minutes_delta)).replace(tzinfo=utc)
             get_token_f = hashlib.sha256(("token" + str(random.randint(0, 100000))).encode('utf-8')).hexdigest()
 
             token.time_f = token_time_f
@@ -78,7 +79,7 @@ def refresh_token(request):
             token.save()
 
             result['token_f'] = get_token_f
-            result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=5)
+            result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=minutes_delta)
             result['status'] = 'ok'
     return result
 
