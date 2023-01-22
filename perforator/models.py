@@ -68,7 +68,6 @@ class Profile(models.Model):
 
 class Team(models.Model):
     manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    test = models.BooleanField(default=False)
 
 
 class PrList(models.Model):

@@ -71,5 +71,8 @@ urlpatterns = [
     path('performance_review/next_stage', general_views.begin_next_stage),
     path('performance_review/status', general_views.get_pr_status),
     path('performance_review/list', general_views.get_pr_list),
-
+    path('performance_review/get/self_review', general_views.pr_get_self_review),
+    path('performance_review/get/review', general_views.pr_get_review),
+    path('performance_review/get/common_notes', general_views.pr_get_common_notes),
+    path('performance_review/get/private_notes', general_views.pr_get_private_notes),
 ]

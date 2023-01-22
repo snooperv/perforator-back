@@ -1,4 +1,4 @@
-from .models import User, Profile, OneToOneReviews
+from .models import PrList, Profile, OneToOneReviews
 from .token import tokenCheck
 
 
@@ -8,8 +8,9 @@ def getCommonNotes(request):
         data = request.data
         manager = Profile.objects.filter(id=data['manager_id']).first()
         employee = Profile.objects.filter(id=data['employee_id']).first()
+        pr_id = PrList.objects.filter(id=manager.pr)[0].pr.id
         review = OneToOneReviews.objects.filter(manager=manager) \
-            .filter(employee=employee).first()
+            .filter(employee=employee, pr_id=pr_id).first()
         if review:
             result['notes'] = review.common_notes
         else:
@@ -30,7 +31,7 @@ def updateCommonNotes(request):
         employee = Profile.objects.filter(id=data['employee_id']).first()
         review = OneToOneReviews.objects.filter(manager=manager) \
             .filter(employee=employee).first()
-
+        pr_id = PrList.objects.filter(id=manager.pr)[0]
         if review:
             review.common_notes = data['note']
             review.save()
@@ -41,7 +42,8 @@ def updateCommonNotes(request):
                 employee=employee,
                 common_notes=data['note'],
                 manager_notes='',
-                employee_notes=''
+                employee_notes='',
+                pr_id=pr_id.pr.id
             )
             new_common_note.save()
             result['status'] = 'ok'
@@ -56,8 +58,9 @@ def getPrivateNotes(request):
         data = request.data
         manager = Profile.objects.filter(id=data['manager_id']).first()
         employee = Profile.objects.filter(id=data['employee_id']).first()
+        pr_id = PrList.objects.filter(id=manager.pr)[0].pr.id
         review = OneToOneReviews.objects.filter(manager=manager) \
-            .filter(employee=employee).first()
+            .filter(employee=employee, pr_id=pr_id).first()
         if data['is_manager']:
             if review:
                 result['notes'] = review.manager_notes
@@ -84,7 +87,7 @@ def updatePrivateNotes(request):
         employee = Profile.objects.filter(id=data['employee_id']).first()
         review = OneToOneReviews.objects.filter(manager=manager) \
             .filter(employee=employee).first()
-
+        pr_id = PrList.objects.filter(id=manager.pr)[0]
         if review:
             if data['is_manager']:
                 review.manager_notes = data['note']
@@ -99,7 +102,8 @@ def updatePrivateNotes(request):
                     employee=employee,
                     common_notes='',
                     manager_notes=data['note'],
-                    employee_notes=''
+                    employee_notes='',
+                    pr_id=pr_id.pr.id
                 )
                 new_note.save()
             else:
@@ -108,7 +112,8 @@ def updatePrivateNotes(request):
                     employee=employee,
                     common_notes='',
                     manager_notes='',
-                    employee_notes=data['note']
+                    employee_notes=data['note'],
+                    pr_id=pr_id.pr.id
                 ).save()
             result['status'] = 'ok'
     else:

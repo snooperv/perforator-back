@@ -3,11 +3,12 @@ import hashlib
 import random
 from datetime import datetime, timedelta
 from django.contrib.auth.hashers import check_password
-from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team, PrList
+from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team, PrList, Review, Grade, OneToOneReviews
 from .token import tokenCheck
 from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team
 
 minutes_delta = 60
+
 
 def login(request):
     utc = pytz.UTC
@@ -174,6 +175,7 @@ def processRate(request):
         user = token.user
         rated_person = Profile.objects.filter(id=data['profile'])[0]
         peer_id = Profile.objects.filter(user=user)[0]
+        pr_id = PrList.objects.filter(id=peer_id.pr)[0].pr.id
         peer_review = PeerReviews(
             peer_id=peer_id,
             rated_person=rated_person,
@@ -190,7 +192,7 @@ def processRate(request):
             adaptation=data['adaptation'],
             rates_adaptation=data['rates_adaptation'],
             rates_date=request_time,
-            pr_id=peer_id.pr
+            pr_id=pr_id
         )
         peer_review.save()
         result['status'] = 'ok'
@@ -241,7 +243,7 @@ def begin_perforator(request):
                 )
                 u_pr_record.save()
 
-                u_pr_id = PrList.objects.filter(profile=u, is_active=True).first().id
+                u_pr_id = PrList.objects.filter(profile=u, is_active=True)[0].id
                 u.pr = u_pr_id
                 u.save()
 
@@ -356,13 +358,132 @@ def pr_list(request):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user).first()
-        if profile.is_manager:
-            team = Team.objects.filter(manager=profile).first()
-        else:
-            team = Team.objects.filter(id=profile.team_id).first()
-        prl = PrList.objects.filter(team=team)
-
+        prl = PrList.objects.filter(profile=profile)
+        result['rp'] = []
+        for pr in prl:
+            result['rp'].append({"pr_id": pr.id, "closing_date": pr.date})
+        result['status'] = "ok"
     else:
         result['status'] = 'You are not login'
     return result
 
+
+def pr_self_review(request):
+    """
+     :param request:
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
+
+        review = Review.objects.filter(
+            appraising_person=profile.id,
+            evaluated_person=profile.id,
+            pr_id=request.data['pr_id']).first()
+
+        result = {
+            'id': review.id,
+            'is_draft': review.is_draft,
+            'grades': []
+        }
+        grades = Grade.objects.filter(review=review.id)
+        for grade in grades:
+            result['grades'].append({
+                'id': grade.id,
+                'grade_category_id': grade.grade_category.id,
+                'grade_category_name': grade.grade_category.name,
+                'grade_category_description': grade.grade_category.description,
+                'grade_category_preview_description': grade.grade_category.preview_description,
+                'comment': grade.comment,
+            })
+        result['status'] = "ok"
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def pr_review(request):
+    """
+     :param request:
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        pr_id = PrList.objects.filter(id=request.data['pr_id'])[0].pr.id
+        review = PeerReviews.objects.filter(
+            peer_id=data['appraising_person'],
+            rated_person=data['evaluated_person'],
+            pr_id=pr_id).first()
+        if not review:
+            return {'status': 'Self-review не найдено'}
+
+        result = {
+            'status': "ok",
+            'peer_id': review.peer_id,
+            'rated_person': review.rated_person,
+            'deadlines': review.deadlines,
+            'approaches': review.approaches,
+            'teamwork': review.teamwork,
+            'practices': review.practices,
+            'experience': review.experience,
+            'adaptation': review.adaptation,
+            'rates_deadlines': review.rates_deadlines,
+            'rates_approaches': review.rates_approaches,
+            'rates_teamwork': review.rates_teamwork,
+            'rates_practices': review.rates_practices,
+            'rates_experience': review.rates_experience,
+            'rates_adaptation': review.rates_adaptation
+        }
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def pr_common_notes(request):
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        manager = Profile.objects.filter(id=data['manager_id']).first()
+        employee = Profile.objects.filter(id=data['employee_id']).first()
+        pr_id = PrList.objects.filter(id=data['pr_id'])[0].pr.id
+        review = OneToOneReviews.objects.filter(manager=manager) \
+            .filter(employee=employee, pr_id=pr_id).first()
+        if review:
+            result['notes'] = review.common_notes
+        else:
+            result['notes'] = ''
+        result['status'] = 'ok'
+        return result
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def pr_private_notes(request):
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        manager = Profile.objects.filter(id=data['manager_id']).first()
+        employee = Profile.objects.filter(id=data['employee_id']).first()
+        pr_id = PrList.objects.filter(id=data['pr_id'])[0].pr.id
+        review = OneToOneReviews.objects.filter(manager=manager) \
+            .filter(employee=employee, pr_id=pr_id).first()
+        if data['is_manager']:
+            if review:
+                result['notes'] = review.manager_notes
+            else:
+                result['notes'] = ''
+        else:
+            if review:
+                result['notes'] = review.employee_notes
+            else:
+                result['notes'] = ''
+        result['status'] = 'ok'
+        return result
+    else:
+        result['status'] = 'You are not login'
+    return result

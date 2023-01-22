@@ -1,6 +1,6 @@
 from django.conf import settings
 from .token import tokenCheck
-from .models import Profile, User, Review, Team, Grade, PerformanceReview, Tokens, PeerReviews
+from .models import Profile, User, Review, PrList, Grade, PerformanceReview, Tokens, PeerReviews
 from .ratings import peer_review_to_dict
 
 
@@ -236,10 +236,11 @@ def get_review(request):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
+        pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
         review = PeerReviews.objects.filter(
             peer_id=data['appraising_person'],
             rated_person=data['evaluated_person'],
-            pr_id=profile.pr).first()
+            pr_id=pr_id).first()
         if not review:
             return {'status': 'Self-review не найдено'}
     else:
