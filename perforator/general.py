@@ -220,6 +220,7 @@ def begin_perforator(request):
 
             pr_record = PrList(
                 pr=perforator,
+                team=team,
                 is_active=True,
                 date=time
             )

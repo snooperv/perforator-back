@@ -36,14 +36,6 @@ class PerformanceProcess(models.Model):
     #self_review = models.ForeignKey(SelfReview, on_delete=models.CASCADE, null=True)
 
 
-class PrList(models.Model):
-    """
-    """
-    pr = models.ForeignKey(PerformanceProcess, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=False)
-    date = models.DateTimeField(auto_now=False)
-
-
 # Модель Профиль (связан с User джанги 1-к-1)
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -72,6 +64,20 @@ class Profile(models.Model):
         size = (int(width * factor), int(height * factor))
         image = image.resize(size, Image.ANTIALIAS)
         image.save(self.photo.path)
+
+
+class Team(models.Model):
+    manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    test = models.BooleanField(default=False)
+
+
+class PrList(models.Model):
+    """
+    """
+    pr = models.ForeignKey(PerformanceProcess, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now=False)
 
 
 class PeerReviews(models.Model):
@@ -182,8 +188,4 @@ class Tokens(models.Model):
     time_f = models.DateTimeField(null=True, default=None)
     time_b = models.DateTimeField(null=True, default=None)
 
-
-class Team(models.Model):
-    manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    test = models.BooleanField(default=False)
 
