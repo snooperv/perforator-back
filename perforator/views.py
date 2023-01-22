@@ -166,9 +166,9 @@ def registration(request):
             photo = form.cleaned_data['photo']
             user.profile.photo = photo
             user.save()
-            auto_login = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
+            """ auto_login = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
             login(request, auto_login)
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('index')) """
         else:
             # print(form)
             pass
