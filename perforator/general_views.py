@@ -37,5 +37,20 @@ def save_process_rate(request):
 
 
 @api_view(['POST'])
+def begin_next_stage(request):
+    return Response(data=general.next_stage(request), status=200)
+
+
+@api_view(['GET'])
+def get_pr_status(request):
+    return Response(data=general.pr_status(request), status=200)
+
+
+@api_view(['POST'])
 def begin_performance_review(request):
     return Response(data=general.begin_perforator(request), status=200)
+
+
+@api_view(['POST'])
+def close_performance_review(request):
+    return Response(data=general.close_perforator(request), status=200)

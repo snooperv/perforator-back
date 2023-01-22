@@ -36,10 +36,13 @@ urlpatterns = [
     path('self-review/id', raw_reviews_views.get_self_review_by_id),  #!
     path('self-review/main', raw_reviews_views.self_review), #!
     path('self-review/save/', raw_reviews_views.edit_self_review),
+    path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
+
+
     path('review/form/', raw_reviews_views.get_empty_review_form),
     path('review/save/', raw_reviews_views.save_review),
     path('review/get/', raw_reviews_views.get_review),
-    path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
+
 
     path('manager', raw_hierarchy_views.get_profile_manager),
     path('manager/become', raw_hierarchy_views.post_become_manager),
@@ -64,4 +67,7 @@ urlpatterns = [
     path('team/delete_user', raw_hierarchy_views.team_delete_user),
 
     path('performance_review/begin', general_views.begin_performance_review),
+    path('performance_review/close', general_views.close_performance_review),
+    path('performance_review/next_stage', general_views.begin_next_stage),
+    path('performance_review/status', general_views.get_pr_status),
 ]

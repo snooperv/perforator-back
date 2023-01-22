@@ -3,7 +3,7 @@ import hashlib
 import random
 from datetime import datetime, timedelta
 from django.contrib.auth.hashers import check_password
-from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team
+from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team, PrList
 from .token import tokenCheck
 from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team
 
@@ -188,7 +188,8 @@ def processRate(request):
             rates_experience=data['rates_experience'],
             adaptation=data['adaptation'],
             rates_adaptation=data['rates_adaptation'],
-            rates_date=request_time
+            rates_date=request_time,
+            pr_id=peer_id.pr
         )
         peer_review.save()
         result['status'] = 'ok'
@@ -204,19 +205,127 @@ def begin_perforator(request):
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
+        time = (datetime.now()).replace(tzinfo=pytz.UTC)
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user).first()
-        team = Team.objects.filter(manager=profile).first()
         if profile.is_manager:
+            team = Team.objects.filter(manager=profile).first()
             perforator = PerformanceProcess(
-                manager=profile,
-                team=team,
                 is_active=True,
                 status=0,
-                deadline=(datetime.now()).replace(tzinfo=pytz.UTC)
+                deadline=time
             )
             perforator.save()
+
+            pr_record = PrList(
+                pr=perforator,
+                is_active=True,
+                date=time
+            )
+            pr_record.save()
+            pr_id = PrList.objects.filter(pr=perforator).first().id
+
+            profile.pr = pr_id
+            profile.save()
+
+            teams = Profile.objects.filter(team_id=team.id)
+            for u in teams:
+                u.pr = pr_id
+                u.save()
+
+            result['status'] = 'ok'
+        else:
+            result['status'] = 'Вы не менеджер'
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def next_stage(request):
+    """
+     :param request:
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        deadline = datetime.strptime(data['deadline'], "%Y-%m-%dT%H:%M")
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user).first()
+        if profile.is_manager:
+            prl = PrList.objects.filter(id=profile.pr).first()
+            pr = prl.pr
+
+            pr.status += 1
+            pr.deadline = deadline
+            result['status'] = 'ok'
+        else:
+            result['status'] = 'Вы не менеджер'
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def pr_status(request):
+    """
+     :param request:
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user).first()
+        prl = PrList.objects.filter(id=profile.pr).first()
+        if prl:
+            pr = prl.pr
+
+            result['pr_status'] = pr.status
+            result['deadline'] = pr.deadline
+            result['status'] = 'ok'
+        else:
+            result['pr_status'] = "Отсутствуют активные performance review"
+            result['deadline'] = "None"
+            result['status'] = 'no pr'
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def close_perforator(request):
+    """
+     :param request:
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user).first()
+
+        if profile.is_manager:
+            team = Team.objects.filter(manager=profile).first()
+            pr_record = PrList.objects.filter(id=profile.pr).first()
+            perforator = pr_record.pr
+
+            perforator.status = 0
+            perforator.is_active = False
+            perforator.save()
+
+            pr_record.is_active = False
+            pr_record.date = perforator.deadline
+            pr_record.save()
+
+            profile.pr = -1
+            profile.save()
+
+            teams = profile.objects.filter(team_id=team.id)
+            for u in teams:
+                u.pr = -1
+                u.save()
+
             result['status'] = 'ok'
         else:
             result['status'] = 'Вы не менеджер'

@@ -18,6 +18,32 @@ def savePhotoUnderRandomName(instance, filename):
     return os.path.join(upload_to, filename)
 
 
+class SelfReview(models.Model):
+    input_part = models.CharField(max_length=512)
+    plans = models.CharField(max_length=512)
+    self_review = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class PerformanceProcess(models.Model):
+    """
+    status: 0 - Performance review окончено; 1 - этап self-review
+            2 - этап утверждения пиров; 3 - этап оценивания друг друга
+            4 - этап one to one
+    """
+    is_active = models.BooleanField(default=False)
+    status = models.IntegerField(default=0)
+    deadline = models.DateTimeField(auto_now=False)
+    #self_review = models.ForeignKey(SelfReview, on_delete=models.CASCADE, null=True)
+
+
+class PrList(models.Model):
+    """
+    """
+    pr = models.ForeignKey(PerformanceProcess, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now=False)
+
+
 # Модель Профиль (связан с User джанги 1-к-1)
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -30,6 +56,7 @@ class Profile(models.Model):
     approve = models.BooleanField(default=False)
     is_manager = models.BooleanField(default=False)
     team_id = models.IntegerField(default=0, null=True)
+    pr = models.IntegerField(default=-1, null=True)
 
     def save(self, *args, **kwargs):
         if not self.id and not self.photo:
@@ -73,6 +100,7 @@ class PeerReviews(models.Model):
     rates_experience = models.IntegerField(choices=Rates.choices)
     rates_adaptation = models.IntegerField(choices=Rates.choices)
     rates_date = models.DateTimeField(null=True, default=None)
+    pr_id = models.IntegerField(default=-1, null=True)
 
 
 class OneToOneReviews(models.Model):
@@ -81,6 +109,7 @@ class OneToOneReviews(models.Model):
     common_notes = models.CharField(max_length=2048)
     manager_notes = models.CharField(max_length=2048)
     employee_notes = models.CharField(max_length=2048)
+    pr_id = models.IntegerField(default=-1, null=True)
 
 
 @receiver(post_save, sender=User)
@@ -92,12 +121,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
-
-
-class SelfReview(models.Model):
-    input_part = models.CharField(max_length=512)
-    plans = models.CharField(max_length=512)
-    self_review = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 # Модель Категория оценки (по которой пользователю предлагают
@@ -116,6 +139,7 @@ class PerformanceReview(models.Model):
     peers_review_categories = models.ManyToManyField(GradeCategory, related_name='peers_review_categories',
                                                      default=None)
     team_review_categories = models.ManyToManyField(GradeCategory, related_name='team_review_categories', default=None)
+    #performance_review_id = models.IntegerField(default=-1)
 
 
 # Модель Ревью (для обычного ревью и селф-ревью. В случае последнего в оценках числовое значение остаётся null)
@@ -128,6 +152,7 @@ class Review(models.Model):
                                            default=0)
     is_draft = models.BooleanField(default=True)
     is_not_enough_data = models.BooleanField(default=False)
+    pr_id = models.IntegerField(default=-1)
 
 
 # Модель Оценка (непосредственно оценка с комментарием. Null в числе для селф-ревью.)
@@ -162,15 +187,3 @@ class Team(models.Model):
     manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
     test = models.BooleanField(default=False)
 
-
-class PerformanceProcess(models.Model):
-    """
-    status: 0 - Performance review окончено; 1 - этап self-review
-            2 - этап утверждения пиров; 3 - этап оценивания друг друга
-            4 - этап one to one
-    """
-    manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=False)
-    status = models.IntegerField(default=0)
-    deadline = models.DateTimeField(auto_now=False)

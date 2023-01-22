@@ -1,6 +1,6 @@
 from django.conf import settings
 from .token import tokenCheck
-from .models import Profile, User, Review, GradeCategory, Grade, PerformanceReview, Tokens, PeerReviews
+from .models import Profile, User, Review, Team, Grade, PerformanceReview, Tokens, PeerReviews
 from .ratings import peer_review_to_dict
 
 
@@ -48,15 +48,18 @@ def get_self_review(request):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
+
         review = Review.objects.filter(
             appraising_person=profile.id,
-            evaluated_person=profile.id).first()
+            evaluated_person=profile.id,
+            pr_id=profile.pr).first()
         if not review:
             performance_review = PerformanceReview.objects.get(id=1)
             review = Review.objects.create(appraising_person=profile,
                                            evaluated_person=profile,
                                            performance_review=performance_review,
-                                           is_draft=True)
+                                           is_draft=True,
+                                           pr_id=profile.pr)
             for grade_category in performance_review.self_review_categories.all():
                 Grade.objects.create(
                     review=review,
@@ -230,9 +233,13 @@ def get_review(request):
     """
     if tokenCheck(request.headers['token']):
         data = request.data
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
         review = PeerReviews.objects.filter(
             peer_id=data['appraising_person'],
-            rated_person=data['evaluated_person']).first()
+            rated_person=data['evaluated_person'],
+            pr_id=profile.pr).first()
         if not review:
             return {'status': 'Self-review не найдено'}
     else:
