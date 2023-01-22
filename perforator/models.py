@@ -75,7 +75,7 @@ class PrList(models.Model):
     """
     """
     pr = models.ForeignKey(PerformanceProcess, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=None)
     is_active = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now=False)
 

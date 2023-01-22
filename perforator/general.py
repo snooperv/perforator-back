@@ -32,7 +32,7 @@ def login(request):
                                    )
                 new_token.save()
                 result['token_f'] = get_token_f
-                result['token_f_lifetime'] = token_time_f
+                result['token_f_lifetime'] = token_time_f.utcnow()
                 result['token_b'] = get_token_b
                 result['status'] = 'ok'
                 return result
@@ -45,7 +45,7 @@ def login(request):
                 token.save()
 
                 result['token_f'] = get_token_f
-                result['token_f_lifetime'] = token_time_f
+                result['token_f_lifetime'] = token_time_f.utcnow()
                 result['token_b'] = get_token_b
                 result['status'] = 'ok'
         else:
@@ -78,7 +78,7 @@ def refresh_token(request):
             token.save()
 
             result['token_f'] = get_token_f
-            result['token_f_lifetime'] = token_time_f
+            result['token_f_lifetime'] = token_time_f.utcnow()
             result['status'] = 'ok'
     return result
 
@@ -220,7 +220,7 @@ def begin_perforator(request):
 
             pr_record = PrList(
                 pr=perforator,
-                team=team,
+                profile=profile,
                 is_active=True,
                 date=time
             )
@@ -232,7 +232,16 @@ def begin_perforator(request):
 
             teams = Profile.objects.filter(team_id=team.id)
             for u in teams:
-                u.pr = pr_id
+                u_pr_record = PrList(
+                    pr=perforator,
+                    profile=u,
+                    is_active=True,
+                    date=time
+                )
+                u_pr_record.save()
+
+                u_pr_id = PrList.objects.filter(profile=u, is_active=True).first().id
+                u.pr = u_pr_id
                 u.save()
 
             result['status'] = 'ok'
@@ -334,3 +343,25 @@ def close_perforator(request):
     else:
         result['status'] = 'You are not login'
     return result
+
+
+def pr_list(request):
+    """
+     :param request:
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user).first()
+        if profile.is_manager:
+            team = Team.objects.filter(manager=profile).first()
+        else:
+            team = Team.objects.filter(id=profile.team_id).first()
+        prl = PrList.objects.filter(team=team)
+
+    else:
+        result['status'] = 'You are not login'
+    return result
+

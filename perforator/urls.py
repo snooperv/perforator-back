@@ -70,4 +70,6 @@ urlpatterns = [
     path('performance_review/close', general_views.close_performance_review),
     path('performance_review/next_stage', general_views.begin_next_stage),
     path('performance_review/status', general_views.get_pr_status),
+    path('performance_review/list', general_views.get_pr_list),
+
 ]

@@ -46,6 +46,11 @@ def get_pr_status(request):
     return Response(data=general.pr_status(request), status=200)
 
 
+@api_view(['GET'])
+def get_pr_list(request):
+    return Response(data=general.pr_list(request), status=200)
+
+
 @api_view(['POST'])
 def begin_performance_review(request):
     return Response(data=general.begin_perforator(request), status=200)
