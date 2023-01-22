@@ -32,7 +32,7 @@ def login(request):
                                    )
                 new_token.save()
                 result['token_f'] = get_token_f
-                result['token_f_lifetime'] = token_time_f.utcnow()
+                result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=60)
                 result['token_b'] = get_token_b
                 result['status'] = 'ok'
                 return result
@@ -45,7 +45,7 @@ def login(request):
                 token.save()
 
                 result['token_f'] = get_token_f
-                result['token_f_lifetime'] = token_time_f.utcnow()
+                result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=60)
                 result['token_b'] = get_token_b
                 result['status'] = 'ok'
         else:
@@ -78,7 +78,7 @@ def refresh_token(request):
             token.save()
 
             result['token_f'] = get_token_f
-            result['token_f_lifetime'] = token_time_f.utcnow()
+            result['token_f_lifetime'] = datetime.utcnow() + timedelta(minutes=5)
             result['status'] = 'ok'
     return result
 
