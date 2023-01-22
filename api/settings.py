@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'perforator',
     'drf_yasg',
-    'sslserver'
+    #'sslserver'
 ]
 
 MIDDLEWARE = [

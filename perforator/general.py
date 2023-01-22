@@ -260,6 +260,7 @@ def next_stage(request):
 
             pr.status += 1
             pr.deadline = deadline
+            pr.save()
             result['status'] = 'ok'
         else:
             result['status'] = 'Вы не менеджер'
@@ -321,7 +322,7 @@ def close_perforator(request):
             profile.pr = -1
             profile.save()
 
-            teams = profile.objects.filter(team_id=team.id)
+            teams = Profile.objects.filter(team_id=team.id)
             for u in teams:
                 u.pr = -1
                 u.save()
