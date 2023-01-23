@@ -1,7 +1,7 @@
 import pytz
 import hashlib
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from django.contrib.auth.hashers import check_password
 from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team, PrList, Review, Grade, OneToOneReviews
 from .token import tokenCheck
@@ -297,9 +297,10 @@ def pr_status(request):
         prl = PrList.objects.filter(id=profile.pr).first()
         if prl:
             pr = prl.pr
+            offset = datetime.fromtimestamp(pr.deadline.timestamp()) - datetime.utcfromtimestamp(pr.deadline.timestamp())
 
             result['pr_status'] = pr.status
-            result['deadline'] = pr.deadline
+            result['deadline'] =  pr.deadline - offset
             result['status'] = 'ok'
         else:
             result['pr_status'] = "Отсутствуют активные performance review"
