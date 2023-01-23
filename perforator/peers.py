@@ -1,6 +1,6 @@
 import uuid
 from .token import tokenCheck
-from .models import User, Profile, PeerReviews, Tokens
+from .models import User, Profile, PeerReviews, Tokens, Team
 
 """
     Модуль для работы с пирами пользователей.
@@ -188,6 +188,13 @@ def get_where_user_id_is_peer(request, id):
         result = []
         user = User.objects.filter(id=id).first()
         profiles = Profile.objects.filter(peers__user_id=user.id)
+        profile = Profile.objects.filter(user=user)[0]
+        if not profile.is_manager:
+            team = Team.objects.filter(id=profile.team_id)[0]
+            manager = team.manager
+            obj = {'user_id': manager.user.id, 'profile_id': manager.id,
+                   'username': manager.user.first_name, 'photo': manager.photo.url, 'approve': manager.approve}
+            result.append(obj)
         for p in profiles:
             obj = {'user_id': p.user.id, 'profile_id': p.id,
                    'username': p.user.first_name, 'photo': p.photo.url, 'approve': p.approve}
@@ -215,7 +222,12 @@ def get_where_user_id_is_peer_team(request, id):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
-        profiles = profile.team.all()
+        if profile.is_manager:
+            team = Team.objects.filter(manager=profile).first()
+            team_id = team.id
+        else:
+            team_id = profile.team_id
+        profiles = Profile.objects.filter(team_id=team_id)
         for p in profiles:
             obj = {'user_id': p.user.id, 'profile_id': p.id,
                    'username': p.user.first_name, 'photo': p.photo.url, 'approve': p.approve}

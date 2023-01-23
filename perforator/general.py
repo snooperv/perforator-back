@@ -128,30 +128,32 @@ def irate_list(request):
             return {}
         answer = {'rated': []}
 
-        for r in rated:
-            pid = int(r['profile_id'])
-            review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
-            if review is None:
-                p = Profile.objects.filter(id=pid).first()
-                answer['rated'].append({
-                    'id': p.user.id,
-                    'name': p.user.first_name,
-                    'phone': p.user.username,
-                    'sbis': p.sbis,
-                    'photo': p.photo.url
-                })
-        for r in rated_team:
-            pid = int(r['profile_id'])
-            review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
-            if review is None:
-                p = Profile.objects.filter(id=pid).first()
-                answer['rated'].append({
-                    'id': p.user.id,
-                    'name': p.user.first_name,
-                    'phone': p.user.username,
-                    'sbis': p.sbis,
-                    'photo': p.photo.url
-                })
+        if not profile.is_manager:
+            for r in rated:
+                pid = int(r['profile_id'])
+                review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
+                if review is None:
+                    p = Profile.objects.filter(id=pid).first()
+                    answer['rated'].append({
+                        'id': p.user.id,
+                        'name': p.user.first_name,
+                        'phone': p.user.username,
+                        'sbis': p.sbis,
+                        'photo': p.photo.url
+                    })
+        else:
+            for r in rated_team:
+                pid = int(r['profile_id'])
+                review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
+                if review is None:
+                    p = Profile.objects.filter(id=pid).first()
+                    answer['rated'].append({
+                        'id': p.user.id,
+                        'name': p.user.first_name,
+                        'phone': p.user.username,
+                        'sbis': p.sbis,
+                        'photo': p.photo.url
+                    })
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
@@ -337,6 +339,11 @@ def close_perforator(request):
 
             teams = Profile.objects.filter(team_id=team.id)
             for u in teams:
+                u_pr_record = PrList.objects.filter(id=u.pr).first()
+                u_pr_record.is_active = False
+                u_pr_record.date = perforator.deadline
+                u_pr_record.save()
+
                 u.pr = -1
                 u.save()
 
@@ -370,7 +377,7 @@ def pr_list(request):
 
 def pr_self_review(request):
     """
-     :param request:
+     :param request: { "pr_id": <pr_id> }
     :return:
     """
     result = {'status': 'not ok'}
@@ -407,7 +414,7 @@ def pr_self_review(request):
 
 def pr_review(request):
     """
-     :param request:
+     :param request: { "appraising_person": <profile_id>, "evaluated_person": <profile_id>, "pr_id": <pr_id> }
     :return:
     """
     result = {'status': 'not ok'}
