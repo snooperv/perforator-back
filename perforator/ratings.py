@@ -160,8 +160,8 @@ def generate_matched_profiles_and_forms(request, profile_from):
 
 def peer_review_to_dict(review):
     return {
-            'peer_id': review.peer_id,
-            'rated_person': review.rated_person,
+            'peer_id': review.peer_id.id,
+            'rated_person': review.rated_person.id,
             'deadlines': review.deadlines,
             'approaches': review.approaches,
             'teamwork': review.teamwork,

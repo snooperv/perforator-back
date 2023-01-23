@@ -79,3 +79,8 @@ def pr_get_common_notes(request):
 @api_view(['POST'])
 def pr_get_private_notes(request):
     return Response(data=general.pr_private_notes(request), status=200)
+
+
+@api_view(['POST'])
+def get_user_rating_by_id(request):
+    return Response(data=general.pr_user_rating_by_id(request), status=200)

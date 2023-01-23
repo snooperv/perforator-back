@@ -236,7 +236,10 @@ def get_review(request):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
-        pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
+        if profile.pr == -1:
+            return {'status': 'Отсутствуют активные performance review'}
+        else:
+            pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
         review = PeerReviews.objects.filter(
             peer_id=data['appraising_person'],
             rated_person=data['evaluated_person'],

@@ -75,4 +75,5 @@ urlpatterns = [
     path('performance_review/get/review', general_views.pr_get_review),
     path('performance_review/get/common_notes', general_views.pr_get_common_notes),
     path('performance_review/get/private_notes', general_views.pr_get_private_notes),
+    path('performance_review/employee/rating', general_views.get_user_rating_by_id),
 ]
