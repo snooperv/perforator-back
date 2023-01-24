@@ -349,7 +349,6 @@ def close_perforator(request):
                 for peer in u.peers.all():
                     u.peers.remove(peer)
                 u.save()
-
             result['status'] = 'ok'
         else:
             result['status'] = 'Вы не менеджер'
