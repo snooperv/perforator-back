@@ -348,6 +348,7 @@ def close_perforator(request):
                 u.pr = -1
                 for peer in u.peers.all():
                     u.peers.remove(peer)
+                u.approve = False
                 u.save()
             result['status'] = 'ok'
         else:
