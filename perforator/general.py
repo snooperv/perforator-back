@@ -122,6 +122,7 @@ def irate_list(request):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
+        pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
         rated = get_where_user_id_is_peer(request, profile.user.id)
         rated_team = get_where_user_id_is_peer_team(request, profile.user.id)
         if (len(rated) == 0 and len(rated_team) == 0):
@@ -131,7 +132,7 @@ def irate_list(request):
         if not profile.is_manager:
             for r in rated:
                 pid = int(r['profile_id'])
-                review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
+                review = PeerReviews.objects.filter(rated_person_id=pid, peer_id=profile, pr_id=pr_id).first()
                 if review is None:
                     p = Profile.objects.filter(id=pid).first()
                     answer['rated'].append({
@@ -144,7 +145,7 @@ def irate_list(request):
         else:
             for r in rated_team:
                 pid = int(r['profile_id'])
-                review = PeerReviews.objects.filter(rated_person_id=pid).filter(peer_id=profile).first()
+                review = PeerReviews.objects.filter(rated_person_id=pid, peer_id=profile, pr_id=pr_id).first()
                 if review is None:
                     p = Profile.objects.filter(id=pid).first()
                     answer['rated'].append({
