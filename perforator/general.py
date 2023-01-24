@@ -505,7 +505,7 @@ def pr_user_rating_by_id(request):
     if tokenCheck(request.headers['token']):
         result = []
         id = request.data['id']
-        pr_id = request.data['pr_id']
+        pr_id = PrList.objects.filter(id=request.data['pr_id'])[0].pr.id
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = User.objects.filter(id=id).first()
         manager = token.user
