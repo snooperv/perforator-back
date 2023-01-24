@@ -95,28 +95,35 @@ def edit_self_review(request):
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.get(
             appraising_person=profile.id,
-            evaluated_person=profile.id)
-        for grade in request.data['grades']:
-            Grade.objects.filter(review=review, grade_category_id=grade['grade_category_id']) \
-                .update(grade=None, comment=grade['comment'])
-        if not request.data['is_draft']:
-            review.is_draft = False
-        review.save()
+            evaluated_person=profile.id,
+            pr_id=profile.pr)
+        if review:
+            for grade in request.data['grades']:
+                Grade.objects.filter(review=review, grade_category_id=grade['grade_category_id']) \
+                    .update(grade=None, comment=grade['comment'])
+            if not request.data['is_draft']:
+                review.is_draft = False
+            review.save()
+        else:
+            return {'status': 'Self-review не найдено'}
     else:
         return {'message': 'Вы не авторизовались'}
     return {'message': 'ОК'}
 
 
 def is_draft(request, id):
+    result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         user = User.objects.filter(id=id).first()
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.get(
             appraising_person=profile.id,
-            evaluated_person=profile.id)
-        result = {
-            'is_draft': review.is_draft,
-        }
+            evaluated_person=profile.id,
+            pr_id=profile.pr)
+        if review:
+            result['is_draft'] = review.is_draft
+        else:
+            result['status'] = 'ok'
     else:
         return {'message': 'Вы не авторизовались'}
     return result
