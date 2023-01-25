@@ -15,6 +15,20 @@ def __format_profile_to_data(p):
     }
 
 
+def __format_profile_to_data_with_team(p):
+    return {
+        'user_id': p.user.id,
+        'profile_id': p.id,
+        'phone': p.phone,
+        'username': p.user.first_name,
+        'photo': p.photo.url,
+        'sbis': p.sbis,
+        'approve': p.approve,
+        'message': "ok",
+        'team_id': p.team_id
+    }
+
+
 def __format_profile_to_data_without_photo(p):
     # Фото дольше грузится, что для выгрузки полного дерева недопустимо
     return {
@@ -215,7 +229,7 @@ def get_all_users(request):
         result['users'] = []
         users = Profile._meta.model.objects.all()
         for u in users:
-            result['users'].append(__format_profile_to_data(u))
+            result['users'].append(__format_profile_to_data_with_team(u))
         result['status'] = 'ok'
     else:
         result['status'] = 'You are not login'
