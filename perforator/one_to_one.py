@@ -29,9 +29,9 @@ def updateCommonNotes(request):
 
         manager = Profile.objects.filter(id=data['manager_id']).first()
         employee = Profile.objects.filter(id=data['employee_id']).first()
-        review = OneToOneReviews.objects.filter(manager=manager) \
-            .filter(employee=employee).first()
         pr_id = PrList.objects.filter(id=manager.pr)[0]
+        review = OneToOneReviews.objects.filter(manager=manager, employee=employee, pr_id=pr_id).first()
+
         if review:
             review.common_notes = data['note']
             review.save()
@@ -85,9 +85,9 @@ def updatePrivateNotes(request):
 
         manager = Profile.objects.filter(id=data['manager_id']).first()
         employee = Profile.objects.filter(id=data['employee_id']).first()
-        review = OneToOneReviews.objects.filter(manager=manager) \
-            .filter(employee=employee).first()
         pr_id = PrList.objects.filter(id=manager.pr)[0]
+        review = OneToOneReviews.objects.filter(manager=manager, employee=employee, pr_id=pr_id).first()
+
         if review:
             if data['is_manager']:
                 review.manager_notes = data['note']

@@ -1,6 +1,6 @@
 import uuid
 from .token import tokenCheck
-from .models import User, Profile, PeerReviews, Tokens, Team
+from .models import User, Profile, PeerReviews, Tokens, Team, PrList
 
 """
     Модуль для работы с пирами пользователей.
@@ -324,9 +324,10 @@ def get_user_rating(request, id):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = User.objects.filter(id=id).first()
         manager = token.user
-
+        manager_profile = Profile.objects.filter(user=manager)[0]
         p = Profile.objects.filter(user=user.id)[0]
-        rates = PeerReviews.objects.filter(rated_person_id=id)
+        pr_id = PrList.objects.filter(id=manager_profile.pr)[0].pr.id
+        rates = PeerReviews.objects.filter(rated_person_id=id, pr_id=pr_id)
         obj = {'user_id': p.user.id,
                'username': p.user.first_name,
                'photo': p.photo.url,
