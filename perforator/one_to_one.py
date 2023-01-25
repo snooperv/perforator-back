@@ -43,7 +43,7 @@ def updateCommonNotes(request):
                 common_notes=data['note'],
                 manager_notes='',
                 employee_notes='',
-                pr_id=pr_id.pr.id
+                pr_id=pr_id
             )
             new_common_note.save()
             result['status'] = 'ok'
@@ -103,7 +103,7 @@ def updatePrivateNotes(request):
                     common_notes='',
                     manager_notes=data['note'],
                     employee_notes='',
-                    pr_id=pr_id.pr.id
+                    pr_id=pr_id
                 )
                 new_note.save()
             else:
@@ -113,7 +113,7 @@ def updatePrivateNotes(request):
                     common_notes='',
                     manager_notes='',
                     employee_notes=data['note'],
-                    pr_id=pr_id.pr.id
+                    pr_id=pr_id
                 ).save()
             result['status'] = 'ok'
     else:
