@@ -25,7 +25,8 @@ def __format_profile_to_data_with_team(p):
         'sbis': p.sbis,
         'approve': p.approve,
         'message': "ok",
-        'team_id': p.team_id
+        'team_id': p.team_id,
+        'is_manager': p.is_manager
     }
 
 
