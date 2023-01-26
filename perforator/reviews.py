@@ -1,33 +1,43 @@
 from django.conf import settings
 from .token import tokenCheck
-from .models import Profile, User, Review, PrList, Grade, PerformanceReview, Tokens, PeerReviews
+from .models import Profile, User, Review, GradeCategory, Grade, PerformanceReview, Tokens, PeerReviews
 from .ratings import peer_review_to_dict
-
 
 """
     Модуль для работы с ревью и селф-ревью.
     Аналогичен модулю peers.py
 """
 
-
-def __format_review_data(review):
+def __format_review_data(review, isMobile = False):
     result = {
         'id': review.id,
         'is_draft': review.is_draft,
         'grades': []
     }
     grades = Grade.objects.filter(review=review.id)
-    for grade in grades:
-        result['grades'].append({
-            'id': grade.id,
-            'grade_category_id': grade.grade_category.id,
-            'grade_category_name': grade.grade_category.name,
-            'grade_category_description': grade.grade_category.description,
-            'grade_category_preview_description': grade.grade_category.preview_description,
-            'comment': grade.comment,
-        })
+    if (not isMobile):
+        for grade in grades:
+            result['grades'].append({
+                'id': grade.id,
+                'grade_category_id': grade.grade_category.id,
+                'grade_category_name': grade.grade_category.name,
+                'grade_category_description': grade.grade_category.description,
+                'grade_category_preview_description': grade.grade_category.preview_description,
+                'comment': grade.comment,
+            })
+    else:
+        for grade in grades:
+            result['grades'].append({
+                'id': grade.id,
+                'category': {
+                    'id': grade.grade_category.id,
+                    'name': grade.grade_category.name,
+                    'description': grade.grade_category.description,
+                    'preview_description': grade.grade_category.preview_description
+                },
+                'comment': grade.comment,
+            })
     return result
-
 
 def get_self_review(request):
     """
@@ -46,20 +56,18 @@ def get_self_review(request):
     """
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        isMobile = request.headers.get('isMobile')
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
-
         review = Review.objects.filter(
             appraising_person=profile.id,
-            evaluated_person=profile.id,
-            pr_id=profile.pr).first()
+            evaluated_person=profile.id).first()
         if not review:
             performance_review = PerformanceReview.objects.get(id=1)
             review = Review.objects.create(appraising_person=profile,
                                            evaluated_person=profile,
                                            performance_review=performance_review,
-                                           is_draft=True,
-                                           pr_id=profile.pr)
+                                           is_draft=True)
             for grade_category in performance_review.self_review_categories.all():
                 Grade.objects.create(
                     review=review,
@@ -69,8 +77,7 @@ def get_self_review(request):
                 )
     else:
         return {'message': 'Вы не авторизовались'}
-    return __format_review_data(review)
-
+    return __format_review_data(review, isMobile)
 
 def edit_self_review(request):
     """
@@ -91,43 +98,40 @@ def edit_self_review(request):
     """
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        isMobile = request.headers.get('isMobile')
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.get(
             appraising_person=profile.id,
-            evaluated_person=profile.id,
-            pr_id=profile.pr)
-        if review:
+            evaluated_person=profile.id)
+        if not isMobile:
             for grade in request.data['grades']:
                 Grade.objects.filter(review=review, grade_category_id=grade['grade_category_id']) \
                     .update(grade=None, comment=grade['comment'])
-            if not request.data['is_draft']:
-                review.is_draft = False
-            review.save()
         else:
-            return {'status': 'Self-review не найдено'}
+            for grade in request.data['grades']:
+                Grade.objects.filter(review=review, grade_category_id=grade['category']['id']) \
+                    .update(grade=None, comment=grade['comment'])
+        if not request.data['is_draft']:
+            review.is_draft = False
+        review.save()
     else:
         return {'message': 'Вы не авторизовались'}
     return {'message': 'ОК'}
 
-
 def is_draft(request, id):
-    result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         user = User.objects.filter(id=id).first()
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.get(
             appraising_person=profile.id,
-            evaluated_person=profile.id,
-            pr_id=profile.pr)
-        if review:
-            result['is_draft'] = review.is_draft
-        else:
-            result['status'] = 'ok'
+            evaluated_person=profile.id)
+        result = {
+            'is_draft': review.is_draft,
+        }
     else:
         return {'message': 'Вы не авторизовались'}
     return result
-
 
 def get_empty_review_form(request):
     """
@@ -154,7 +158,6 @@ def get_empty_review_form(request):
         categories[categories_name] = getattr(performance_review, categories_name).values('id', 'name', 'description')
     return categories
 
-
 def save_review(request):
     """
         Сохраняет ревью на выбранного пользователя
@@ -179,25 +182,33 @@ def save_review(request):
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
+        isMobile = request.headers.get('isMobile')
         profile = Profile.objects.filter(user=user)[0]
         review = Review.objects.create(appraising_person=profile,
                                        evaluated_person_id=int(request.data['evaluated_person_id']),
                                        performance_review_id=1,
                                        is_draft=False)
         if not request.data['is_not_enough_data']:
-            for grade in request.data['grades']:
-                Grade.objects.create(review=review,
-                                     grade_category_id=grade['grade_category_id'],
-                                     grade=grade['grade'],
-                                     comment=grade['comment']
-                                     )
+            if not isMobile:
+                for grade in request.data['grades']:
+                    Grade.objects.create(review=review,
+                                         grade_category_id=grade['grade_category_id'],
+                                         grade=grade['grade'],
+                                         comment=grade['comment']
+                                         )
+            else:
+                for grade in request.data['grades']:
+                    Grade.objects.create(review=review,
+                                         grade_category_id=grade['category']['id'],
+                                         grade=grade['grade'],
+                                         comment=grade['comment']
+                                         )
         else:
             review.is_not_enough_data = True
         review.save()
     else:
         return {'message': 'Вы не авторизовались'}
     return {'message': 'ОК'}
-
 
 def get_self_review_by_id(request, id):
     """
@@ -224,7 +235,6 @@ def get_self_review_by_id(request, id):
         return {'status': 'Вы не авторизовались'}
     return __format_review_data(review)
 
-
 def get_review(request):
     """
         Возвращает ревью
@@ -240,19 +250,13 @@ def get_review(request):
     """
     if tokenCheck(request.headers['token']):
         data = request.data
-        token = Tokens.objects.filter(token_f=request.headers['token']).first()
-        user = token.user
-        profile = Profile.objects.filter(user=user)[0]
-        if profile.pr == -1:
-            return {'status': 'Отсутствуют активные performance review'}
-        else:
-            pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
         review = PeerReviews.objects.filter(
             peer_id=data['appraising_person'],
-            rated_person=data['evaluated_person'],
-            pr_id=pr_id).first()
+            rated_person=data['evaluated_person']).first()
         if not review:
             return {'status': 'Self-review не найдено'}
     else:
         return {'status': 'Вы не авторизовались'}
     return peer_review_to_dict(review)
+
+
