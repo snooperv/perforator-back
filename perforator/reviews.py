@@ -115,17 +115,17 @@ def is_draft(request, id):
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         user = User.objects.filter(id=id).first()
-        profile = Profile.objects.filter(user=user)[0]
-        review = Review.objects.get(
+        profile = Profile.objects.filter(user=user).first()
+        review = Review.objects.filter(
             appraising_person=profile.id,
             evaluated_person=profile.id,
-            pr_id=profile.pr)
+            pr_id=profile.pr).first()
         if review:
             result['is_draft'] = review.is_draft
         else:
-            result['status'] = 'ok'
+            result['status'] = 'Review не найдено'
     else:
-        return {'message': 'Вы не авторизовались'}
+        result['status'] = 'You are not login'
     return result
 
 
