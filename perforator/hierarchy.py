@@ -106,7 +106,10 @@ def become_manager(request):
 def update_team(request):
     """
     Добавляет указанного пользователя в команду залогинненого профиля
-    :param request: Принимает JSON в формате { "profile_id": <id> }
+    :param request: Принимает JSON в формате
+    {
+        "profile_id": <id>
+    }
     :return:
     """
     result = {'status': 'not ok'}

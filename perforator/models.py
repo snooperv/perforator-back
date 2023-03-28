@@ -1,8 +1,6 @@
 import os
-import django.utils.timezone
 from uuid import uuid4
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
@@ -33,7 +31,6 @@ class PerformanceProcess(models.Model):
     is_active = models.BooleanField(default=False)
     status = models.IntegerField(default=0)
     deadline = models.DateTimeField(auto_now=False)
-    #self_review = models.ForeignKey(SelfReview, on_delete=models.CASCADE, null=True)
 
 
 # Модель Профиль (связан с User джанги 1-к-1)
@@ -41,7 +38,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
-    #manager = models.ForeignKey('self', on_delete=models.PROTECT, null=True, related_name='team')
     peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True,
                                    related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
@@ -147,37 +143,35 @@ class PerformanceReview(models.Model):
     #performance_review_id = models.IntegerField(default=-1)
 
 
+class Questionary(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    perforator = models.ForeignKey(PerformanceProcess, on_delete=models.CASCADE)
+    mark_system = models.IntegerField(default=-1, null=True)
+    is_self_review = models.BooleanField(default=False)
+
+
 # Модель Ревью (для обычного ревью и селф-ревью. В случае последнего в оценках числовое значение остаётся null)
 class Review(models.Model):
     appraising_person = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='appraising_person')
     evaluated_person = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='evaluated_person')
-    performance_review = models.ForeignKey(PerformanceReview,
-                                           on_delete=models.CASCADE,
-                                           related_name='performance_review',
-                                           default=0)
+    questionary = models.ForeignKey(Questionary, on_delete=models.CASCADE, default=None)
     is_draft = models.BooleanField(default=True)
-    is_not_enough_data = models.BooleanField(default=False)
     pr_id = models.IntegerField(default=-1)
+    is_self_review = models.BooleanField(default=False)
 
 
-# Модель Оценка (непосредственно оценка с комментарием. Null в числе для селф-ревью.)
-class Grade(models.Model):
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    grade_category = models.ForeignKey(GradeCategory, on_delete=models.DO_NOTHING, default=0)
-    grade = models.IntegerField(validators=[
-        MaxValueValidator(4),
-        MinValueValidator(1)
-    ], null=True)
-    comment = models.CharField(max_length=120)
+class Question(models.Model):
+    questionary = models.ForeignKey(Questionary, on_delete=models.CASCADE, default=None)
+    name = models.CharField(max_length=256)
+    description = models.CharField(max_length=256)
 
 
-# Модель Средняя Оценка (на будущее)
-class AverageGrade(models.Model):
-    performance_review = models.ForeignKey(PerformanceReview, on_delete=models.CASCADE)
-    evaluated_person = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    grade_category = models.ForeignKey(GradeCategory, on_delete=models.PROTECT)
-    raw_grade = models.FloatField()
-    normalized_grade = models.FloatField()
+class Answer(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, default=None)
+    text = models.CharField(max_length=512)
+    mark = models.IntegerField(default=-1)
 
 
 class Tokens(models.Model):
@@ -186,5 +180,3 @@ class Tokens(models.Model):
     token_b = models.CharField(max_length=256)
     time_f = models.DateTimeField(null=True, default=None)
     time_b = models.DateTimeField(null=True, default=None)
-
-

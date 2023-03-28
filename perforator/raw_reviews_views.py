@@ -19,6 +19,11 @@ def self_review(request):
                   'reviews/self_review.html', {'review_form': form, 'review': review})
 
 
+@api_view(['POST'])
+def pr_get_self_review(request):
+    return Response(data=reviews.pr_self_review(request), status=200)
+
+
 @api_view(['GET'])
 def get_self_review(request):
     return Response(data=reviews.get_self_review(request), status=200)

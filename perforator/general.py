@@ -3,9 +3,11 @@ import hashlib
 import random
 from datetime import datetime, timedelta, timezone
 from django.contrib.auth.hashers import check_password
-from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team, PrList, Review, Grade, OneToOneReviews
+from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team, PrList, Review, OneToOneReviews, \
+    Questionary, Question, Answer
 from .token import tokenCheck
 from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team
+from .reviews import __format_review_data
 
 minutes_delta = 60
 
@@ -176,7 +178,7 @@ def processRate(request):
         request_time = (datetime.now()).replace(tzinfo=utc)
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
-        rated_person = Profile.objects.filter(id=data['profile'])[0]
+        rated_person = Profile.objects.filter(id=data['profile']).first()
         peer_id = Profile.objects.filter(user=user)[0]
         pr_id = PrList.objects.filter(id=peer_id.pr)[0].pr.id
         peer_review = PeerReviews(
@@ -258,8 +260,53 @@ def begin_perforator(request):
     return result
 
 
+def __create_self_review_and_answers(profile, questionary):
+    review = Review(
+        appraising_person=profile,
+        evaluated_person=profile,
+        questionary=questionary,
+        pr_id=profile.pr,
+        is_self_review=True
+    )
+    review.save()
+
+    questions = Question.objects.filter(questionary=questionary)
+    for q in questions:
+        answer = Answer(
+            profile=profile,
+            question=q,
+            review=review,
+            text='',
+        )
+        answer.save()
+
+
+def __create_review_and_answers(p1, p2, questionary):
+    review = Review(
+        appraising_person=p1,
+        evaluated_person=p2,
+        questionary=questionary,
+        pr_id=p1.pr,
+        is_self_review=False
+    )
+    review.save()
+
+    questions = Question.objects.filter(questionary=questionary)
+    for q in questions:
+        answer = Answer(
+            profile=p1,
+            question=q,
+            review=review,
+            text='',
+        )
+        answer.save()
+
+
 def next_stage(request):
     """
+    status: 0 - Performance review окончено; 1 - этап self-review
+            2 - этап утверждения пиров; 3 - этап оценивания друг друга
+            4 - этап one to one
      :param request:
     :return:
     """
@@ -278,6 +325,37 @@ def next_stage(request):
             pr.deadline = deadline
             pr.save()
             result['status'] = 'ok'
+
+            if pr.status == 1:
+                questionary = Questionary.objects.filter(profile=profile, perforator=pr, is_self_review=True).first()
+
+                if questionary:
+                    __create_self_review_and_answers(profile, questionary)
+
+                    team = Team.objects.filter(manager=profile).first()
+                    employees = Profile.objects.filter(team_id=team.id)
+
+                    for e in employees:
+                        __create_self_review_and_answers(e, questionary)
+                else:
+                    return {'status': 'Отсутствуют анкеты с вопросами'}
+
+            if pr.status == 3:
+                questionary = Questionary.objects.filter(profile=profile, perforator=pr, is_self_review=False).first()
+
+                if questionary:
+                    team = Team.objects.filter(manager=profile).first()
+                    employees = Profile.objects.filter(team_id=team.id)
+
+                    for e in employees:
+                        __create_review_and_answers(profile, e, questionary)
+                        __create_review_and_answers(e, profile, questionary)
+
+                        peers = e.peers.all()
+                        for p in peers:
+                            __create_review_and_answers(e, p, questionary)
+                else:
+                    return {'status': 'Отсутствуют анкеты с вопросами'}
         else:
             result['status'] = 'Вы не менеджер'
     else:
@@ -379,43 +457,6 @@ def pr_list(request):
     return result
 
 
-def pr_self_review(request):
-    """
-     :param request: { "pr_id": <pr_id> }
-    :return:
-    """
-    result = {'status': 'not ok'}
-    if tokenCheck(request.headers['token']):
-        token = Tokens.objects.filter(token_f=request.headers['token']).first()
-        user = token.user
-        profile = Profile.objects.filter(user=user)[0]
-
-        review = Review.objects.filter(
-            appraising_person=profile.id,
-            evaluated_person=profile.id,
-            pr_id=request.data['pr_id']).first()
-
-        result = {
-            'id': review.id,
-            'is_draft': review.is_draft,
-            'grades': []
-        }
-        grades = Grade.objects.filter(review=review.id)
-        for grade in grades:
-            result['grades'].append({
-                'id': grade.id,
-                'grade_category_id': grade.grade_category.id,
-                'grade_category_name': grade.grade_category.name,
-                'grade_category_description': grade.grade_category.description,
-                'grade_category_preview_description': grade.grade_category.preview_description,
-                'comment': grade.comment,
-            })
-        result['status'] = "ok"
-    else:
-        result['status'] = 'You are not login'
-    return result
-
-
 def pr_review(request):
     """ Доступ к любому из ревью имеет любой из пользователей. Возможно стоит добавить ограничений?
      :param request: { "appraising_person": <profile_id>, "evaluated_person": <profile_id>, "pr_id": <pr_id> }
@@ -425,30 +466,15 @@ def pr_review(request):
     if tokenCheck(request.headers['token']):
         data = request.data
         pr_id = PrList.objects.filter(id=request.data['pr_id'])[0].pr.id
-        review = PeerReviews.objects.filter(
-            peer_id=data['appraising_person'],
-            rated_person=data['evaluated_person'],
+        review = Review.objects.filter(
+            appraising_person=data['appraising_person'],
+            evaluated_person=data['evaluated_person'],
+            is_self_review=False,
             pr_id=pr_id).first()
         if not review:
             return {'status': 'Self-review не найдено'}
 
-        result = {
-            'status': "ok",
-            'peer_id': review.peer_id.id,
-            'rated_person': review.rated_person.id,
-            'deadlines': review.deadlines,
-            'approaches': review.approaches,
-            'teamwork': review.teamwork,
-            'practices': review.practices,
-            'experience': review.experience,
-            'adaptation': review.adaptation,
-            'rates_deadlines': review.rates_deadlines,
-            'rates_approaches': review.rates_approaches,
-            'rates_teamwork': review.rates_teamwork,
-            'rates_practices': review.rates_practices,
-            'rates_experience': review.rates_experience,
-            'rates_adaptation': review.rates_adaptation
-        }
+        result = __format_review_data(review)
     else:
         result['status'] = 'You are not login'
     return result

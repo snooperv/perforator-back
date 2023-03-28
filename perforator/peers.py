@@ -1,6 +1,6 @@
 import uuid
 from .token import tokenCheck
-from .models import User, Profile, PeerReviews, Tokens, Team, PrList
+from .models import User, Profile, PeerReviews, Tokens, Team, PrList, Questionary, Question, Answer, Review
 
 """
     Модуль для работы с пирами пользователей.
@@ -71,7 +71,6 @@ def get_all_current_user_peers(request):
             obj = {'user_id': p.user.id,
                    'profile_id': p.id,
                    'username': p.user.first_name,
-                   'photo': p.photo.url,
                    'sbis': p.sbis,
                    'approve': p.approve,
                    'photo': p.photo.url}
@@ -308,14 +307,19 @@ def approve_user(request, id):
     """
         Проверяет, является ли пользователь утверждённым или нет (по id указанного пользователя)
     """
+    result = {'status': "not ok"}
     if tokenCheck(request.headers['token']):
         user = User.objects.filter(id=id).first()
-        profile = Profile.objects.filter(user=user)[0]
-        profile.approve = True
-        profile.save()
-        return {'message': 'ОК'}
+        profile = Profile.objects.filter(user=user).first()
+        if profile:
+            profile.approve = True
+            profile.save()
+            result['status'] = 'ok'
+        else:
+            result['status'] = 'Профиль не найден'
     else:
-        return {'error': True, 'message': 'Вы не авторизовались'}
+        result['status'] = 'You are not login'
+    return result
 
 
 def get_user_rating(request, id):

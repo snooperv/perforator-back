@@ -7,21 +7,16 @@ from . import raw_reviews_views
 from . import raw_hierarchy_views
 from . import general_views
 from . import one_to_one_views
+from . import mark_views
 
 
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
-    path('irate/', views.I_Rate.as_view(), name='irate'),
-    path('1to1/', views.OneToOne.as_view(), name='1to1'),
-    path('imanager/', views.I_Manager.as_view(), name='imanager'),
     path('registration/', csrf_exempt(views.registration), name='registration'),
-    #path('process_rate/', csrf_exempt(views.process_rate_form), name='process_rate'), #Сказали, что работает
     path('process_rate/', general_views.save_process_rate), #Переписано
-    path('process_one_to_one/', views.process_one_to_one_form), # Я хз что это
     path('imanager/employee/', views.Employee.as_view(), name='employee'), #не трогал
     path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
 
-    #path('peers/demo', raw_peers_views.peers_demo),
     path('peers/all/', raw_peers_views.get_all_peers), #Какая то хуйня - переделать!
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
     path('peers/delete/', raw_peers_views.delete_peers),
@@ -30,6 +25,7 @@ urlpatterns = [
     path('peers/uid', raw_peers_views.get_user_peers),
     path('peers/delete/user', raw_peers_views.delete_user_peers),
     path('peers/save/user', raw_peers_views.save_user_peers),
+    path('peers/approve', raw_peers_views.approve_user),
 
 
     path('self-review/', raw_reviews_views.get_self_review),
@@ -49,9 +45,7 @@ urlpatterns = [
     path('manager/status', raw_hierarchy_views.manager_status),
     path('all_users', raw_hierarchy_views.all_users),
     path('team', raw_hierarchy_views.get_profile_team),
-    #path('hierarchy', raw_hierarchy_views.get_full_hierarchy_tree),
 
-    path('peers/approve', raw_peers_views.approve_user),
 
     path('api/login', general_views.login_token),
     path('api/refresh-token', general_views.refresh_token),
@@ -71,9 +65,12 @@ urlpatterns = [
     path('performance_review/next_stage', general_views.begin_next_stage),
     path('performance_review/status', general_views.get_pr_status),
     path('performance_review/list', general_views.get_pr_list),
-    path('performance_review/get/self_review', general_views.pr_get_self_review),
+    path('performance_review/get/self_review', raw_reviews_views.pr_get_self_review),
     path('performance_review/get/review', general_views.pr_get_review),
     path('performance_review/get/common_notes', general_views.pr_get_common_notes),
     path('performance_review/get/private_notes', general_views.pr_get_private_notes),
     path('performance_review/employee/rating', general_views.get_user_rating_by_id),
+
+    path('questionary/create', mark_views.create_questionary),
+    path('questionary/update', mark_views.update_questionary),
 ]

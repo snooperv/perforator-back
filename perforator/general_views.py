@@ -62,11 +62,6 @@ def close_performance_review(request):
 
 
 @api_view(['POST'])
-def pr_get_self_review(request):
-    return Response(data=general.pr_self_review(request), status=200)
-
-
-@api_view(['POST'])
 def pr_get_review(request):
     return Response(data=general.pr_review(request), status=200)
 

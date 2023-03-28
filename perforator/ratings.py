@@ -15,14 +15,6 @@ def create_review_form(request):
     return RateForm()
 
 
-def get_review_from_current_user(request, profile_rated):
-    if request.user.is_authenticated:
-        cur_profile = Profile.objects.filter(user=request.user)[0]
-        return get_review_to_profile(request, cur_profile, profile_rated)
-    else:
-        return {"error": 'Вы не авторизованы'}
-
-
 def get_review_to_profile(request, profile_from, profile_rated):
     """
         Возвращает запись в таблицы PeerReviews -
@@ -119,43 +111,6 @@ def transform_form(form):
     answer['rates_experience'] = int(answer['rates_experience'])
     answer['rates_adaptation'] = int(answer['rates_adaptation'])
     return answer
-
-
-def generate_matched_profiles_and_forms_from_current_user(request):
-    if request.user.is_authenticated:
-        cur_profile = Profile.objects.filter(user=request.user)[0]
-        return generate_matched_profiles_and_forms(request, cur_profile)
-    else:
-        return {"error": 'Вы не авторизованы'}
-
-
-def generate_matched_profiles_and_forms(request, profile_from):
-    """
-        :return: словарь след. вида:
-        { profile.id: rate_form, ... }
-        или словарь с ошибкой
-    """
-    if request.user.is_authenticated:
-        rated = get_where_user_id_is_peer(request, profile_from.user.id)
-        rated_team = get_where_user_id_is_peer_team(request, profile_from.user.id)
-        if (len(rated) == 0 and len(rated_team) == 0):
-            return {}
-        answer = {}
-        for r in rated:
-            review = PeerReviews.objects.filter(rated_person_id=r['profile_id']).filter(peer_id=profile_from).first()
-            if review is None:
-                p = Profile.objects.filter(id=r['profile_id']).first()
-                form = generate_review_form(request, profile_from, p)
-                answer[p] = form
-        for r in rated_team:
-            review = PeerReviews.objects.filter(rated_person_id=r['profile_id']).filter(peer_id=profile_from).first()
-            if review is None:
-                p = Profile.objects.filter(id=r['profile_id']).first()
-                form = generate_review_form(request, profile_from, p)
-                answer[p] = form
-        return answer
-    else:
-        return {"error": 'Вы не авторизованы'}
 
 
 def peer_review_to_dict(review):

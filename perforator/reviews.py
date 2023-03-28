@@ -1,6 +1,6 @@
-from django.conf import settings
 from .token import tokenCheck
-from .models import Profile, User, Review, PrList, Grade, PerformanceReview, Tokens, PeerReviews
+from .models import Profile, User, Review, PrList, PerformanceReview,\
+    Tokens, PeerReviews, Question, Questionary, Answer, Team
 from .ratings import peer_review_to_dict
 
 
@@ -16,33 +16,41 @@ def __format_review_data(review):
         'is_draft': review.is_draft,
         'grades': []
     }
-    grades = Grade.objects.filter(review=review.id)
-    for grade in grades:
+
+    questions = Question.objects.filter(questionary=review.questionary)
+    for q in questions:
+        answer = Answer.objects.filter(profile=review.appraising_person, question=q, review=review).first()
         result['grades'].append({
-            'id': grade.id,
-            'grade_category_id': grade.grade_category.id,
-            'grade_category_name': grade.grade_category.name,
-            'grade_category_description': grade.grade_category.description,
-            'grade_category_preview_description': grade.grade_category.preview_description,
-            'comment': grade.comment,
+            'id': answer.id,
+            'name': q.name,
+            'description': q.description,
+            'text': answer.text,
+            'mark': answer.mark
         })
     return result
 
 
 def get_self_review(request):
-    """
-    TESTED
-        Возвращает селф-ревью
-        request.GET: параметры не нужны
-        :return: Один из следующих словраей:
-        { 'id': review.id, 'is_draft': review.is_draft,
-        'grades':   [
-            { 'id': grade.id, 'grade_category_id': grade.grade_category.id,
-            'grade_category_name': grade.grade_category.name, 'grade_category_description': grade.grade_category.description,
-            'comment': grade.comment (только коммент. У сэлф-ревью оценка всегда NULL),
-            } {...}, {...}
-        ] },
-        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+    """ GET метод. Ничего не принимает и возвращает self-review залогиненного пользователя в формате:
+    {
+        "id": 2,
+        "is_draft": true,
+        "grades": [
+            {
+                "id": 5,
+                "name": "test1",
+                "description": "test111",
+                "text": ""
+            },
+            {
+                "id": 8,
+                "name": "test2",
+                "description": "test222",
+                "text": ""
+            }
+        ]
+    }
+
     """
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
@@ -50,45 +58,34 @@ def get_self_review(request):
         profile = Profile.objects.filter(user=user)[0]
 
         review = Review.objects.filter(
-            appraising_person=profile.id,
-            evaluated_person=profile.id,
+            appraising_person=profile,
+            evaluated_person=profile,
+            is_self_review=True,
             pr_id=profile.pr).first()
         if not review:
-            performance_review = PerformanceReview.objects.get(id=1)
-            review = Review.objects.create(appraising_person=profile,
-                                           evaluated_person=profile,
-                                           performance_review=performance_review,
-                                           is_draft=True,
-                                           pr_id=profile.pr)
-            for grade_category in performance_review.self_review_categories.all():
-                Grade.objects.create(
-                    review=review,
-                    grade_category=grade_category,
-                    grade=None,
-                    comment=''
-                )
+            return {'status': 'Self-review не найдено'}
     else:
-        return {'message': 'Вы не авторизовались'}
+        return {'status': 'Вы не авторизовались'}
     return __format_review_data(review)
 
 
 def edit_self_review(request):
-    """
-    TESTED
-        Изменяет селф-ревью
-        Аналогичен изменению обыкновенного ревью, вынесем функционал в другое место
-        request.data: (Заполненное селф-ревью)
-        { 'id': review.id, 'is_draft': review.is_draft,
-        'grades':   [
+    """ Формат входного JSON:
+    {
+        "is_draft": true,
+        "grades": [
             {
-            'grade_category_id': grade.grade_category.id,
-            'comment': grade.comment (только коммент. У сэлф-ревью оценка всегда NULL),
-            }, {...}, {...}
-        ] }
-        :return: Один из следующих словраей:
-        { message: "ОК" },
-        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+                "id": 5,
+                "text": "Ю"
+            },
+            {
+                "id": 8,
+                "text": "Фак"
+            }
+        ]
+    }
     """
+    result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
@@ -96,19 +93,20 @@ def edit_self_review(request):
         review = Review.objects.get(
             appraising_person=profile.id,
             evaluated_person=profile.id,
+            is_self_review=True,
             pr_id=profile.pr)
         if review:
             for grade in request.data['grades']:
-                Grade.objects.filter(review=review, grade_category_id=grade['grade_category_id']) \
-                    .update(grade=None, comment=grade['comment'])
+                Answer.objects.filter(id=grade['id']).update(text=grade['text'])
             if not request.data['is_draft']:
                 review.is_draft = False
             review.save()
+            result['status'] = 'ok'
         else:
-            return {'status': 'Self-review не найдено'}
+            result['status'] = 'Self-review не найдено'
     else:
-        return {'message': 'Вы не авторизовались'}
-    return {'message': 'ОК'}
+        result['status'] = 'You are not login'
+    return result
 
 
 def is_draft(request, id):
@@ -119,6 +117,7 @@ def is_draft(request, id):
         review = Review.objects.filter(
             appraising_person=profile.id,
             evaluated_person=profile.id,
+            is_self_review=True,
             pr_id=profile.pr).first()
         if review:
             result['is_draft'] = review.is_draft
@@ -156,47 +155,47 @@ def get_empty_review_form(request):
 
 
 def save_review(request):
+    """ Формат входного JSON:
+    {
+        "profile": 2,
+        "is_draft": true,
+        "grades": [
+            {
+                "id": 5,
+                "text": "Ю",
+                "mark": 2
+            },
+            {
+                "id": 8,
+                "text": "Фак",
+                "mark": 1
+            }
+        ]
+    }
     """
-        Сохраняет ревью на выбранного пользователя
-        Сохранять можно только в чистовик, то есть возвращать его больше не придётся
-        request.data: (Заполненное ревью. Аналогично селф-ревью, но:
-        все оценки имеют числовой эквивалент;
-        is_draft автоматически ставится false;
-        есть возможность поставить not_enough_data (если пользователь не может оценить человека))
-        { 'id': review.id,
-        'evaluated_person': review.evaluated_person_id,
-        'is_not_enough_data': boolean
-        'grades':   [
-            { 'id': grade.id, 'grade_category_id': grade.grade_category.id,
-            'grade': grade.grade,
-            'comment': grade.comment,
-            }, {...}, {...}
-        ] }
-        :return: Один из следующих словраей:
-        { message: "ОК" },
-        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
-    """
+    result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
+        data = request.data
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
-        profile = Profile.objects.filter(user=user)[0]
-        review = Review.objects.create(appraising_person=profile,
-                                       evaluated_person_id=int(request.data['evaluated_person_id']),
-                                       performance_review_id=1,
-                                       is_draft=False)
-        if not request.data['is_not_enough_data']:
+        appraising_person = Profile.objects.filter(user=user).first()
+        evaluated_person = Profile.objects.filter(id=data['profile']).first()
+        review = Review.objects.filter(appraising_person=appraising_person,
+                                       evaluated_person=evaluated_person,
+                                       is_self_review=False,
+                                       pr_id=appraising_person.pr).first()
+        if review:
             for grade in request.data['grades']:
-                Grade.objects.create(review=review,
-                                     grade_category_id=grade['grade_category_id'],
-                                     grade=grade['grade'],
-                                     comment=grade['comment']
-                                     )
+                Answer.objects.filter(id=grade['id']).update(text=grade['text'], mark=grade['mark'])
+            if not request.data['is_draft']:
+                review.is_draft = False
+            review.save()
+            result = {'status': 'ok'}
         else:
-            review.is_not_enough_data = True
-        review.save()
+            result['status'] = 'Review не найдено'
     else:
-        return {'message': 'Вы не авторизовались'}
-    return {'message': 'ОК'}
+        result['status'] = 'You are not login'
+    return result
 
 
 def get_self_review_by_id(request, id):
@@ -227,32 +226,54 @@ def get_self_review_by_id(request, id):
 
 def get_review(request):
     """
-        Возвращает ревью
-        :return: Один из следующих словраей:
-        { 'id': review.id, 'is_draft': review.is_draft,
-        'grades':   [
-            { 'id': grade.id, 'grade_category_id': grade.grade_category.id,
-            'grade_category_name': grade.grade_category.name, 'grade_category_description': grade.grade_category.description,
-            'comment': grade.comment (только коммент. У сэлф-ревью оценка всегда NULL),
-            } {...}, {...}
-        ] },
-        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+    {
+        "appraising_person": 1,
+        "evaluated_person": 2
+    }
     """
     if tokenCheck(request.headers['token']):
         data = request.data
+
+        appraising_person = Profile.objects.filter(id=data['appraising_person']).first()
+        evaluated_person = Profile.objects.filter(id=data['evaluated_person']).first()
+
+        if appraising_person.pr == -1:
+            return {'status': 'Отсутствуют активные performance review'}
+        else:
+            pr_id = appraising_person.pr
+        review = Review.objects.filter(
+            appraising_person=appraising_person,
+            evaluated_person=evaluated_person,
+            is_self_review=False,
+            pr_id=pr_id).first()
+        if not review:
+            return {'status': 'Review не найдено'}
+    else:
+        return {'status': 'Вы не авторизовались'}
+    return __format_review_data(review)
+
+
+def pr_self_review(request):
+    """
+     :param request: { "pr_id": <pr_id> }
+    :return:
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
-        if profile.pr == -1:
-            return {'status': 'Отсутствуют активные performance review'}
+
+        review = Review.objects.filter(
+            appraising_person=profile,
+            evaluated_person=profile,
+            is_self_review=True,
+            pr_id=request.data['pr_id']).first()
+
+        if review:
+            result = __format_review_data(review)
         else:
-            pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
-        review = PeerReviews.objects.filter(
-            peer_id=data['appraising_person'],
-            rated_person=data['evaluated_person'],
-            pr_id=pr_id).first()
-        if not review:
-            return {'status': 'Self-review не найдено'}
+            result['status'] = 'Review не найдено'
     else:
-        return {'status': 'Вы не авторизовались'}
-    return peer_review_to_dict(review)
+        result['status'] = 'You are not login'
+    return result
