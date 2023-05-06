@@ -17,7 +17,7 @@ urlpatterns = [
     path('imanager/employee/', views.Employee.as_view(), name='employee'), #не трогал
     path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
 
-    path('peers/all/', raw_peers_views.get_all_peers), #Какая то хуйня - переделать!
+    path('peers/all/', raw_peers_views.get_all_peers),
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
     path('peers/delete/', raw_peers_views.delete_peers),
     path('peers/save/', raw_peers_views.save_peers),
@@ -27,25 +27,20 @@ urlpatterns = [
     path('peers/save/user', raw_peers_views.save_user_peers),
     path('peers/approve', raw_peers_views.approve_user),
 
-
     path('self-review/', raw_reviews_views.get_self_review),
     path('self-review/id', raw_reviews_views.get_self_review_by_id),  #!
     path('self-review/main', raw_reviews_views.self_review), #!
     path('self-review/save/', raw_reviews_views.edit_self_review),
     path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
 
-
     path('review/form/', raw_reviews_views.get_empty_review_form),
     path('review/save/', raw_reviews_views.save_review),
     path('review/get/', raw_reviews_views.get_review),
-
 
     path('manager', raw_hierarchy_views.get_profile_manager),
     path('manager/become', raw_hierarchy_views.post_become_manager),
     path('manager/status', raw_hierarchy_views.manager_status),
     path('all_users', raw_hierarchy_views.all_users),
-    path('team', raw_hierarchy_views.get_profile_team),
-
 
     path('api/login', general_views.login_token),
     path('api/refresh-token', general_views.refresh_token),
@@ -57,6 +52,7 @@ urlpatterns = [
     path('1to1/get_private_notes/', one_to_one_views.get_private_notes),
     path('1to1/update_private_notes/', one_to_one_views.update_private_notes),
 
+    path('team', raw_hierarchy_views.get_profile_team),
     path('team/update', raw_hierarchy_views.team_update),
     path('team/delete_user', raw_hierarchy_views.team_delete_user),
 

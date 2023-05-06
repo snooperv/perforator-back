@@ -50,7 +50,10 @@ def get_self_review(request):
             }
         ]
     }
-
+    В случае ошибки один из вариантов:
+        {'status': 'Self-review не найдено'},
+        {'status': 'Вы не авторизовались'},
+        {'status': <error message>}
     """
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
@@ -201,22 +204,34 @@ def save_review(request):
 def get_self_review_by_id(request, id):
     """
     TESTED
-        Возвращает селф-ревью
-        request.GET: параметры не нужны
+        Возвращает селф-ревью по указанному id профиля.
+        request.GET: необходимо id профиля, для которого нудно получить self-review
         :return: Один из следующих словраей:
-        { 'id': review.id, 'is_draft': review.is_draft,
-        'grades':   [
-            { 'id': grade.id, 'grade_category_id': grade.grade_category.id,
-            'grade_category_name': grade.grade_category.name, 'grade_category_description': grade.grade_category.description,
-            'comment': grade.comment (только коммент. У сэлф-ревью оценка всегда NULL),
-            } {...}, {...}
-        ] },
-        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
+        {
+            'id': review.id,
+            'is_draft': review.is_draft,
+            'grades':   [
+                {
+                    'id': <id ответа>,
+                    'name': <название вопроса>,
+                    'description': <описание вопроса>,
+                    'text': <текст ответа>,
+                    'mark': <оценка ответа>
+                },
+                {...},
+                {...}
+            ]
+        }
+        При ошибке: { 'status': 'Self-review не найдено'}
     """
     if tokenCheck(request.headers['token']):
+        profile = Profile.objects.filter(id=id).first()
         review = Review.objects.filter(
             appraising_person=id,
-            evaluated_person=id).first()
+            evaluated_person=id,
+            pr_id=profile.pr,
+            is_self_review=True
+        ).first()
         if not review:
             return {'status': 'Self-review не найдено'}
     else:
