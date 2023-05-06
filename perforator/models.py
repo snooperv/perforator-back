@@ -22,6 +22,11 @@ class SelfReview(models.Model):
     self_review = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
+class Companies(models.Model):
+    name = models.CharField(max_length=256)
+    description = models.CharField(max_length=512, default=None)
+
+
 class PerformanceProcess(models.Model):
     """
     status: 0 - Performance review окончено; 1 - этап self-review
@@ -45,6 +50,7 @@ class Profile(models.Model):
     is_manager = models.BooleanField(default=False)
     team_id = models.IntegerField(default=0, null=True)
     pr = models.IntegerField(default=-1, null=True)
+    company = models.ForeignKey(Companies, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if not self.id and not self.photo:
@@ -75,35 +81,6 @@ class PrList(models.Model):
     date = models.DateTimeField(auto_now=False)
 
 
-class PeerReviews(models.Model):
-    """
-    peer_id - тот, кто оценивают
-    rated_person - тот, кого оценивает
-    """
-    class Rates(models.IntegerChoices):
-        LOWER = 1
-        LOW = 2
-        HIGH = 3
-        HIGHER = 4
-
-    peer_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='rated_reviews')
-    rated_person = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='my_reviews')
-    deadlines = models.CharField(max_length=512)
-    approaches = models.CharField(max_length=512)
-    teamwork = models.CharField(max_length=512)
-    practices = models.CharField(max_length=512)
-    experience = models.CharField(max_length=512)
-    adaptation = models.CharField(max_length=512)
-    rates_deadlines = models.IntegerField(choices=Rates.choices)
-    rates_approaches = models.IntegerField(choices=Rates.choices)
-    rates_teamwork = models.IntegerField(choices=Rates.choices)
-    rates_practices = models.IntegerField(choices=Rates.choices)
-    rates_experience = models.IntegerField(choices=Rates.choices)
-    rates_adaptation = models.IntegerField(choices=Rates.choices)
-    rates_date = models.DateTimeField(null=True, default=None)
-    pr_id = models.IntegerField(default=-1, null=True)
-
-
 class OneToOneReviews(models.Model):
     manager = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='manager_reviews')
     employee = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='employee_reviews')
@@ -124,14 +101,6 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
-# Модель Категория оценки (по которой пользователю предлагают
-# оценить сотрудника)
-class GradeCategory(models.Model):
-    name = models.CharField(max_length=64, null=True)
-    preview_description = models.CharField(max_length=512, null=True)
-    description = models.CharField(max_length=512, null=True)
-
-
 # Модель Перформанс-Ревью
 class PerformanceReview(models.Model):
     self_review_categories = models.ManyToManyField(GradeCategory, related_name='self_review_categories', default=None)
@@ -140,7 +109,6 @@ class PerformanceReview(models.Model):
     peers_review_categories = models.ManyToManyField(GradeCategory, related_name='peers_review_categories',
                                                      default=None)
     team_review_categories = models.ManyToManyField(GradeCategory, related_name='team_review_categories', default=None)
-    #performance_review_id = models.IntegerField(default=-1)
 
 
 class Questionary(models.Model):

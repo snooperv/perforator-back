@@ -13,9 +13,8 @@ from . import mark_views
 urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
     path('registration/', csrf_exempt(views.registration), name='registration'),
-    path('process_rate/', general_views.save_process_rate), #Переписано
-    path('imanager/employee/', views.Employee.as_view(), name='employee'), #не трогал
-    path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
+    path('imanager/employee/', views.Employee.as_view(), name='employee'),
+    #path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
 
     path('peers/all/', raw_peers_views.get_all_peers),
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
@@ -45,7 +44,8 @@ urlpatterns = [
     path('api/login', general_views.login_token),
     path('api/refresh-token', general_views.refresh_token),
     path('api/myprofile', general_views.my_profile),
-    path('rate_list', general_views.get_irate_list),
+    path('api/companies', general_views.get_companies),
+    #path('rate_list', general_views.get_irate_list),
 
     path('1to1/get_common_notes/', one_to_one_views.get_common_notes),
     path('1to1/update_common_notes/', one_to_one_views.update_common_notes),
@@ -65,7 +65,7 @@ urlpatterns = [
     path('performance_review/get/review', general_views.pr_get_review),
     path('performance_review/get/common_notes', general_views.pr_get_common_notes),
     path('performance_review/get/private_notes', general_views.pr_get_private_notes),
-    path('performance_review/employee/rating', general_views.get_user_rating_by_id),
+    #path('performance_review/employee/rating', general_views.get_user_rating_by_id),
 
     path('questionary/create', mark_views.create_questionary),
     path('questionary/update', mark_views.update_questionary),

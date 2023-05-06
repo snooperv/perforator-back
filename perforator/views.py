@@ -1,49 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, logout, login
-from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views import generic, View
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from django.views import View
 
 from .form import *
-from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .ratings import *
-from .one_to_one import *
-
-
-def index(request):
-    num_self = SelfReview.objects.all().count()
-    return render(request,
-                  'main/index.html',
-                  context={'num_self': num_self})
-
-
-@api_view(['POST'])
-def process_one_to_one_form(request):
-    json = request.data
-    save_json(request, json)
-    return Response(data={'message': 'OK'}, status=200)
-
-
-def process_rate_form(request):
-    if request.method == 'POST':
-        form = RateForm(request.POST)
-        if form.is_valid():
-            d = request.POST.dict()
-            profile_id = int(d['profile'])
-            rated = Profile.objects.filter(id=profile_id).first()
-            cur = Profile.objects.filter(user=request.user).first()
-
-            td = transform_form(form)
-
-            save_review_form(request, cur, rated, form)
-
-        return redirect('irate')
 
 
 class SelfReviewByUserView(LoginRequiredMixin, View):
@@ -88,14 +51,11 @@ def registration(request):
             user.profile.phone = form.cleaned_data['phone']
             user.first_name = form.cleaned_data['name']
             user.profile.sbis = form.cleaned_data['sbis']
+            user.profile.company = Companies.objects.filter(id=form.cleaned_data['company']).first()
             photo = form.cleaned_data['photo']
             user.profile.photo = photo
             user.save()
-            """ auto_login = authenticate(username=form.cleaned_data['phone'], password=form.cleaned_data['password'])
-            login(request, auto_login)
-            return HttpResponseRedirect(reverse('index')) """
         else:
-            # print(form)
             pass
     else:
         form = RegistrationForm(initial={'name': "", 'phone': "", 'sbis': "", 'password': ""})

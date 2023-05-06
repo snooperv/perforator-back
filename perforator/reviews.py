@@ -1,7 +1,6 @@
 from .token import tokenCheck
 from .models import Profile, User, Review, PrList, PerformanceReview,\
-    Tokens, PeerReviews, Question, Questionary, Answer, Team
-from .ratings import peer_review_to_dict
+    Tokens, Question, Questionary, Answer, Team
 
 
 """

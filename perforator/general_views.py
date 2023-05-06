@@ -32,11 +32,6 @@ def get_irate_list(request):
 
 
 @api_view(['POST'])
-def save_process_rate(request):
-    return Response(data=general.processRate(request), status=200)
-
-
-@api_view(['POST'])
 def begin_next_stage(request):
     return Response(data=general.next_stage(request), status=200)
 
@@ -79,3 +74,8 @@ def pr_get_private_notes(request):
 @api_view(['POST'])
 def get_user_rating_by_id(request):
     return Response(data=general.pr_user_rating_by_id(request), status=200)
+
+
+@api_view(['GET'])
+def get_companies(request):
+    return Response(data=general.all_companies(request), status=200)

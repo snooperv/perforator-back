@@ -1,6 +1,6 @@
 import uuid
 from .token import tokenCheck
-from .models import User, Profile, PeerReviews, Tokens, Team, PrList, Questionary, Question, Answer, Review
+from .models import User, Profile, Tokens, Team, PrList
 
 """
     Модуль для работы с пирами пользователей.
@@ -323,6 +323,7 @@ def approve_user(request, id):
 
 
 def get_user_rating(request, id):
+    return {'error': 'Не работает'}
     if tokenCheck(request.headers['token']):
         result = []
         token = Tokens.objects.filter(token_f=request.headers['token']).first()

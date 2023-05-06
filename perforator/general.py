@@ -3,8 +3,8 @@ import hashlib
 import random
 from datetime import datetime, timedelta, timezone
 from django.contrib.auth.hashers import check_password
-from .models import User, Profile, Tokens, PeerReviews, PerformanceProcess, Team, PrList, Review, OneToOneReviews, \
-    Questionary, Question, Answer
+from .models import User, Profile, Tokens, PerformanceProcess, Team, PrList, Review, OneToOneReviews, \
+    Questionary, Question, Answer, Companies
 from .token import tokenCheck
 from .ratings import get_where_user_id_is_peer, get_where_user_id_is_peer_team
 from .reviews import __format_review_data
@@ -120,6 +120,7 @@ def irate_list(request):
         { profile.id: rate_form, ... }
         или словарь с ошибкой
     """
+    return {"error": 'Пока не работает'}
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
@@ -160,50 +161,6 @@ def irate_list(request):
         return answer
     else:
         return {"error": 'Вы не авторизованы'}
-
-
-def processRate(request):
-    """
-        peer_id - тот, кто оценивают
-        rated_person - тот, кого оценивает
-
-        :return: словарь след. вида:
-        { profile.id: rate_form, ... }
-        или словарь с ошибкой
-    """
-    result = {'status': 'not ok'}
-    if tokenCheck(request.headers['token']):
-        data = request.data
-        utc = pytz.UTC
-        request_time = (datetime.now()).replace(tzinfo=utc)
-        token = Tokens.objects.filter(token_f=request.headers['token']).first()
-        user = token.user
-        rated_person = Profile.objects.filter(id=data['profile']).first()
-        peer_id = Profile.objects.filter(user=user)[0]
-        pr_id = PrList.objects.filter(id=peer_id.pr)[0].pr.id
-        peer_review = PeerReviews(
-            peer_id=peer_id,
-            rated_person=rated_person,
-            deadlines=data['deadlines'],
-            rates_deadlines=data['rates_deadlines'],
-            approaches=data['approaches'],
-            rates_approaches=data['rates_approaches'],
-            teamwork=data['teamwork'],
-            rates_teamwork=data['rates_teamwork'],
-            practices=data['practices'],
-            rates_practices=data['rates_practices'],
-            experience=data['experience'],
-            rates_experience=data['rates_experience'],
-            adaptation=data['adaptation'],
-            rates_adaptation=data['rates_adaptation'],
-            rates_date=request_time,
-            pr_id=pr_id
-        )
-        peer_review.save()
-        result['status'] = 'ok'
-    else:
-        result['status'] = 'You are not login'
-    return result
 
 
 def begin_perforator(request):
@@ -531,6 +488,7 @@ def pr_user_rating_by_id(request):
     :param request: JSON-body { "id": <user-id пользователя, чьи оценки необходимы>, "pr_id": <pr_id>}
     :return:
     """
+    return {"error": 'Не арботает'}
     if tokenCheck(request.headers['token']):
         result = []
         id = request.data['id']
@@ -573,3 +531,16 @@ def pr_user_rating_by_id(request):
         return result
     else:
         return {'error': True, 'message': 'Вы не авторизовались'}
+
+
+def all_companies(request):
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        result['companies'] = []
+        companies = Companies.objects.all()
+        for e in companies:
+            result['companies'].append([e.id, e.name, e.description])
+        return result
+    else:
+        result['status'] = 'You are not login'
+    return result

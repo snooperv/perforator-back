@@ -1,4 +1,4 @@
-from .models import PeerReviews, Profile
+from .models import Profile
 from .form import RateForm
 from .peers import *
 
@@ -13,104 +13,6 @@ def create_review_form(request):
         :return: пустая forms.RateForm
     """
     return RateForm()
-
-
-def get_review_to_profile(request, profile_from, profile_rated):
-    """
-        Возвращает запись в таблицы PeerReviews -
-        ревью от пользователя profile_from по отн-ю к
-        пользователю profile_rated
-        profile_from, profile_rated - запись из модели Profile
-        :return: словарь с данными (ключи называются также,
-        как и в моделе PeerReviews) или ошибкой
-    """
-    if tokenCheck(request.headers['token']):
-        review = PeerReviews.objects.filter(rated_person=profile_rated) \
-            .filter(peer_id=profile_from).first()
-        answer = {}
-        if review is not None:
-            answer = peer_review_to_dict(review)
-            answer['created'] = True
-        else:
-            answer['created'] = False
-        return answer
-    else:
-        return {"error": 'Вы не авторизованы'}
-
-
-def generate_review_form_from_current_user(request, profile_rated):
-    if request.user.is_authenticated:
-        cur_profile = Profile.objects.filter(user=request.user)[0]
-        return generate_review_form(request, cur_profile, profile_rated)
-    else:
-        return {"error": 'Вы не авторизованы'}
-
-
-def generate_review_form(request, profile_from, profile_rated):
-    """
-        :return: форму из таблицы PeerReviews, новая пустая форма или
-        словарь с ошибкой
-    """
-    if tokenCheck(request.headers['token']):
-        review = get_review_to_profile(request, profile_from, profile_rated)
-
-        if review['created'] == False:
-            return create_review_form(request)
-        del review['created']
-        del review['peer_id']
-        del review['rated_person']
-        return RateForm(initial=review)
-    else:
-        return {"error": 'Вы не авторизованы'}
-
-
-def save_review_form_from_current_user(request, profile_rated, form):
-    if request.user.is_authenticated:
-        cur_profile = Profile.objects.filter(user=request.user)[0]
-        return save_review_form(request, cur_profile, profile_rated, form)
-    else:
-        return {"error": 'Вы не авторизованы'}
-
-
-def save_review_form(request, profile_from, profile_rated, form):
-    """
-        :return: словарь с ответом или ошибкой
-    """
-    if request.user.is_authenticated:
-        if form.is_valid():
-            td = transform_form(form)
-
-            # try:
-            #     obj = PeerReviews.objects.get(peer_id=profile_from, rated_person=profile_rated)
-            #     for key, value in td.items():
-            #         setattr(obj, key, value)
-            #     obj.save()
-            # except PeerReviews.DoesNotExist:
-            #     new_values = {'peer_id': profile_from, 'rated_person': profile_rated}
-            #     new_values.update(td)
-            #     obj = PeerReviews(**new_values)
-            #     obj.save()
-
-            review, created = PeerReviews.objects.update_or_create(peer_id=profile_from,
-                                  rated_person=profile_rated,
-                                  defaults=td)
-
-            return {'message': 'OK'}
-        else:
-            return {'error': 'Невалидная форма', 'form': form}
-    else:
-        return {"error": 'Вы не авторизованы'}
-
-
-def transform_form(form):
-    answer = form.cleaned_data
-    answer['rates_deadlines'] = int(answer['rates_deadlines'])
-    answer['rates_approaches'] = int(answer['rates_approaches'])
-    answer['rates_teamwork'] = int(answer['rates_teamwork'])
-    answer['rates_practices'] = int(answer['rates_practices'])
-    answer['rates_experience'] = int(answer['rates_experience'])
-    answer['rates_adaptation'] = int(answer['rates_adaptation'])
-    return answer
 
 
 def peer_review_to_dict(review):
