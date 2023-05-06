@@ -120,7 +120,7 @@ def irate_list(request):
         { profile.id: rate_form, ... }
         или словарь с ошибкой
     """
-    return {"error": 'Пока не работает'}
+    #return {"error": 'Пока не работает'}
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
