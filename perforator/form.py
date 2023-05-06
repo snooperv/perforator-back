@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 class RegistrationForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput())
     phone = forms.CharField(widget=forms.TextInput())
+    company = forms.CharField(widget=forms.URLInput())
     sbis = forms.CharField(widget=forms.URLInput())
     password = forms.CharField(widget=forms.PasswordInput())
     photo = forms.ImageField(widget=forms.FileInput())
