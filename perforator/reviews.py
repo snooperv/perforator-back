@@ -1,5 +1,5 @@
 from .token import tokenCheck
-from .models import Profile, User, Review, PrList, PerformanceReview,\
+from .models import Profile, User, Review, PrList,\
     Tokens, Question, Questionary, Answer, Team
 
 
@@ -128,32 +128,6 @@ def is_draft(request, id):
     else:
         result['status'] = 'You are not login'
     return result
-
-
-def get_empty_review_form(request):
-    """
-    TESTED
-        Возвращает запрошенный набор тем для построения формы ревью
-        Так как у обыкновенных ревью черновиков нет, возвращать готовые ревью не придётся
-        Список не оценённых менеджеров \ пиров \ подчинённых запрашивается отедльно
-        request.GET: параметры не нужны
-        :return: Один из следующих словраей:
-        { categories:
-            manager_review_categories: [
-                { id, name, description },
-                {...}, {...}
-            ],
-            peers_review_categories: [ {...}, {...}],
-            team_review_categories: [ {...}, {...}],
-         },
-        При ошибке: {'error': True, 'message': 'Профиль с таким id не найден'}
-    """
-    performance_review = PerformanceReview.objects.get(id=1)
-    categories = {}
-    for role in ['manager', 'peers', 'team']:
-        categories_name = role + '_review_categories'
-        categories[categories_name] = getattr(performance_review, categories_name).values('id', 'name', 'description')
-    return categories
 
 
 def save_review(request):

@@ -1,7 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from .models import PerformanceReview
 
 
 class RegistrationForm(forms.Form):
@@ -16,29 +15,6 @@ class UpdateProfile(forms.Form):
     name = forms.CharField(widget=forms.TextInput())
     phone = forms.CharField(widget=forms.TextInput())
     sbis = forms.CharField(widget=forms.TextInput())
-
-
-class SelfReviewForm(forms.Form):
-    def __init__(self, formType):
-        performance_review = PerformanceReview.objects.first()
-        super().__init__()
-        if formType == 'manager':
-            categories = performance_review.manager_review_categories.all()
-        elif formType == 'team':
-            categories = performance_review.team_review_categories.all()
-        elif formType == 'peers':
-            categories = performance_review.peers_review_categories.all()
-        else:
-            categories = performance_review.self_review_categories.all()
-        for category in categories:
-            field_name = 'category_%s' % category.id
-            self.fields[field_name] = forms.CharField(widget=forms.TextInput)
-            self.initial[field_name] = ""
-
-    def get_category_fields(self):
-        for field_name in self.fields:
-            if field_name.startswith('category_'):
-                yield self[field_name]
 
 
 class RateForm(forms.Form):

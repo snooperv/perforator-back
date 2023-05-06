@@ -101,16 +101,6 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
-# Модель Перформанс-Ревью
-class PerformanceReview(models.Model):
-    self_review_categories = models.ManyToManyField(GradeCategory, related_name='self_review_categories', default=None)
-    manager_review_categories = models.ManyToManyField(GradeCategory, related_name='manager_review_categories',
-                                                       default=None)
-    peers_review_categories = models.ManyToManyField(GradeCategory, related_name='peers_review_categories',
-                                                     default=None)
-    team_review_categories = models.ManyToManyField(GradeCategory, related_name='team_review_categories', default=None)
-
-
 class Questionary(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     perforator = models.ForeignKey(PerformanceProcess, on_delete=models.CASCADE)

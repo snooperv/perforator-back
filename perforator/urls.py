@@ -32,7 +32,6 @@ urlpatterns = [
     path('self-review/save/', raw_reviews_views.edit_self_review),
     path('self-review/is-draft/', raw_reviews_views.get_is_draft_status),
 
-    path('review/form/', raw_reviews_views.get_empty_review_form),
     path('review/save/', raw_reviews_views.save_review),
     path('review/get/', raw_reviews_views.get_review),
 
@@ -45,7 +44,7 @@ urlpatterns = [
     path('api/refresh-token', general_views.refresh_token),
     path('api/myprofile', general_views.my_profile),
     path('api/companies', general_views.get_companies),
-    #path('rate_list', general_views.get_irate_list),
+    path('rate_list', general_views.get_irate_list),
 
     path('1to1/get_common_notes/', one_to_one_views.get_common_notes),
     path('1to1/update_common_notes/', one_to_one_views.update_common_notes),
