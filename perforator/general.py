@@ -116,11 +116,10 @@ def my_profile(request):
 
 def irate_list(request):
     """
-        :return: словарь след. вида:
-        { profile.id: rate_form, ... }
-        или словарь с ошибкой
+        Возвращает словарь пользователей, которых необходимо оценить.
+        Входные данные не требуются.
     """
-    #return {"error": 'Пока не работает'}
+    result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
@@ -128,17 +127,17 @@ def irate_list(request):
         pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
         rated = get_where_user_id_is_peer(request, profile.user.id)
         rated_team = get_where_user_id_is_peer_team(request, profile.user.id)
-        if (len(rated) == 0 and len(rated_team) == 0):
+        if len(rated) == 0 and len(rated_team) == 0:
             return {}
-        answer = {'rated': []}
+        result = {'rated': []}
 
         if not profile.is_manager:
             for r in rated:
                 pid = int(r['profile_id'])
-                review = PeerReviews.objects.filter(rated_person_id=pid, peer_id=profile, pr_id=pr_id).first()
-                if review is None:
+                review = Review.objects.filter(appraising_person=profile, evaluated_person=pid,  pr_id=pr_id).first()
+                if review:
                     p = Profile.objects.filter(id=pid).first()
-                    answer['rated'].append({
+                    result['rated'].append({
                         'id': p.user.id,
                         'name': p.user.first_name,
                         'phone': p.user.username,
@@ -148,19 +147,19 @@ def irate_list(request):
         else:
             for r in rated_team:
                 pid = int(r['profile_id'])
-                review = PeerReviews.objects.filter(rated_person_id=pid, peer_id=profile, pr_id=pr_id).first()
+                review = Review.objects.filter(appraising_person=profile, evaluated_person=pid,  pr_id=pr_id).first()
                 if review is None:
                     p = Profile.objects.filter(id=pid).first()
-                    answer['rated'].append({
+                    result['rated'].append({
                         'id': p.user.id,
                         'name': p.user.first_name,
                         'phone': p.user.username,
                         'sbis': p.sbis,
                         'photo': p.photo.url
                     })
-        return answer
     else:
-        return {"error": 'Вы не авторизованы'}
+        result['status'] = 'You are not login'
+    return result
 
 
 def begin_perforator(request):
