@@ -135,10 +135,12 @@ def irate_list(request):
             for r in rated:
                 pid = int(r['profile_id'])
                 print(r)
-                print(profile)
+                print(profile.id)
                 print(pid)
+                print(pr_id)
                 review = Review.objects.filter(appraising_person=profile, evaluated_person=pid,  pr_id=pr_id).first()
                 if review:
+                    print('ok')
                     if review.is_draft:
                         p = Profile.objects.filter(id=pid).first()
                         result['rated'].append({
