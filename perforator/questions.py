@@ -94,11 +94,33 @@ def questionary_update(request):
                 if questionary:
                     questions = Question.objects.filter(questionary=questionary)
 
-                    for i in range(len(questions)):
-                        questions[i].name = data['questions'][i]['name']
-                        questions[i].description = data['questions'][i]['description']
-                        questions[i].save()
-                        result['status'] = 'ok'
+                    if len(questions) == len(data['questions']):
+                        for i in range(len(questions)):
+                            questions[i].name = data['questions'][i]['name']
+                            questions[i].description = data['questions'][i]['description']
+                            questions[i].save()
+                    elif len(questions) < len(data['questions']):
+                        for i in range(len(data['questions'])):
+                            if i < len(questions):
+                                questions[i].name = data['questions'][i]['name']
+                                questions[i].description = data['questions'][i]['description']
+                                questions[i].save()
+                            else:
+                                question = Question(
+                                    questionary=questionary,
+                                    name=data['questions'][i]['name'],
+                                    description=data['questions'][i]['description']
+                                )
+                                question.save()
+                    else:
+                        for i in range(len(questions)):
+                            if i < len(data['questions']):
+                                questions[i].name = data['questions'][i]['name']
+                                questions[i].description = data['questions'][i]['description']
+                                questions[i].save()
+                            else:
+                                questions[i].delete()
+                    result['status'] = 'ok'
                 else:
                     result['status'] = 'У пользователя отсутствуют анкеты'
             else:
