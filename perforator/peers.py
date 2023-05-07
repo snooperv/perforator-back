@@ -187,7 +187,8 @@ def get_where_user_id_is_peer(request, id):
         result = []
         user = User.objects.filter(id=id).first()
         profiles = Profile.objects.filter(peers__user_id=user.id)
-        profile = Profile.objects.filter(user=user)[0]
+        profile = Profile.objects.filter(user=user).first()
+        print(profiles)
         if not profile.is_manager:
             team = Team.objects.filter(id=profile.team_id)[0]
             manager = team.manager

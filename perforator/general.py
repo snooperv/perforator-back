@@ -125,8 +125,8 @@ def irate_list(request):
         user = token.user
         profile = Profile.objects.filter(user=user)[0]
         pr_id = PrList.objects.filter(id=profile.pr)[0].pr.id
-        rated = get_where_user_id_is_peer(request, profile.user.id)
-        rated_team = get_where_user_id_is_peer_team(request, profile.user.id)
+        rated = get_where_user_id_is_peer(request, profile.id)
+        rated_team = get_where_user_id_is_peer_team(request, profile.id)
         if len(rated) == 0 and len(rated_team) == 0:
             return {}
         result = {'rated': []}

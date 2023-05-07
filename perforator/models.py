@@ -43,7 +43,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=13)
     sbis = models.CharField(max_length=128)
-    peers = models.ManyToManyField('self', symmetrical=False, default=None, blank=True,
+    peers = models.ManyToMa nyField('self', symmetrical=False, default=None, blank=True,
                                    related_name='i_am_peer_to')
     photo = models.ImageField(null=True, upload_to=savePhotoUnderRandomName)
     approve = models.BooleanField(default=False)
