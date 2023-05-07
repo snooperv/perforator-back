@@ -135,28 +135,30 @@ def irate_list(request):
             for r in rated:
                 pid = int(r['profile_id'])
                 review = Review.objects.filter(appraising_person=profile, evaluated_person=pid,  pr_id=pr_id).first()
-                if review.is_draft:
-                    p = Profile.objects.filter(id=pid).first()
-                    result['rated'].append({
-                        'id': p.user.id,
-                        'name': p.user.first_name,
-                        'phone': p.user.username,
-                        'sbis': p.sbis,
-                        'photo': p.photo.url
-                    })
+                if review:
+                    if review.is_draft:
+                        p = Profile.objects.filter(id=pid).first()
+                        result['rated'].append({
+                            'id': p.user.id,
+                            'name': p.user.first_name,
+                            'phone': p.user.username,
+                            'sbis': p.sbis,
+                            'photo': p.photo.url
+                        })
         else:
             for r in rated_team:
                 pid = int(r['profile_id'])
                 review = Review.objects.filter(appraising_person=profile, evaluated_person=pid,  pr_id=pr_id).first()
-                if review.is_draft:
-                    p = Profile.objects.filter(id=pid).first()
-                    result['rated'].append({
-                        'id': p.user.id,
-                        'name': p.user.first_name,
-                        'phone': p.user.username,
-                        'sbis': p.sbis,
-                        'photo': p.photo.url
-                    })
+                if review:
+                    if review.is_draft:
+                        p = Profile.objects.filter(id=pid).first()
+                        result['rated'].append({
+                            'id': p.user.id,
+                            'name': p.user.first_name,
+                            'phone': p.user.username,
+                            'sbis': p.sbis,
+                            'photo': p.photo.url
+                        })
     else:
         result['status'] = 'You are not login'
     return result
