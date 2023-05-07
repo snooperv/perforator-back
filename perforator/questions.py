@@ -108,3 +108,47 @@ def questionary_update(request):
     else:
         result['status'] = 'You are not login'
     return result
+
+
+def questionary_get(request):
+    """
+        Возвращает анкету с вопросами залогиненного менеджера.
+        Формат входных данных JSON:
+        {
+            "is_self_review": true
+        }
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user)[0]
+
+        if profile.is_manager:
+            perforator = PrList.objects.filter(id=profile.pr)[0].pr
+            if perforator:
+                questionary = Questionary.objects.filter(
+                    profile=profile,
+                    perforator=perforator,
+                    is_self_review=data['is_self_review']
+                ).first()
+
+                if questionary:
+                    questions = Question.objects.filter(questionary=questionary)
+                    result['questions'] = []
+                    for i in range(len(questions)):
+                        result['questions'].append({
+                            'name': questions[i].name,
+                            'description': questions[i].description
+                        })
+                    result['status'] = 'ok'
+                else:
+                    result['status'] = 'У пользователя отсутствуют анкеты'
+            else:
+                result['status'] = 'У пользователя отсутствуют активные performance-review'
+        else:
+            result['status'] = 'Недостаточно прав'
+    else:
+        result['status'] = 'You are not login'
+    return result

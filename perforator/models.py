@@ -121,7 +121,7 @@ class Review(models.Model):
 class Question(models.Model):
     questionary = models.ForeignKey(Questionary, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=256)
-    description = models.CharField(max_length=256)
+    description = models.CharField(max_length=512)
 
 
 class Answer(models.Model):

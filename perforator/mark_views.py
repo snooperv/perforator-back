@@ -11,3 +11,8 @@ def create_questionary(request):
 @api_view(['POST'])
 def update_questionary(request):
     return Response(data=questions.questionary_update(request), status=200)
+
+
+@api_view(['POST'])
+def get_questionary(request):
+    return Response(data=questions.questionary_get(request), status=200)

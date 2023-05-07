@@ -67,4 +67,5 @@ urlpatterns = [
 
     path('questionary/create', mark_views.create_questionary),
     path('questionary/update', mark_views.update_questionary),
+    path('questionary/get', mark_views.get_questionary),
 ]
