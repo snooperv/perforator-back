@@ -134,6 +134,9 @@ def irate_list(request):
         if not profile.is_manager:
             for r in rated:
                 pid = int(r['profile_id'])
+                print(r)
+                print(profile)
+                print(pid)
                 review = Review.objects.filter(appraising_person=profile, evaluated_person=pid,  pr_id=pr_id).first()
                 if review:
                     if review.is_draft:
