@@ -323,7 +323,7 @@ def approve_user(request, id):
 
 
 def get_user_rating(request, id):
-    return {'error': 'Не работает'}
+    #return {'error': 'Не работает'}
     if tokenCheck(request.headers['token']):
         result = []
         token = Tokens.objects.filter(token_f=request.headers['token']).first()

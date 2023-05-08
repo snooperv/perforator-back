@@ -13,6 +13,14 @@ minutes_delta = 60
 
 
 def login(request):
+    """
+    {
+        "user": {
+            "id": "+79876543211",
+            "password": "123"
+        }
+    }
+    """
     utc = pytz.UTC
     result = {'status': 'not ok'}
     user = request.data['user']

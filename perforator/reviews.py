@@ -163,8 +163,7 @@ def save_review(request):
         if review:
             for grade in request.data['grades']:
                 Answer.objects.filter(id=grade['id']).update(text=grade['text'], mark=grade['mark'])
-            if not request.data['is_draft']:
-                review.is_draft = False
+            review.is_draft = False
             review.save()
             result = {'status': 'ok'}
         else:

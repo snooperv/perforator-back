@@ -1,35 +1,31 @@
-from .models import Profile
-from .form import RateForm
-from .peers import *
+from .token import tokenCheck
+from .models import Profile, User, Review, PrList,\
+    Tokens, Question, Questionary, Answer, Team
 
 """
     Модуль для работы с ревью на странице 'Я оцениваю'
 """
 
 
-def create_review_form(request):
-    """
-        Создать новую пустую форму forms.RateForm
-        :return: пустая forms.RateForm
-    """
-    return RateForm()
-
-
-def peer_review_to_dict(review):
-    return {
-            'peer_id': review.peer_id.id,
-            'rated_person': review.rated_person.id,
-            'deadlines': review.deadlines,
-            'approaches': review.approaches,
-            'teamwork': review.teamwork,
-            'practices': review.practices,
-            'experience': review.experience,
-            'adaptation': review.adaptation,
-            'rates_deadlines': review.rates_deadlines,
-            'rates_approaches': review.rates_approaches,
-            'rates_teamwork': review.rates_teamwork,
-            'rates_practices': review.rates_practices,
-            'rates_experience': review.rates_experience,
-            'rates_adaptation': review.rates_adaptation
+def user_rating(request, id):
+    """ Формат входного JSON:
+        {
+            "id": 1,
+            "pr_id": 1
         }
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        profile = Profile.objects.filter(id=id).first()
+        result['rating'] = [
+            {
+                'name': 'Средняя оценка',
+                'manager': 0,
+                'peer': 0,
+                'average': 0
+            }
+        ]
+    else:
+        result['status'] = 'You are not login'
+    return result
 
