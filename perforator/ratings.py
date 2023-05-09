@@ -67,6 +67,7 @@ def save_rating(profile):
             m_avg += g['mark']
 
         marks['avg'] = {}
+        marks['avg']['name'] = "Средняя оценка"
         marks['avg']['m'] = m_avg / len(grades)
         marks['avg']['p'] = 0
         marks['avg']['a'] = 0
