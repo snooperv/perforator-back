@@ -57,7 +57,10 @@ def save_rating(profile):
 
         grades = __get_grades(m_review)
         m_avg, marks = 0, {}
+        print(grades)
+        """
         for g in grades:
+            print(g)
             marks[g.id]['m'] = g.mark
             marks[g.id]['name'] = g.name
             marks[g.id]['p'] = 0
@@ -96,4 +99,5 @@ def save_rating(profile):
             )
             ur.save()
     return result
+    """
 
