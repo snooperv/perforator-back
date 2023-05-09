@@ -323,6 +323,12 @@ def next_stage(request):
                             __create_review_and_answers(e, p, questionary)
                 else:
                     return {'status': 'Отсутствуют анкеты с вопросами'}
+            if pr.status == 4:
+                team = Team.objects.filter(manager=profile).first()
+                employees = Profile.objects.filter(team_id=team.id)
+
+                for e in employees:
+                    save_rating(e)
         else:
             result['status'] = 'Вы не менеджер'
     else:

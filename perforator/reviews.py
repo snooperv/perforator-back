@@ -135,7 +135,6 @@ def save_review(request):
     """ Формат входного JSON:
     {
         "profile": 2,
-        "is_draft": true,
         "grades": [
             {
                 "id": 5,

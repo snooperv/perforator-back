@@ -139,7 +139,7 @@ class Tokens(models.Model):
     time_f = models.DateTimeField(null=True, default=None)
     time_b = models.DateTimeField(null=True, default=None)
 
-"""
+
 class UserRating(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     pr = models.ForeignKey(PrList, on_delete=models.CASCADE)
@@ -147,5 +147,3 @@ class UserRating(models.Model):
     manager_mark = models.IntegerField(default=-1)
     peer_mark = models.IntegerField(default=-1)
     average_mark = models.IntegerField(default=-1)
-
-"""
