@@ -34,10 +34,5 @@ def get_profile_team(request):
 
 
 @api_view(['GET'])
-def get_full_hierarchy_tree(request):
-    return Response(data=get_full_tree(), status=200)
-
-
-@api_view(['GET'])
 def all_users(request):
     return Response(data=get_all_users(request), status=200)

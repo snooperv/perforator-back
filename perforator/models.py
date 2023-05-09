@@ -138,3 +138,14 @@ class Tokens(models.Model):
     token_b = models.CharField(max_length=256)
     time_f = models.DateTimeField(null=True, default=None)
     time_b = models.DateTimeField(null=True, default=None)
+
+"""
+class UserRating(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    pr = models.ForeignKey(PrList, on_delete=models.CASCADE)
+    name = models.CharField(max_length=256)
+    manager_mark = models.IntegerField(default=-1)
+    peer_mark = models.IntegerField(default=-1)
+    average_mark = models.IntegerField(default=-1)
+
+"""

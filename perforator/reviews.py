@@ -11,7 +11,7 @@ from .models import Profile, User, Review, PrList,\
 
 def __format_review_data(review):
     result = {
-        'id': review.id,
+        #'id': review.id,
         'is_draft': review.is_draft,
         'grades': []
     }
