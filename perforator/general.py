@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import check_password
 from .models import User, Profile, Tokens, PerformanceProcess, Team, PrList, Review, OneToOneReviews, \
     Questionary, Question, Answer, Companies
 from .token import tokenCheck
+from .peers import get_where_user_id_is_peer, get_where_user_id_is_peer_team
 from .ratings import save_rating
 from .reviews import __format_review_data
 
