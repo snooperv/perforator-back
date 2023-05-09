@@ -57,15 +57,16 @@ def save_rating(profile):
 
         grades = __get_grades(m_review)
         m_avg, marks = 0, {}
-        print(grades)
 
         for g in grades:
-            print(g)
+            marks[g['id']] = {}
             marks[g['id']]['m'] = g['mark']
             marks[g['id']]['name'] = g['name']
             marks[g['id']]['p'] = 0
             marks[g['id']]['a'] = 0
             m_avg += g['mark']
+
+        marks['avg'] = {}
         marks['avg']['m'] = m_avg / len(grades)
         marks['avg']['p'] = 0
         marks['avg']['a'] = 0
