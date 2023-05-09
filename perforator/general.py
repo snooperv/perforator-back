@@ -290,7 +290,7 @@ def next_stage(request):
 
             pr.status += 1
             pr.deadline = deadline
-            #pr.save()
+            pr.save()
             result['status'] = 'ok'
 
             if pr.status == 1:
@@ -323,7 +323,7 @@ def next_stage(request):
                             __create_review_and_answers(e, p, questionary)
                 else:
                     return {'status': 'Отсутствуют анкеты с вопросами'}
-            if True:#pr.status == 4:
+            if pr.status == 4:
                 team = Team.objects.filter(manager=profile).first()
                 employees = Profile.objects.filter(team_id=team.id)
 
