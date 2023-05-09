@@ -58,14 +58,14 @@ def save_rating(profile):
         grades = __get_grades(m_review)
         m_avg, marks = 0, {}
         print(grades)
-        """
+
         for g in grades:
             print(g)
-            marks[g.id]['m'] = g.mark
-            marks[g.id]['name'] = g.name
-            marks[g.id]['p'] = 0
-            marks[g.id]['a'] = 0
-            m_avg += g.mark
+            marks[g['id']]['m'] = g['mark']
+            marks[g['id']]['name'] = g['name']
+            marks[g['id']]['p'] = 0
+            marks[g['id']]['a'] = 0
+            m_avg += g['mark']
         marks['avg']['m'] = m_avg / len(grades)
         marks['avg']['p'] = 0
         marks['avg']['a'] = 0
@@ -80,8 +80,8 @@ def save_rating(profile):
                 p_grades = __get_grades(review)
                 count_marks += 1
                 for g in p_grades:
-                    marks[g.id]['p'] += g.mark
-                    marks['avg']['p'] += g.mark
+                    marks[g['id']]['p'] += g['mark']
+                    marks['avg']['p'] += g['mark']
 
         marks['avg']['p'] /= (len(grades) * count_marks)
         marks['avg']['p'] = round(marks['avg']['p'], 2)
@@ -99,5 +99,5 @@ def save_rating(profile):
             )
             ur.save()
     return result
-    """
+
 
