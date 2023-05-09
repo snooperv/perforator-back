@@ -11,7 +11,7 @@ from .models import Profile, User, Review, PrList,\
 
 def __format_review_data(review):
     result = {
-        #'id': review.id,
+        'id': review.id,
         'is_draft': review.is_draft,
         'grades': []
     }
@@ -19,13 +19,14 @@ def __format_review_data(review):
     questions = Question.objects.filter(questionary=review.questionary)
     for q in questions:
         answer = Answer.objects.filter(profile=review.appraising_person, question=q, review=review).first()
-        result['grades'].append({
-            'id': answer.id,
-            'name': q.name,
-            'description': q.description,
-            'text': answer.text,
-            'mark': answer.mark
-        })
+        if answer:
+            result['grades'].append({
+                'id': answer.id,
+                'name': q.name,
+                'description': q.description,
+                'text': answer.text,
+                'mark': answer.mark
+            })
     return result
 
 
