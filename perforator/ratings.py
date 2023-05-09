@@ -51,7 +51,7 @@ def save_rating(profile):
         pass
     else:
         manager = Team.objects.filter(id=profile.team_id).first().manager
-
+        pr = PrList.objects.filter(id=profile.pr).first()
         m_review = Review.objects.filter(appraising_person=manager, evaluated_person=profile,
                                          pr_id=manager.pr, is_self_review=False).first()
 
@@ -92,7 +92,7 @@ def save_rating(profile):
 
             ur = UserRating(
                 profile=profile,
-                pr=profile.pr,
+                pr=pr,
                 name=marks[e]['name'],
                 manager_mark=marks[e]['m'],
                 peer_mark=marks[e]['p'],

@@ -215,7 +215,7 @@ def begin_perforator(request):
                 )
                 u_pr_record.save()
 
-                u_pr_id = PrList.objects.filter(profile=u, is_active=True)[0].id
+                u_pr_id = PrList.objects.filter(profile=u, is_active=True).first().id
                 u.pr = u_pr_id
                 u.save()
 
