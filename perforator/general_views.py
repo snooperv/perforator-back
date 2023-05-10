@@ -71,11 +71,6 @@ def pr_get_private_notes(request):
     return Response(data=general.pr_private_notes(request), status=200)
 
 
-@api_view(['POST'])
-def get_user_rating_by_id(request):
-    return Response(data=general.pr_user_rating_by_id(request), status=200)
-
-
 @api_view(['GET'])
 def get_companies(request):
     return Response(data=general.all_companies(request), status=200)

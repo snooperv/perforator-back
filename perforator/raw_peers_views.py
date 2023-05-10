@@ -58,8 +58,3 @@ def save_user_peers(request):
 @api_view(['POST'])
 def approve_user(request):
     return Response(data=peers.approve_user(request, request.GET['id']), status=200)
-
-
-@api_view(['GET'])
-def get_user_rating_by_id(request):
-    return Response(data=peers.get_user_rating(request, request.GET['id']), status=200)

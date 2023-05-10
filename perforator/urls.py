@@ -14,7 +14,6 @@ urlpatterns = [
     path('', views.SelfReviewByUserView.as_view(), name='index'),
     path('registration/', csrf_exempt(views.registration), name='registration'),
     path('imanager/employee/', views.Employee.as_view(), name='employee'),
-    path('imanager/employee/rating', raw_peers_views.get_user_rating_by_id),
 
     path('peers/all/', raw_peers_views.get_all_peers),
     path('peers/my/', raw_peers_views.get_all_current_user_peers),
@@ -63,7 +62,6 @@ urlpatterns = [
     path('performance_review/get/review', general_views.pr_get_review),
     path('performance_review/get/common_notes', general_views.pr_get_common_notes),
     path('performance_review/get/private_notes', general_views.pr_get_private_notes),
-    #path('performance_review/employee/rating', general_views.get_user_rating_by_id),
 
     path('questionary/create', mark_views.create_questionary),
     path('questionary/update', mark_views.update_questionary),

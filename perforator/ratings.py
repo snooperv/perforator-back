@@ -56,7 +56,30 @@ def save_user_rating(profile):
     """
     result = {'status': 'not ok'}
     if profile.is_manager:
-        pass
+        team = Profile.objects.filter(team_id=Team.objects.get(manager=profile).id)
+        pr = PrList.objects.get(id=profile.pr)
+        count_marks, marks = 0, {}
+        for t in team:
+            review = Review.objects.filter(appraising_person=t, evaluated_person=profile,
+                                           pr_id=t.pr, is_self_review=False).first()
+            if review:
+                p_grades = __get_grades(review)
+                count_marks += 1
+                for g in p_grades:
+                    if g['name'] in marks:
+                        marks[g['name']] = g['mark']
+                    else:
+                        marks[g['name']] += g['mark']
+        for e in marks:
+            marks[e] /= count_marks
+
+            rating = UserRating(
+                profile=profile,
+                pr=pr,
+                name=e,
+                average_mark=round(marks[e], 2)
+            )
+            rating.save()
     else:
         manager = Team.objects.filter(id=profile.team_id).first().manager
         pr = PrList.objects.filter(id=profile.pr).first()
@@ -129,7 +152,7 @@ def save_manager_rating(manager, team):
             manager=manager,
             pr=PrList.objects.filter(id=manager.pr).first(),
             name=e,
-            average_mark=result[e]
+            average_mark=round(result[e], 2)
         )
         team_rating.save()
 

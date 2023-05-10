@@ -501,56 +501,6 @@ def pr_private_notes(request):
     return result
 
 
-def pr_user_rating_by_id(request):
-    """
-    :param request: JSON-body { "id": <user-id пользователя, чьи оценки необходимы>, "pr_id": <pr_id>}
-    :return:
-    """
-    return {"error": 'Не арботает'}
-    if tokenCheck(request.headers['token']):
-        result = []
-        id = request.data['id']
-        pr_id = PrList.objects.filter(id=request.data['pr_id'])[0].pr.id
-        token = Tokens.objects.filter(token_f=request.headers['token']).first()
-        user = User.objects.filter(id=id).first()
-        manager = token.user
-
-        p = Profile.objects.filter(user=user.id)[0]
-        rates = PeerReviews.objects.filter(rated_person_id=id, pr_id=pr_id)
-        obj = {'user_id': p.user.id,
-               'username': p.user.first_name,
-               'photo': p.photo.url,
-               'rates': []}
-        for r in rates:
-            rate = {'who': r.peer_id_id,
-                    'is_manager': False,
-                    'manager_name': '',
-                    'manager_photo': '',
-                    'r_deadline': r.rates_deadlines,
-                    'r_approaches': r.rates_approaches,
-                    'r_teamwork': r.rates_teamwork,
-                    'r_practices': r.rates_practices,
-                    'r_experience': r.rates_experience,
-                    'r_adaptation': r.rates_adaptation,
-                    'deadline': r.deadlines,
-                    'approaches': r.approaches,
-                    'teamwork': r.teamwork,
-                    'practices': r.practices,
-                    'experience': r.experience,
-                    'adaptation': r.adaptation,
-                    'rate_date': r.rates_date
-                    }
-            if r.peer_id_id == manager.id:
-                rate['is_manager'] = True
-                rate['manager_name'] = manager.first_name
-                rate['manager_photo'] = manager.profile.photo.url
-            obj['rates'].append(rate)
-        result.append(obj)
-        return result
-    else:
-        return {'error': True, 'message': 'Вы не авторизовались'}
-
-
 def all_companies(request):
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
