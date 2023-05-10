@@ -147,3 +147,10 @@ class UserRating(models.Model):
     manager_mark = models.FloatField(default=-1)
     peer_mark = models.FloatField(default=-1)
     average_mark = models.FloatField(default=-1)
+
+
+class TeamRating(models.Model):
+    manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    pr = models.ForeignKey(PrList, on_delete=models.CASCADE)
+    name = models.CharField(max_length=256)
+    average_mark = models.FloatField(default=-1)

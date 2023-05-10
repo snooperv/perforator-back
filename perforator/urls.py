@@ -70,4 +70,5 @@ urlpatterns = [
     path('questionary/get', mark_views.get_questionary),
 
     path('rating/user_get', mark_views.get_user_rating),
+    path('rating/manager_get', mark_views.get_manager_rating),
 ]

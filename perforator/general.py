@@ -7,7 +7,7 @@ from .models import User, Profile, Tokens, PerformanceProcess, Team, PrList, Rev
     Questionary, Question, Answer, Companies
 from .token import tokenCheck
 from .peers import get_where_user_id_is_peer, get_where_user_id_is_peer_team
-from .ratings import save_rating
+from .ratings import save_user_rating, save_manager_rating
 from .reviews import __format_review_data
 
 minutes_delta = 60
@@ -328,7 +328,9 @@ def next_stage(request):
                 employees = Profile.objects.filter(team_id=team.id)
 
                 for e in employees:
-                    save_rating(e)
+                    save_user_rating(e)
+
+                save_manager_rating(profile, employees)
         else:
             result['status'] = 'Вы не менеджер'
     else:
@@ -352,7 +354,7 @@ def pr_status(request):
             offset = datetime.fromtimestamp(pr.deadline.timestamp()) - datetime.utcfromtimestamp(pr.deadline.timestamp())
 
             result['pr_status'] = pr.status
-            result['deadline'] =  pr.deadline - offset
+            result['deadline'] = pr.deadline - offset
             result['status'] = 'ok'
         else:
             result['pr_status'] = "Отсутствуют активные performance review"

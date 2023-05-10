@@ -21,3 +21,8 @@ def get_questionary(request):
 @api_view(['POST'])
 def get_user_rating(request):
     return Response(data=ratings.user_rating(request), status=200)
+
+
+@api_view(['GET'])
+def get_manager_rating(request):
+    return Response(data=ratings.manager_rating(request, request.GET['id']), status=200)

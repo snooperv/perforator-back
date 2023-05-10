@@ -1,6 +1,6 @@
 from .token import tokenCheck
 from .models import Profile, UserRating, Review, PrList,\
-    Tokens, Question, Questionary, Answer, Team
+    Question, TeamRating, Answer, Team, Tokens
 
 
 def __get_grades(review):
@@ -17,34 +17,42 @@ def __get_grades(review):
     return result
 
 
-def user_rating(request, id):
-    """ Формат входного JSON:
+def user_rating(request):
+    """ Возвращает таблицу с оценками пользователя.
+        Формат входного JSON:
         {
             "id": 1,
             "pr_id": 1
         }
+        id - Идентификатор пользователя, рейтинг которого нужен;
+        pr_id - Идентификатор конкретного performance review
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
-        profile = Profile.objects.filter(id=id).first()
-        result['rating'] = [
-            {
-                'name': 'Средняя оценка',
-                'manager': 0,
-                'peer': 0,
-                'average': 0
-            }
-        ]
+        data = request.data
+        profile = Profile.objects.filter(id=data['id']).first()
+        pr = PrList.objects.filter(id=data['pr_id']).first()
+        rating = UserRating.objects.filter(profile=profile, pr=pr)
+        if rating:
+            result['rating'] = []
+
+            for e in rating:
+                result['rating'].append({
+                    'name': e.name,
+                    'manager': e.manager_mark,
+                    'peer': e.peer_mark,
+                    'average': e.average_mark
+                })
+            result['status'] = 'ok'
+        else:
+            result['status'] = 'Отсутствует информация с рейтингом'
     else:
         result['status'] = 'You are not login'
     return result
 
 
-def save_rating(profile):
-    """ Формат входного JSON:
-        {
-
-        }
+def save_user_rating(profile):
+    """ Сохраняет рейтинг сотрудника в базу
     """
     result = {'status': 'not ok'}
     if profile.is_manager:
@@ -100,6 +108,57 @@ def save_rating(profile):
                 average_mark=marks[e]['a'],
             )
             ur.save()
+
     return result
 
 
+def save_manager_rating(manager, team):
+    result = {}
+    for u in team:
+        pr = PrList.objects.filter(id=u.pr).first()
+        rating = UserRating.objects.filter(profile=u, pr=pr)
+
+        for e in rating:
+            if e.name not in result:
+                result[e.name] = e.average_mark
+            else:
+                result[e.name] += e.average_mark
+    for e in result:
+        result[e] /= len(team)
+        team_rating = TeamRating(
+            manager=manager,
+            pr=PrList.objects.filter(id=manager.pr).first(),
+            name=e,
+            average_mark=result[e]
+        )
+        team_rating.save()
+
+
+def manager_rating(request, pr_id):
+    """
+        Возвращает таблицу с рейтингом о команде залогиненного менеджера.
+        Входные данные: Это GET-запрос, в параметрах надо передать performance review ID с названием поля "id"
+        пример: <url>/rating/manager_get?id=1
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        user = Tokens.objects.filter(token_f=request.headers['token']).first().user
+        profile = Profile.objects.filter(user=user).first()
+
+        if profile.is_manager:
+            result['rating'] = []
+            team_rating = TeamRating.objects.filter(manager=profile, pr=pr_id)
+            if team_rating:
+                for e in team_rating:
+                    result['rating'].append({
+                        'name': e.name,
+                        'mark': e.average_mark
+                    })
+                result['status'] = 'ok'
+            else:
+                result['status'] = 'Отсутствует информация с рейтингом'
+        else:
+            result['status'] = 'Недостаточно прав. Вы не менеджер'
+    else:
+        result['status'] = 'You are not login'
+    return result
