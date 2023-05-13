@@ -290,7 +290,6 @@ def next_stage(request):
 
             pr.status += 1
             pr.deadline = deadline
-            pr.save()
             result['status'] = 'ok'
 
             if pr.status == 1:
@@ -305,9 +304,9 @@ def next_stage(request):
                     for e in employees:
                         __create_self_review_and_answers(e, questionary)
                 else:
-                    return {'status': 'Отсутствуют анкеты с вопросами'}
-
-            if pr.status == 3:
+                    result['status'] = 'Отсутствуют анкеты с вопросами'
+                pr.save()
+            elif pr.status == 3:
                 questionary = Questionary.objects.filter(profile=profile, perforator=pr, is_self_review=False).first()
 
                 if questionary:
@@ -322,8 +321,9 @@ def next_stage(request):
                         for p in peers:
                             __create_review_and_answers(e, p, questionary)
                 else:
-                    return {'status': 'Отсутствуют анкеты с вопросами'}
-            if pr.status == 4:
+                    result['status'] = 'Отсутствуют анкеты с вопросами'
+                pr.save()
+            elif pr.status == 4:
                 team = Team.objects.filter(manager=profile).first()
                 employees = Profile.objects.filter(team_id=team.id)
 
@@ -331,6 +331,9 @@ def next_stage(request):
                     save_user_rating(e)
 
                 save_manager_rating(profile, employees)
+                pr.save()
+            else:
+                pr.save()
         else:
             result['status'] = 'Вы не менеджер'
     else:
@@ -415,8 +418,7 @@ def close_perforator(request):
 
 def pr_list(request):
     """
-     :param request:
-    :return:
+     Без входных аргументов. Возвращает лист всех performance review для залогиненного пользователя.
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
@@ -428,6 +430,32 @@ def pr_list(request):
         for pr in prl:
             result['rp'].append({"pr_id": pr.id, "closing_date": pr.date})
         result['status'] = "ok"
+    else:
+        result['status'] = 'You are not login'
+    return result
+
+
+def pr_list_by_id(request):
+    """
+     Возвращает лист всех performance review для конкретного пользователя.
+     Входной JSON:
+     {
+        "id": 1
+     }
+     id - идентификатор профиля
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        data = request.data
+        profile = Profile.objects.filter(user=data['id']).first()
+        if profile:
+            prl = PrList.objects.filter(profile=profile)
+            result['rp'] = []
+            for pr in prl:
+                result['rp'].append({"pr_id": pr.id, "closing_date": pr.date})
+            result['status'] = "ok"
+        else:
+            result['status'] = "Указанный профиль не найден"
     else:
         result['status'] = 'You are not login'
     return result
