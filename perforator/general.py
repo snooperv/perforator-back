@@ -355,6 +355,7 @@ def pr_status(request):
 
             result['pr_status'] = pr.status
             result['deadline'] = pr.deadline - offset
+            result['pr_id'] = prl.id
             result['status'] = 'ok'
         else:
             result['pr_status'] = "Отсутствуют активные performance review"
