@@ -11,6 +11,7 @@ def __format_profile_to_data(p):
         'photo': p.photo.url,
         'sbis': p.sbis,
         'approve': p.approve,
+        'pr_id': p.pr,
         'message': "ok",
     }
 
@@ -148,19 +149,6 @@ def delete_user_from_team(request):
     else:
         result['status'] = 'You are not login'
     return result
-
-
-# Метод на изменение менеджера (пока не нужен)
-# def set_manager(request):
-#     if request.user.is_authenticated:
-#         profile = Profile.objects.filter(user=request.user)[0]
-#         manager_id = request.POST.get('manager_id')
-#         if not manager_id:
-#             profile.manager_id = None
-#         profile.manager_id = request.manager_id
-#         return {'message': 'ОК'}
-#     else:
-#         return {'error': True, 'message': 'Вы не авторизовались'}
 
 
 def get_team(request):
