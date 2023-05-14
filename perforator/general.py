@@ -467,19 +467,25 @@ def pr_review(request):
      {
         "appraising_person": <profile_id>,
         "evaluated_person": <profile_id>,
-        "pr_id": <pr_id>
+        "pr_id": <pr_id>,
+        "face": <profile_id>
     }
     :return:
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         data = request.data
-        pr_id = PrList.objects.filter(id=request.data['pr_id']).first().id
+        if data['face'] == data['appraising_person']:
+            pr = data['pr_id']
+        else:
+            profile = Profile.objects.get(id=data['appraising_person'])
+            pp = PrList.objects.get(id=data['pr_id']).pr
+            pr = PrList.objects.get(pr=pp, profile=profile, is_active=False).id
         review = Review.objects.filter(
             appraising_person=data['appraising_person'],
             evaluated_person=data['evaluated_person'],
             is_self_review=False,
-            pr_id=pr_id).first()
+            pr_id=pr).first()
         if not review:
             return {'status': 'Review не найдено'}
 
