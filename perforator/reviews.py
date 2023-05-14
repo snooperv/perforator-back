@@ -242,14 +242,17 @@ def get_review(request):
 
 def pr_self_review(request):
     """
-     :param request: { "pr_id": <pr_id> }
-    :return:
+     :param request:
+     {
+        "pr_id":
+        <pr_id>
+    }
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
-        profile = Profile.objects.filter(user=user)[0]
+        profile = Profile.objects.get(user=user)
 
         review = Review.objects.filter(
             appraising_person=profile,

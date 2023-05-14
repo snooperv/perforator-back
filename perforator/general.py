@@ -463,20 +463,25 @@ def pr_list_by_id(request):
 
 def pr_review(request):
     """ Доступ к любому из ревью имеет любой из пользователей. Возможно стоит добавить ограничений?
-     :param request: { "appraising_person": <profile_id>, "evaluated_person": <profile_id>, "pr_id": <pr_id> }
+     :param request:
+     {
+        "appraising_person": <profile_id>,
+        "evaluated_person": <profile_id>,
+        "pr_id": <pr_id>
+    }
     :return:
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         data = request.data
-        pr_id = PrList.objects.filter(id=request.data['pr_id'])[0].pr.id
+        pr_id = PrList.objects.filter(id=request.data['pr_id']).first().id
         review = Review.objects.filter(
             appraising_person=data['appraising_person'],
             evaluated_person=data['evaluated_person'],
             is_self_review=False,
             pr_id=pr_id).first()
         if not review:
-            return {'status': 'Self-review не найдено'}
+            return {'status': 'Review не найдено'}
 
         result = __format_review_data(review)
     else:
