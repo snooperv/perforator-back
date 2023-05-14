@@ -48,17 +48,13 @@ def registration(request):
 
         if form.is_valid():
             user = User.objects.create_user(form.cleaned_data['phone'], '', form.cleaned_data['password'])
+            user.profile.phone = form.cleaned_data['phone']
             user.first_name = form.cleaned_data['name']
-            company = Companies.objects.filter(id=form.cleaned_data['company']).first()
-            profile = Profile(
-                user=user,
-                phone=form.cleaned_data['phone'],
-                sbis=form.cleaned_data['sbis'],
-                company=company,
-                photo=form.cleaned_data['photo']
-            )
+            user.profile.sbis = form.cleaned_data['sbis']
+            user.profile.company = Companies.objects.filter(id=form.cleaned_data['company']).first()
+            photo = form.cleaned_data['photo']
+            user.profile.photo = photo
             user.save()
-            profile.save()
         else:
             pass
     else:
