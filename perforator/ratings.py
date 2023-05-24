@@ -26,6 +26,21 @@ def user_rating(request):
         }
         id - Идентификатор пользователя, рейтинг которого нужен;
         pr_id - Идентификатор конкретного performance review
+
+        Формат выходного JSON:
+        {
+            "rating": [
+                {
+                    "name": <заголовок вопроса>,
+                    "manager": <оценка менеджера>,
+                    "peer": <оценка коллег>,
+                    "average": <средняя оценка>
+                },
+                {
+                    ...
+                }
+            ]
+        }
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):

@@ -98,16 +98,23 @@ def refresh_token(request):
 
 def my_profile(request):
     """
-    USER:  date_joined, email, first_name, groups, id, is_active, is_staff, is_superuser, last_login, las
-            t_name, logentry, password, profile, selfreview, user_permissions, username
-    :param request:
-    :return:
+    Возвращает всю необходимую информацию об авторизованном пользователе.
+    Входные данные не требуются
+    :return: JSON
+    {
+        "id": <profile_id>,
+        "name": <user_first_name>,
+        "phone": <user_username>,
+        "photo": <profile_photo>,
+        "status": "ok",
+        "team_id": <profile_team_id>
+    }
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
         token = Tokens.objects.filter(token_f=request.headers['token']).first()
         user = token.user
-        profile = Profile.objects.filter(user=user)[0]
+        profile = Profile.objects.filter(user=user).first()
 
         result = {
             'id': profile.id,
@@ -418,7 +425,7 @@ def close_perforator(request):
 
 def pr_list(request):
     """
-     Без входных аргументов. Возвращает лист всех performance review для залогиненного пользователя.
+     Без входных аргументов. Возвращает лист всех performance review для авторизованного пользователя.
     """
     result = {'status': 'not ok'}
     if tokenCheck(request.headers['token']):
