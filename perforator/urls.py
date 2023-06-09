@@ -70,4 +70,6 @@ urlpatterns = [
 
     path('rating/user_get', mark_views.get_user_rating),
     path('rating/manager_get', mark_views.get_manager_rating),
+
+    path('admin/change_data', general_views.adm_change_data),
 ]

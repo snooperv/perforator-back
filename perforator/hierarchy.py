@@ -95,7 +95,7 @@ def become_manager(request):
         team.save()
 
         profile.is_manager = True
-        #profile.team_id = team.id
+
         profile.save()
 
         result['status'] = 'ok'

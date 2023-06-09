@@ -559,3 +559,38 @@ def all_companies(request):
     else:
         result['status'] = 'You are not login'
     return result
+
+
+def change_data(request):
+    """
+    Обновляет данные сотрудника из аккаунта админа.
+    Входной JSON
+    {
+        "id": <profile_id>,
+        "name": <user_first_name>,
+        "phone": <user_username>,
+        "photo": <profile_photo>,
+        "is_manager": <true or false>,
+        "company": <company name>
+    }
+    """
+    result = {'status': 'not ok'}
+    if tokenCheck(request.headers['token']):
+        token = Tokens.objects.filter(token_f=request.headers['token']).first()
+        user = token.user
+        profile = Profile.objects.filter(user=user).first()
+
+        if profile.is_admin:
+            data = request.data
+            new_profile = Profile.objects.filter(id=data['id']).first()
+
+            for e in data:
+                if e != 'id':
+                    new_profile[e] = data[e]
+            new_profile.save()
+            result['status'] = 'ok'
+        else:
+            result['status'] = 'You are not admin'
+    else:
+        result['status'] = 'You are not login'
+    return result

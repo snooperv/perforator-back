@@ -79,3 +79,8 @@ def pr_get_private_notes(request):
 @api_view(['GET'])
 def get_companies(request):
     return Response(data=general.all_companies(request), status=200)
+
+
+@api_view(['POST'])
+def adm_change_data(request):
+    return Response(data=general.change_data(request), status=200)

@@ -70,6 +70,7 @@ class Profile(models.Model):
 
 class Team(models.Model):
     manager = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=False)
 
 
 class PrList(models.Model):
